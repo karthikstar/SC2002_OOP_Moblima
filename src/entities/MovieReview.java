@@ -29,7 +29,7 @@ public class MovieReview implements Serializable {
      * Additional comment is optional
      * @param username              this Review's username (email)
      * @param numOfStars            this Review's number of stars
-     * @param Comment     this Review's additional coomment (optional)
+     * @param Comment     this Review's additional comment (optional)
      */
     public MovieReview(String username, double numOfStars, String Comment){
         this.username = username;
