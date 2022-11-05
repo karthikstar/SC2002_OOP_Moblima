@@ -7,12 +7,23 @@ public class MainApp {
         Scanner sc = new Scanner(System.in);
         int choice;
 
+        String logo = "\n" +
+                "                  _     _ _                 \n" +
+                "                 | |   | (_)                \n" +
+                "  _ __ ___   ___ | |__ | |_ _ __ ___   __ _ \n" +
+                " | '_ ` _ \\ / _ \\| '_ \\| | | '_ ` _ \\ / _` |\n" +
+                " | | | | | | (_) | |_) | | | | | | | | (_| |\n" +
+                " |_| |_| |_|\\___/|_.__/|_|_|_| |_| |_|\\__,_|\n" +
+                "                                            \n";
+
         do {
-            System.out.println(
-                    "WELCOME TO MOBLIMA APP\n" +
-                            "1. Customer\n" +
-                            "2. Staff\n" +
-                            "0. Exit\n"
+            System.out.printf(
+                    "WELCOME TO..\n" +
+                    logo +
+
+                    "1. Customer\n" +
+                    "2. Staff\n" +
+                    "0. Exit\n"
             );
             System.out.println("Select Option: ");
 
@@ -25,6 +36,7 @@ public class MainApp {
             switch (choice) {
                 case 1:
                     System.out.println("Lets bring you to the customer page..");
+                    CustomerUI.getInstance().displayCustomerUI();
                     break;
                 case 2:
                     System.out.println("Lets bring you to the staff page..");
