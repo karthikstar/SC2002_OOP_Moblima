@@ -24,7 +24,7 @@ public class MovieDetails implements Serializable {
     private ArrayList<MovieReview> reviews;
     private MovieType type;
 
-    public Movie(
+    public MovieDetails(
             int id, String title, MovieType type, String synopsis, String rating, double duration, LocalDate movieOpeningDate, LocalDate movieEndDate, String language, String director, ArrayList<String> cast
     ){
         this.id = id;
@@ -208,7 +208,7 @@ public class MovieDetails implements Serializable {
                 + "Release date: " +  getMovieOpeningDateString() + "\n"
                 + "End date: " +  getMovieEndDateString() + "\n"
                 + "Director: " + getDirector() + "\n"
-                + "Cast: " + castString + "\n"
+                + "Cast: " + overallCast + "\n"
                 + "Overall review rating: " + getOverallRating() + "\n"
                 + "Reviews: \n\n" + reviews;
         return details + "\n";
