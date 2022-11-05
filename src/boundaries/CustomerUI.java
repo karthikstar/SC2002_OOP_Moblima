@@ -31,7 +31,7 @@ public class CustomerUI {
         System.out.printf(
                 "---------------------------\n"
                 + "Welcome To the Customer Interface!\n"
-                + "1. View All Movies\n"
+                + "1. View Movies\n"
                 + "2. Book Movie Ticket\n"
                 + "3. View Booking History\n"
                 + "0. Exit To Main Interface\n"
@@ -44,6 +44,8 @@ public class CustomerUI {
             switch (userChoice){
                 case 0:
                     System.out.println("Bringing you back to MOBLIMA Main Interface..");
+
+                    break;
                 case 1:
                     System.out.println("lets go to all movies");
                     break;
