@@ -1,4 +1,4 @@
-package movie.entities;
+package entities.movie;
 
 public class Seat {
     private String seatID;

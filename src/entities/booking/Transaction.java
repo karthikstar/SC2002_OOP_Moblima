@@ -1,8 +1,7 @@
 // WHERE TO IMPLEMENT THE CUSTOMER DETAILS?
-package booking.entities;
+package entities.booking;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 

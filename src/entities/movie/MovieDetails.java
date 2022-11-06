@@ -1,4 +1,4 @@
-package movie.entities;
+package entities.movie;
 
 import java.util.ArrayList;
 import java.io.Serializable;

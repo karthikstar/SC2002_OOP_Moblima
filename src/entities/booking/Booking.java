@@ -1,4 +1,4 @@
-package booking.entities;
+package entities.booking;
 
 import java.util.ArrayList;
 
@@ -8,7 +8,7 @@ public class Booking {
     private ArrayList<Ticket> ticketsBought;
 
 
-    this.ticketsBought = new ArrayList<Ticket>();
+//    this.ticketsBought = new ArrayList<Ticket>();
 
     public ArrayList<Ticket> getTicketsBought() {
         return ticketsBought;

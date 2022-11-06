@@ -1,4 +1,4 @@
-package booking.entities;
+package entities.booking;
 
 public enum TicketType {
     ADULT,

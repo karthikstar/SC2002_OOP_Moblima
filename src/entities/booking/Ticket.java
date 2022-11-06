@@ -1,4 +1,4 @@
-package booking.entities;
+package entities.booking;
 
 public class Ticket {
     private TicketType Type;
