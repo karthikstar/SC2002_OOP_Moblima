@@ -9,6 +9,6 @@ import static entities.cinema.CinemaType.STANDARD;
 public class CinemaTest {
     public static void main(String[] args) throws IOException {
 
-        Cinema amkhub1 = new Cinema("AMK","1", STANDARD);
+        Cinema amkhub1 = new Cinema("AMK",1);
     }
 }
