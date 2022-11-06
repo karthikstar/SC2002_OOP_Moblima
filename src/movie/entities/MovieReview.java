@@ -1,4 +1,4 @@
-package entities;
+package movie.entities;
 
 import java.io.Serializable;
 
@@ -21,7 +21,7 @@ public class MovieReview implements Serializable {
     /**
      * this Review's additional comment (optional)
      */
-    private String Comment;
+    private String comment;
 
 
     /**
@@ -34,7 +34,7 @@ public class MovieReview implements Serializable {
     public MovieReview(String username, double numOfStars, String Comment){
         this.username = username;
         this.numOfStars = numOfStars;
-        this.Comment = Comment;
+        this.comment = Comment;
     }
 
 
@@ -59,7 +59,7 @@ public class MovieReview implements Serializable {
      * @return String   Reviewer's additional comment for this Review
      */
     public String getComment(){
-        return this.Comment;
+        return this.comment;
     }
 
 
@@ -77,7 +77,7 @@ public class MovieReview implements Serializable {
      * @param Comment Reviewer's new additional comment for this Review
      */
     public void setAdditionalComment(String Comment){
-        this.Comment = Comment;
+        this.comment = Comment;
     }
 
 
@@ -86,7 +86,9 @@ public class MovieReview implements Serializable {
      * @return String
      */
 
-    public String asString(){
+
+    @Override
+    public String toString(){
         String details = "";
         details += "        Username: " + getUsername() + "\n"
                 +  "        Number of stars: " + String.valueOf(getNumOfStars()) + "\n"

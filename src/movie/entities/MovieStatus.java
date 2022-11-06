@@ -1,4 +1,4 @@
-package entities;
+package movie.entities;
 
 /**
  * Enumerated type for better readability and easier referencing to attribute
