@@ -1,10 +1,10 @@
 package test;
 
-import entities.Cinema;
+import entities.cinema.Cinema;
 
 import java.io.IOException;
 
-import static entities.CinemaType.STANDARD;
+import static entities.cinema.CinemaType.STANDARD;
 
 public class CinemaTest {
     public static void main(String[] args) throws IOException {

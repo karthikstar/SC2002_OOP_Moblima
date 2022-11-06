@@ -1,4 +1,4 @@
-package entities;
+package entities.cinema;
 
 public enum CinemaType {
     STANDARD("STANDARD"),

@@ -1,4 +1,4 @@
-package entities;
+package entities.movie;
 
 /**
  * Enumerated type for better readability and easier referencing to attribute
@@ -6,7 +6,8 @@ package entities;
 public enum MovieType {
     TWO_D("2D"),
     THREE_D("3D"),
-    BLOCKBUSTER("Blockbuster");
+    ATMOS("ATMOS"),
+    BLOCKBUSTER ("BLOCKBUSTER");
 
     private final String type;
 

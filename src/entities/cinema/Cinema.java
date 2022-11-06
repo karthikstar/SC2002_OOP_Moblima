@@ -1,10 +1,7 @@
-package entities;
+package entities.cinema;
 
 import java.io.*;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.List;
-import java.nio.file.FileSystems;
 
 public class Cinema implements Serializable {
 

@@ -1,23 +1,23 @@
-package entities;
+package entities.movie;
 
 public class Seat {
-    private int seatID;
+    private String seatID;
     private boolean assigned = false;
 
-    public Seat (int id) {
+    public Seat (String id) {
         seatID = id;
     }
 
-    public Seat (int id, boolean assigned) {
+    public Seat (String id, boolean assigned) {
         seatID = id;
         this.assigned = assigned;
     }
 
-    public int getSeatID() {
+    public String getSeatID() {
         return seatID;
     }
 
-    public void setSeatID(int seatID) {
+    public void setSeatID(String seatID) {
         this.seatID = seatID;
     }
 
@@ -29,7 +29,7 @@ public class Seat {
         assigned = true;
     }
 
-    public void unAssign() {
+    public void unassign() {
         assigned = false;
     }
 }
