@@ -1,6 +1,6 @@
 package booking.entities;
 
-public enum paymentMethod {
+public enum PaymentMethod {
     masterCard("MasterCard"),
     visa("Visa"),
     grabPay("GrabPay"),
@@ -8,7 +8,7 @@ public enum paymentMethod {
 
     private String method;
 
-    private paymentMethod(String method) {this.method = method;}
+    private PaymentMethod(String method) {this.method = method;}
 
     @Override
     public String toString() {

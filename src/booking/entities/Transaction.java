@@ -1,3 +1,4 @@
+// WHERE TO IMPLEMENT THE CUSTOMER DETAILS?
 package booking.entities;
 
 import java.io.Serializable;
@@ -8,13 +9,11 @@ import java.time.format.DateTimeFormatter;
 public class Transaction implements Serializable {
     private String transactionID;
     private double totalPrice;
-    private ArrayList<Ticket> ticketsBought;
-    private paymentMethod method;
+    private PaymentMethod method;
 
     public Transaction() {
         this.transactionID = "";
         this.totalPrice = 0;
-        this.ticketsBought = new ArrayList<Ticket>();
         this.method = null;
     }
 
@@ -40,19 +39,11 @@ public class Transaction implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public ArrayList<Ticket> getTicketsBought() {
-        return ticketsBought;
-    }
-
-    public void setTicketsBought(ArrayList<Ticket> ticketsBought) {
-        this.ticketsBought = ticketsBought;
-    }
-
-    public paymentMethod getMethod() {
+    public PaymentMethod getMethod() {
         return method;
     }
 
-    public void setMethod(paymentMethod method) {
+    public void setMethod(PaymentMethod method) {
         this.method = method;
     }
 }
