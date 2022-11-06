@@ -6,5 +6,9 @@ public class InputControllerTest {
         int a;
         a = InputController.getUserInt();
         System.out.println(a);
+
+        int b;
+        b = InputController.getUserInt(0,3);
+        System.out.println(b);
     }
 }
