@@ -1,12 +1,13 @@
 package entities.booking;
 
+import entities.cinema.Cinema;
 public class Ticket {
     private TicketType Type;
     private double Price;
     private String seatID;
 
     // REMEMBER TO AMEND THESE
-    //private Cinema cineplex;
+    private Cinema cineplex;
     private int cinemaHall;
 
     public Ticket(TicketType Type) {
@@ -39,13 +40,13 @@ public class Ticket {
         this.seatID = seatID;
     }
 
-//    public Cinema getCineplex() {
-//        return cineplex;
-//    }
-//
-//    public void setCineplex(Cinema cineplex) {
-//        this.cineplex = cineplex;
-//    }
+    public Cinema getCineplex() {
+        return cineplex;
+    }
+
+    public void setCineplex(Cinema cineplex) {
+        this.cineplex = cineplex;
+    }
 
     public int getCinemaHall() {
         return cinemaHall;
