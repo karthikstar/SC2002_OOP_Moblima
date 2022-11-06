@@ -6,7 +6,8 @@ package movie.entities;
 public enum MovieType {
     TWO_D("2D"),
     THREE_D("3D"),
-    IMAX("IMAX");
+    ATMOS("ATMOS"),
+    BLOCKBUSTER ("BLOCKBUSTER");
 
     private final String type;
 
