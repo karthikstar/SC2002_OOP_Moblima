@@ -1,5 +1,7 @@
 package entities.cinema;
 
+import utils.FilePathFinder;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -7,7 +9,7 @@ public class Cinema implements Serializable {
 
     private String cineplexCode;
     private String cineplexName;
-    private String cinemaID;
+    private int cinemaID;
     private CinemaType cinemaType;
 
     private int totalNOfSeats;
@@ -17,11 +19,10 @@ public class Cinema implements Serializable {
 
 //    private ArrayList<Session> sessions;
 
-    public Cinema(String cineplexCode, String cinemaID, CinemaType cinemaType) throws IOException {
+    public Cinema(String cineplexCode, int cinemaID) throws IOException {
         this.cineplexCode = cineplexCode;
         this.cinemaSeatLayout = new ArrayList<String>();
         this.cinemaID = cinemaID;
-        this.cinemaType = cinemaType;
         this.loadSeatingPlanFromFile(cineplexCode, cinemaID);
     }
     public String getCineplexName() {
@@ -32,7 +33,7 @@ public class Cinema implements Serializable {
         return cineplexCode;
     }
 
-    public String getCinemaID() {
+    public int getCinemaID() {
         return cinemaID;
     }
 
@@ -57,7 +58,7 @@ public class Cinema implements Serializable {
         this.cineplexName = cineplexName;
     }
 
-    public void setCinemaID(String cinemaID) {
+    public void setCinemaID(int cinemaID) {
         this.cinemaID = cinemaID;
     }
 
@@ -83,18 +84,10 @@ public class Cinema implements Serializable {
         }
 
     }
-    private void loadSeatingPlanFromFile(String cineplexCode, String cinemaID) throws IOException {
-        File directory = new File("./");
-//        System.out.println("dir 1 " + directory.getAbsolutePath());
-//        System.out.println("dir 3 " + directory.getCanonicalPath());
-        String filePath = directory.getCanonicalPath();
+    private void loadSeatingPlanFromFile(String cineplexCode, int cinemaID) throws IOException {
+        String filePath = FilePathFinder.findRootPath();
+        filePath = filePath + "/src/data/cinemas/" + cineplexCode + "_" + cinemaID +".txt";
 
-        if (filePath == null) {
-            throw new IOException("Unable to find filepath");
-        } else {
-            filePath = filePath + "/src/data/cinemas/" + cineplexCode + "_" + cinemaID +".txt";
-//            System.out.println("loaded " + filePath);
-        }
 
         FileReader frStream = new FileReader( filePath );
         BufferedReader brStream = new BufferedReader( frStream );
@@ -117,7 +110,7 @@ public class Cinema implements Serializable {
                         break;
                     case 1:
                         System.out.println("Cinema ID: " + inputLine);
-                        this.setCinemaID(inputLine);
+                        this.setCinemaID(Integer.parseInt(inputLine));
                         break;
                     case 2:
                         System.out.println("Cinema Type: " + inputLine);
@@ -141,7 +134,7 @@ public class Cinema implements Serializable {
             brStream.close();
 
             this.setCinemaSeatLayout(seatLayout);
-            this.printCinemaSeatLayout();
+//            this.printCinemaSeatLayout();
 
         } catch (IOException e) {
             System.out.println("IO error: " + e.getMessage());
