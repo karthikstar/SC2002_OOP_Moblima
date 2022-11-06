@@ -86,7 +86,8 @@ public class MovieReview implements Serializable {
      * @return String
      */
 
-    public String asString(){
+    @Override
+    public String toString(){
         String details = "";
         details += "        Username: " + getUsername() + "\n"
                 +  "        Number of stars: " + String.valueOf(getNumOfStars()) + "\n"

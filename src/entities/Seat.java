@@ -26,10 +26,10 @@ public class Seat {
     }
 
     public void assign() {
-        occupied = true;
+        assigned = true;
     }
 
-    public void unassign() {
-        occupied = false;
+    public void unAssign() {
+        assigned = false;
     }
 }

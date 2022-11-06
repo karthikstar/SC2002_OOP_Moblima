@@ -192,7 +192,7 @@ public class MovieDetails implements Serializable {
 
         String reviews = "";
         for(int i = 0; i<getReviews().size();i++){
-            reviews += getReviews().get(i).asString() + "\n\n";
+            reviews += getReviews().get(i) + "\n\n";
         }
         if(reviews.equals(""))
             reviews = "N/A";
