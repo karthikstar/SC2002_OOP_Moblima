@@ -2,6 +2,7 @@ package controllers;
 
 import boundaries.BookingUI;
 import entities.booking.Booking;
+import entities.cinema.CinemaAvailability;
 import entities.cinema.ShowTime;
 
 import java.sql.Array;
@@ -13,7 +14,7 @@ public class BookingController {
 
     private ArrayList<String> selectedSeats = new ArrayList<>();
 
-    // check ofor seat column no, and its index position in the string, store these 2 values as a key value pair in hashmap
+    // check for seat column no, and its index position in the string, store these 2 values as a key value pair in hashmap
     private HashMap<Integer, Integer> storeColumnNoAndIndex = new HashMap<>();
 
     private HashMap<Character, ArrayList<Integer>> storeRowAndColChoices = new HashMap<>();
@@ -22,8 +23,10 @@ public class BookingController {
 
     private ShowTime showTime = null; // refers to current selected showtime
 
+    public Boolean exitBooking = false;
     public static BookingController single_instance = null;
 
+    // ensure there's only one instance of BookingController
     public static BookingController getInstance()
     {
         if(single_instance == null) {
@@ -34,8 +37,18 @@ public class BookingController {
 
 
     private BookingController(){
-//        resetSelf()
+        resetData();
+    }
 
+    // Reset data of this BookingController instance so that data doesn't persist, in the event that user clicks back
+    public void resetData() {
+        setBooking(null);
+        setShowTime(null);
+        setCinemaSeatingLayout(null);
+        getSelectedSeats().clear();
+        getStoreColumnNoAndIndex().clear();
+        getStoreRowAndColChoices().clear();
+        exitBooking = true;
     }
 
     // Initialise Seat Selection Process
@@ -84,8 +97,22 @@ public class BookingController {
             }
         }
 
-        boolean exitBooking = false;
+        // Display Booking UI until user exits
+        exitBooking = false;
         while(!exitBooking) {
+            // Check if showtime has reached full capacity
+
+            // Showtime not implemented yet. AFTER THAT UNCOMMENT THIS OUT
+//            if(showtime.getCinemaStatus() == CinemaAvailability.FULL_CAPACITY) {
+//                System.out.println("Unfortunately, this showtime has reached full capacity! Please try another showtime.");
+//                exitBooking = true;
+//                resetData();
+//                return;
+//            }
+
+            // If showtime still has seats, dispaly cinema's seating plan.
+            displaySeatingPlan(getCinemaSeatingLayout());
+
             BookingUI.printBookingMenu();
             int minBookingMenuChoice = 0;
             int maxBookingMenuChoice = 3;
@@ -94,17 +121,21 @@ public class BookingController {
             switch (choice) {
                 case 0:
                     exitBooking = true;
+                    resetData();
                     break;
                 case 1:
                     addSeat();
                     break;
                 case 2:
-//                    unselectSeat();
+                    removeSelectedSeat();
                     break;
                 case 3: //Ticket Selection - requires at least 1 seat to be selected. if no seats selected, dont allow ticket selection
-//                    ticketmanager
+                    if(getSelectedSeats().size() > 0){
+//                        TicketManager
+                    } else {
+                        System.out.println("You have not added any seats! Please select at least one seat before entering into our Ticketing Portal");
+                    }
                     break;
-
                 default:
                     System.out.println("Invalid Input! Please enter a valid integer between 0 to 3.");
                     break;
@@ -142,6 +173,65 @@ public class BookingController {
         // if not valid, isValidSeatSelection() will print an error message.
     }
 
+    private void removeSelectedSeat() {
+        System.out.println("Please select a seat to be removed from your cart (e.g C3)");
+        String seatChoice = InputController.getUserString().toUpperCase();
+
+        // Check if its a valid seat to be removed.
+        if(isValidSeatRemoval(seatChoice)) {
+            char selectedRow = seatChoice.charAt(0);
+            int selectedCol = Integer.valueOf(seatChoice.substring(1));
+
+            // Remove from selectedSeats
+            getSelectedSeats().remove(seatChoice);
+
+            // remove this seat from storeRowAndColChoices
+            getStoreRowAndColChoices().get(selectedRow).remove(selectedCol);
+
+            // If row now has no col choices stored in it, delete this row
+            if(getStoreRowAndColChoices().get(selectedRow).size() <= 0) {
+                getStoreRowAndColChoices().remove(selectedRow);
+            }
+
+            // Update Cinema Seating Layout
+            updateCinemaSeatingLayout("deleteSeat", seatChoice);
+            System.out.println("You have succesfully removed Seat " + seatChoice + "!");
+        }
+        // if not valid seat removal, isValidSeatRemoval() will print a error message
+    }
+
+    private boolean isValidSeatRemoval(String seatChoice) {
+        String seatChoiceRegex = "[A-Z]\\d{1,2}";
+        // Check 1: Check if formatting of SeatChoice is valid
+        if(seatChoice.matches(seatChoiceRegex)) {
+            // Check 2: Check current selected seats to see if it contains this seat to be removed
+            if(getSelectedSeats().contains(seatChoice)){
+                char rowChoice = seatChoice.charAt(0);
+                int colChoice = Integer.valueOf(seatChoice.substring(1));
+
+                ArrayList<Integer> colChoicesForRow = getStoreRowAndColChoices().get(rowChoice);
+
+                // Check 3 - Check If Seat is In Between 2 Seats
+                // If seat to be removed is in between 2 seats, then prevent this removal (based on check 3)
+                if(colChoicesForRow.contains(colChoice - 1) && colChoicesForRow.contains(colChoice + 1)){
+                    System.out.println("Seat " + seatChoice + " cannot be removed as it has 2 adjacent seats selected by you on the same row.");
+                    System.out.println("You are not allowed to leave spaces between selected seats on the same row!");
+                    return false;
+                } else {
+                    // seat is not in between 2 seats - allow removal (based on check 3)
+                    return true;
+                }
+            } // Seat to be removed is not part of the current selected seats (based on check 2)
+            else {
+                System.out.println("Seat " + seatChoice + " is not one of your selected seats at the moment! Please try again.");
+                return false;
+            }
+        }
+        // Formatting of seat choice is wrong (based on check 1)
+        System.out.println("Invalid seat selection! Please enter a valid seat ID to be removed (e.g C3). ");
+        return false;
+    }
+
     private boolean isValidSeatSelection(String seatChoice) {
         String seatChoiceRegex = "[A-Z]\\d{1,2}";
         if(seatChoice.matches(seatChoiceRegex)) {
@@ -161,7 +251,7 @@ public class BookingController {
                 if(rowString.length() == 0 || rowString == null) {
                     continue;
                 }
-                // Iterate thru each row until we find the correct row according to user choice
+                // Iterate through each row until we find the correct row according to user choice
 
                 // Check #1 - check whether rowString's first char matches row choice
                 if(rowString.charAt(0) == rowChoice) {
@@ -210,6 +300,7 @@ public class BookingController {
         System.out.println("Invalid seat selection! Please enter a valid seat ID (e.g C3). ");
         return false;
     }
+
 
     private void updateCinemaSeatingLayout(String event, String seatID) {
         char targetRow = seatID.charAt(0);
@@ -272,6 +363,15 @@ public class BookingController {
     public ArrayList<String> getSelectedSeats() {
         return selectedSeats;
     }
+
+    public void setBooking(Booking booking) {
+        this.booking = booking;
+    }
+
+    public Booking getBooking() {
+        return booking;
+    }
+
     private ArrayList<String> cloneCinemaSeatingLayout(ArrayList<String> cinemaSeatingLayout) {
         ArrayList<String> cinemaSeatingLayoutClone = new ArrayList<>();
         for(int i = 0; i < cinemaSeatingLayout.size(); i++) {
@@ -281,6 +381,19 @@ public class BookingController {
         return cinemaSeatingLayoutClone;
     }
 
+    public void displaySeatingPlan(ArrayList<String> cinemaSeatingLayout) {
+        String rowString;
+        for(int row = 0; row < cinemaSeatingLayout.size(); row++ ) {
+            rowString = cinemaSeatingLayout.get(row);
+            if(rowString.length() == 0 || rowString == null) {
+                System.out.println();
+                continue;
+            } else {
+                System.out.println(rowString);
+            }
+        }
+        System.out.println("\nLegend: |_| : Available Seat, |X|: Unavailable Seat, |S| : Your Selected Seat");
+    }
     public HashMap<Integer, Integer> getStoreColumnNoAndIndex() {
         return storeColumnNoAndIndex;
     }
