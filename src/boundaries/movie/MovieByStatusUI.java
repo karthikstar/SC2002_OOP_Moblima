@@ -1,16 +1,8 @@
 package boundaries.movie;
 
-public class ViewMovieMenu {
-    private static ViewMovieMenu single_instance = null;
+public class MovieByStatusUI {
 
-    public static ViewMovieMenu getInstance() {
-        if (single_instance == null)
-            single_instance = new ViewMovieMenu();
-        return single_instance;
-    }
-
-    public void viewMovies(String userType) {
-        if (userType.equals("Staff")) {
+    public static void printStaffMenu() {
             System.out.println("------------------- VIEW/ EDIT MOVIES (STAFF) ------------------\n" +
                     " 1. List all movies	                                \n" +
                     " 2. Coming Soon 						       			\n" +
@@ -21,9 +13,8 @@ public class ViewMovieMenu {
                     "---------------------------------------------------------");
 
             System.out.println("Enter choice: ");
-        }
-        else {
-
-        }
     }
+
+
+    //CUST
 }

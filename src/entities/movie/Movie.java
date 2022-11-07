@@ -102,7 +102,7 @@ public class Movie implements Serializable {
                 + "Genres:" + allGenres + "\n"
                 + "Type:" + getType() + "\n"
                 + "Language:" + getLanguage() + "\n"
-                + "Status: " + getShowStatus().asString() + "\n"
+                + "Status: " + getShowStatus().toString() + "\n"
                 + "Synopsis: " + getSynopsis() + "\n"
                 + "Duration: " + String.valueOf(getDuration()) + " hour(s)\n"
                 + "Opening date: " +  getMovieOpeningDateString() + "\n"
