@@ -39,5 +39,17 @@ public class InputController {
         return userInt;
     }
 
+    public static String getUserString() {
+        String userString = "";
+
+        while(userString.equals("")) {
+            userString = sc.nextLine();
+            if(userString.equals("")) {
+                System.out.println("Please enter a non-empty input!");
+            }
+        }
+        return userString;
+    }
+
 
 }
