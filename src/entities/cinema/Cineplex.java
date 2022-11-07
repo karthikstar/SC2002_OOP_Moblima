@@ -91,7 +91,7 @@ public class Cineplex implements Serializable {
         for(int i = 1; i <= noOfCinemas; i++) {
             Cinema cinema = new Cinema(cineplexCode, i);
             this.cinemaList.add(cinema);
-            break;
+//            break; // REMOVE THIS AFTER all txt files for cinemas are settled
         }
     }
 }
