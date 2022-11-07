@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 
-public class MovieDetails implements Serializable {
+public class Movie implements Serializable {
 
     //Attributes
     private int id;
@@ -26,7 +26,7 @@ public class MovieDetails implements Serializable {
     private ArrayList<MovieType> type;
 
     //Constructors
-    public MovieDetails(
+    public Movie(
             int id, String title, MovieRating rating, ArrayList<MovieType> type, String synopsis, double duration, LocalDate movieOpeningDate, LocalDate movieEndDate, String language, String director, ArrayList<MovieGenre> genres,  ArrayList<String> cast
     ){
         this.id = id;

@@ -15,7 +15,8 @@ public enum MovieStatus{
         this.status = status;
     }
 
-    public String asString(){
+    @Override
+    public String toString(){
         return status;
     }
 }
