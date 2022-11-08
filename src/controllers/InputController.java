@@ -1,4 +1,6 @@
 package controllers;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 
@@ -50,6 +52,14 @@ public class InputController {
         }
         return userString;
     }
+
+    public static LocalDate getDate(){
+        String DateKeyed = getUserString();
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate date = LocalDate.parse(DateKeyed, dateFormat);
+        return date;
+    }
+
 
 
 }
