@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 //@SuppressWarnings("serial")
 public class MovieReview implements Serializable {
-
+    private int reviewId;
     /**
      * this Review's username (email)
      */
@@ -31,12 +31,16 @@ public class MovieReview implements Serializable {
      * @param numOfStars            this Review's number of stars
      * @param Comment     this Review's additional comment (optional)
      */
-    public MovieReview(String username, double numOfStars, String Comment){
+    public MovieReview(int Id, String username, double numOfStars, String Comment){
+        this.reviewId = Id;
         this.username = username;
         this.numOfStars = numOfStars;
         this.comment = Comment;
     }
 
+    public int getReviewId() {
+        return reviewId;
+    }
 
     /**
      * Get username (email) of reviewer of this Review
@@ -62,6 +66,9 @@ public class MovieReview implements Serializable {
         return this.comment;
     }
 
+    public void setReviewId(int reviewId) {
+        this.reviewId = reviewId;
+    }
 
     /**
      * Change the number of stars given by the reviewer of this Review
@@ -90,7 +97,8 @@ public class MovieReview implements Serializable {
     @Override
     public String toString(){
         String details = "";
-        details += "        Username: " + getUsername() + "\n"
+        details += "        Review ID: " + getReviewId() + "\n"
+                +  "        Username: " + getUsername() + "\n"
                 +  "        Number of stars: " + String.valueOf(getNumOfStars()) + "\n"
                 +  "        Comment: " + getComment();
         return details;

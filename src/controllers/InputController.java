@@ -2,6 +2,8 @@ package controllers;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 
@@ -42,6 +44,21 @@ public class InputController {
         return userInt;
     }
 
+    public static long getUserLong() {
+        long userLong = -1;
+        boolean isValidLong = false;
+        while(!isValidLong) {
+            if(sc.hasNextLong()){
+                userLong = sc.nextLong();
+                isValidLong = true;
+            } else {
+                System.out.println("Wrong Input! Please enter a valid long");
+            }
+            sc.nextLine();
+        }
+        return userLong;
+    }
+
     public static String getUserString() {
         String userString = "";
 
@@ -53,6 +70,14 @@ public class InputController {
         }
         return userString;
     }
+
+    public static LocalDate getDate(){
+        String DateKeyed = getUserString();
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate date = LocalDate.parse(DateKeyed, dateFormat);
+        return date;
+    }
+
 
 
     public static LocalDateTime getDateTimeFromUser(){
