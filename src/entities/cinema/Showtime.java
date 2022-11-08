@@ -6,12 +6,14 @@ import entities.movie.MovieType;
 
 
 public class Showtime implements Serializable {
-    private String showTimeId;
+
+    private static int showtimeCounter = 0;
+    private int showTimeId;
     private LocalDateTime dateTime;
     private String cineplexName;
 
     private int cinemaID;
-    private String movieId;
+    private int movieId;
     private MovieType movieType;
     private Cinema cinema;
     private CinemaAvailability status;
@@ -33,11 +35,8 @@ public class Showtime implements Serializable {
 
 
 
-
-
-
     //Constructors
-    public Showtime(String showTimeId, LocalDateTime dateTime, String cineplexName, int cinemaID, String movieId, MovieType movieType, Cinema cinema, CinemaAvailability status) {
+    public Showtime(int showTimeId, LocalDateTime dateTime, String cineplexName, int cinemaID, int movieId, MovieType movieType, Cinema cinema, CinemaAvailability status) {
         this.showTimeId = showTimeId;
         this.dateTime = dateTime;
         this.cineplexName = cineplexName;
@@ -46,14 +45,15 @@ public class Showtime implements Serializable {
         this.movieType = movieType;
         this.cinema = cinema;
         this.status = status;
+        showtimeCounter++;
     }
 
     //Getters & Setters
-    public String getShowTimeId() {
+    public int getShowTimeId() {
         return showTimeId;
     }
 
-    public void setShowTimeId(String showTimeId) {
+    public void setShowTimeId(int showTimeId) {
         this.showTimeId = showTimeId;
     }
 
@@ -81,11 +81,11 @@ public class Showtime implements Serializable {
         this.cinemaID = cinemaNumber;
     }
 
-    public String getMovieId() {
+    public int getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(String movieId) {
+    public void setMovieId(int movieId) {
         this.movieId = movieId;
     }
 
@@ -111,5 +111,9 @@ public class Showtime implements Serializable {
 
     public void setStatus(CinemaAvailability status) {
         this.status = status;
+    }
+
+    public static int getShowtimeCounter() {
+        return showtimeCounter;
     }
 }

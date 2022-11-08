@@ -1,7 +1,11 @@
 package boundaries;
 
+import entities.cinema.Cinema;
+import entities.cinema.Cineplex;
 import entities.cinema.Showtime;
+import entities.movie.MovieType;
 
+import java.lang.reflect.Array;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -70,6 +74,20 @@ public class ShowtimeUI {
         System.out.println("Please select one of the above choices: ");
     }
 
+    public static void staffUpdateMenu() {
+        System.out.printf(
+                "Welcome to the Update Menu for Showtime!\n" +
+                "Here are the following attributes you can update for a showtime\n" +
+                "1. Showtime Date and Time\n" +
+                "2. Movie ID\n" +
+                "3. Cinema\n" +
+                "4. Cineplex Name\n" +
+                "5. Cinema Availability\n" +
+                "6. Movie Type\n" +
+                "0. Back to selected showtime menu\n"
+        );
+    }
+
     public static void printShowtimeDetails(Showtime chosenShowtime) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy, hh.mma");
         System.out.println("Here are the details of your chosen showtime:");
@@ -84,4 +102,25 @@ public class ShowtimeUI {
         System.out.println("Cinema Seat Layout: ");
         chosenShowtime.getCinema().printCinemaSeatLayout();
     }
+
+    public static void printListOfCineplexes(ArrayList<Cineplex> listOfCineplexes) {
+        System.out.println("List of Cineplexes:");
+        for(int i = 0; i < listOfCineplexes.size(); i++) {
+            System.out.println(i + 1 + ". " + listOfCineplexes.get(i).getCineplexName());
+        }
+    }
+    public static void printListOfCinemas(ArrayList<Cinema> listOfCinemas) {
+        System.out.println("List of Cinemas:");
+        for(int i = 0; i < listOfCinemas.size(); i++) {
+            System.out.println(i + 1 + ". " + listOfCinemas.get(i).getCineplexName());
+        }
+    }
+    public static void printListOfMovieTypes(ArrayList<MovieType> listOfMovieTypes) {
+        System.out.println("List of Cinemas:");
+        for(int i = 0; i < listOfMovieTypes.size(); i++) {
+            System.out.println(i + 1 + ". " + listOfMovieTypes.get(i).toString());
+        }
+    }
+
+
 }

@@ -2,6 +2,7 @@ package controllers;
 
 import boundaries.BookingUI;
 import entities.booking.Booking;
+import entities.cinema.CinemaAvailability;
 import entities.cinema.Showtime;
 
 import java.util.ArrayList;
@@ -99,14 +100,12 @@ public class BookingController {
         exitBooking = false;
         while(!exitBooking) {
             // Check if showtime has reached full capacity
-
-            // Showtime not implemented yet. AFTER THAT UNCOMMENT THIS OUT
-//            if(showtime.getCinemaStatus() == CinemaAvailability.FULL_CAPACITY) {
-//                System.out.println("Unfortunately, this showtime has reached full capacity! Please try another showtime.");
-//                exitBooking = true;
-//                resetData();
-//                return;
-//            }
+            if(showtime.getStatus() == CinemaAvailability.FULL_CAPACITY) {
+                System.out.println("Unfortunately, this showtime has reached full capacity! Please try another showtime.");
+                exitBooking = true;
+                resetData();
+                return;
+            }
 
             // If showtime still has seats, dispaly cinema's seating plan.
             displaySeatingPlan(getCinemaSeatingLayout());

@@ -1,49 +1,49 @@
 package controllers;
 
 import boundaries.ShowtimeUI;
+import entities.cinema.Cinema;
 import entities.cinema.CinemaAvailability;
+import entities.cinema.Cineplex;
 import entities.cinema.Showtime;
 import entities.movie.Movie;
 import entities.movie.MovieStatus;
+import entities.movie.MovieType;
 import utils.DataSerializer;
 import utils.FilePathFinder;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ShowtimeController {
-// need finish this class
-// do TicketController
-// then transactionController
-// then makeBooking under BookingController
-
-    private HashMap <String, Showtime> showtimes = new HashMap<>();
+    private HashMap<Integer, Showtime> showtimes = new HashMap<>();
 
     private static ShowtimeController single_instance = null;
 
-    public static ShowtimeController getInstance() {
+    public static ShowtimeController getInstance() throws IOException {
         if(single_instance == null) {
             single_instance = new ShowtimeController();
         }
         return single_instance;
     }
 
-    private ShowtimeController() {
-        HashMap<String, Showtime> showTimeHashMap = this.loadData();
+    private ShowtimeController() throws IOException {
+        // load data from .dat files
+        HashMap<Integer, Showtime> showTimeHashMap = this.loadData();
 
         if(showTimeHashMap != null) {
             this.showtimes = showTimeHashMap;
         }
     }
 
-    void getMovieShowtimes(String movieID, String userType) {
+    // retrieves a list of showtimes for a particular movieID - CALL THIS From MovieController.
+    void getMovieShowtimes(int movieID, String userType) throws IOException {
         int userChoice;
         // Get showtime Ids for a particular movie
-        ArrayList<String> showtimeIdsForMovie = MovieController.getInstance().getMoviebyID(movieID).getShowTimeIds();
+        ArrayList<Integer> showtimeIdsForMovie = MovieController.getInstance().getMoviebyID(movieID).getShowTimeIds();
         ArrayList<Showtime> showtimeList = new ArrayList<Showtime>();
 
         for(int i = 0; i < showtimeIdsForMovie.size(); i++) {
@@ -55,7 +55,7 @@ public class ShowtimeController {
 
         do {
             // Print available showtimes for the movie
-            ShowtimeUI.printShowtimes(showtimeList);
+            ShowtimeUI.printShowtimes(showtimeList); // it will also handle the case whr there are 0 showtimes
 
             if(userType.equalsIgnoreCase("Staff") && showtimeList.size() != 0) {
                 ShowtimeUI.staffShowtimeMenu();
@@ -70,7 +70,7 @@ public class ShowtimeController {
                     case 1:
                         System.out.println("Enter the no. of which showtime you would like to view/update/delete: ");
                         int showtimeChoice = InputController.getUserInt(1, showtimeIdsForMovie.size()) - 1;
-                        String chosenShowtimeID = showtimeIdsForMovie.get(showtimeChoice);
+                        int chosenShowtimeID = showtimeIdsForMovie.get(showtimeChoice);
                         this.staffShowtimeOperations(chosenShowtimeID); // goes to staffShowtimeOperations based on the specific showtimeID selected
                         break;
                     case 2: // creating a new showtime
@@ -103,7 +103,7 @@ public class ShowtimeController {
             } else if (userType.equalsIgnoreCase("Customer") && showtimeList.size() != 0) {
                 Movie movie = MovieController.getInstance().getMoviebyID(movieID);
 
-                if(movie.getShowStatus().equals(MovieStatus.COMING_SOON)) {
+                if(movie.getShowStatus().equals(MovieStatus.COMING_SOON)) { // not sure how necessary this is..
                     System.out.println("Sorry, this movie is coming soon, hence you can't book this showtime yet. Bringing you back to the list of showtimes..");
                     userChoice = 0;
                 } else {
@@ -115,10 +115,10 @@ public class ShowtimeController {
                 }
                 switch (userChoice) {
                     case 0:
-                        System.out.println("Bringing you back to MovieController.."); // probs change naming
+                        System.out.println("Bringing you back to MovieController.."); // probs change naming??
                         break;
                     case 1:
-                        String showtimeID = showtimeIdsForMovie.get(userChoice);
+                        int showtimeID = showtimeIdsForMovie.get(userChoice);
                         this.chosenShowtimeCust(showtimeID);
                         break;
                     default:
@@ -131,13 +131,12 @@ public class ShowtimeController {
             }
         } while(userChoice != 0);
 
-
     }
 
-    private void chosenShowtimeCust(String chosenShowtimeID) {
+    private void chosenShowtimeCust(int chosenShowtimeID) {
         int userChoice;
 
-        String movieID = this.showtimes.get(chosenShowtimeID).getMovieId();
+        int movieID = this.showtimes.get(chosenShowtimeID).getMovieId();
         Movie movie = MovieController.getInstance().getMoviebyID(movieID);
 
         if(movie.getShowStatus().equals(MovieStatus.COMING_SOON)){}
@@ -164,15 +163,11 @@ public class ShowtimeController {
                         break;
                 }
             } while (userChoice != 0);
-
-
         }
-
-
     }
 
 
-    private void staffShowtimeOperations(String showtimeID){
+    private void staffShowtimeOperations(int showtimeID) throws IOException {
         int userChoice;
         do {
             ShowtimeUI.staffShowtimeOperationsMenu();
@@ -188,7 +183,7 @@ public class ShowtimeController {
                     this.viewShowtimeDetails(showtimeID);
                     break;
                 case 2:
-                    this.updateShowtimeDetails();
+                    this.updateShowtimeDetails(showtimeID);
 //                     userChoice = 0; - use this if want to quit this operations menu after each update
 //                    System.out.println("Bringing you back to list of showtimes");
                     break;
@@ -206,18 +201,18 @@ public class ShowtimeController {
 
     }
 
-    private Showtime retrieveShowtime(String showtimeID) {
+    private Showtime retrieveShowtime(int showtimeID) {
         return this.showtimes.get(showtimeID);
     }
 
-    private void viewShowtimeDetails(String chosenShowtimeID) {
+    private void viewShowtimeDetails(int chosenShowtimeID) {
         DateTimeFormatter dateTimeFormatter= DateTimeFormatter.ofPattern("dd MMM yyyy, hh.mma");
         // retrieve the showtime obj, corresponding to the chosenShowtimeID
         Showtime chosenShowtime = this.showtimes.get(chosenShowtimeID);
         ShowtimeUI.printShowtimeDetails(chosenShowtime);
     }
 
-    private void deleteShowtime(String showtimeID) throws IOException {
+    private void deleteShowtime(int showtimeID) throws IOException {
         Showtime showtimeToDelete = this.showtimes.get(showtimeID);
         if(showtimeToDelete == null) {
             System.out.println("This showtime does not exist.");
@@ -228,15 +223,152 @@ public class ShowtimeController {
         }
     }
 
- 
+    private Showtime createShowtime(int movieID) throws IOException {
+        int showtimeID = Showtime.getShowtimeCounter() + 1;
+        int cinemaID;
+        String cineplexName;
+        CinemaAvailability cinemaAvailability;
+        MovieType movieType;
 
-    void saveShowtime(Showtime showtimeObj, String showtimeID) throws IOException {
+        System.out.println("Enter a date and time for showtime, in the format dd/MM/yyyy HH:mm.");
+        LocalDateTime localDateTime = InputController.getDateTimeFromUser();
+
+        ArrayList<Cineplex> ListOfCineplex = CompanyController.getInstance().getCompany().getCineplexes();
+
+        // print list of cineplexes available
+        ShowtimeUI.printListOfCineplexes(ListOfCineplex);
+        int minChoice = 1;
+        int maxChoice = ListOfCineplex.size();
+        int userChoice = InputController.getUserInt(minChoice, maxChoice) - 1;
+        cineplexName = ListOfCineplex.get(userChoice).getCineplexName();
+
+        // Selection of Cinema
+        ArrayList<Cinema> ListOfCinemas = ListOfCineplex.get(userChoice).getCinemaList();
+        ShowtimeUI.printListOfCinemas(ListOfCinemas);
+
+        System.out.println("Please choose a cinema from the list above and provide its cinema ID");
+        int minChoiceCinema = 1;
+        int maxChoiceCinema = ListOfCinemas.size();
+        int userChoiceCinema = InputController.getUserInt(minChoiceCinema, maxChoiceCinema) - 1;
+
+        cinemaID = ListOfCinemas.get(userChoiceCinema).getCinemaID();
+
+        Cinema newCinema = CompanyController.getInstance.getNewCinema(cinemaID);
+
+        cinemaAvailability = CinemaAvailability.OPEN_FOR_SALES;
+
+        System.out.println("Available Movie Types: ");
+        ArrayList<MovieType> ListOfMovieTypes = MovieController.getInstance().getMoviebyID(movieID);
+
+        ShowtimeUI.printListOfMovieTypes(ListOfMovieTypes);
+
+        System.out.println("Please pick a movie type by specifying its corresponding number");
+        int minChoiceMovieType = 1;
+        int maxChoiceMovieType = ListOfMovieTypes.size();
+
+        int userChoiceMovieType = InputController.getUserInt(minChoiceMovieType, maxChoiceMovieType) - 1;
+        movieType = ListOfMovieTypes.get(userChoiceMovieType);
+
+        Showtime showtime = new Showtime(showtimeID, localDateTime, cineplexName, cinemaID, movieID, movieType, newCinema, cinemaAvailability );
+
+        MovieController.getInstance().updateShowtimes(movieID, showtimeID);
+        this.showtimes.put(showtimeID, showtime);
+        this.saveShowtime(showtime, showtimeID);
+        System.out.println("A new showtime has been succesfully created.");
+        System.out.println("Redirecting you back to Showtime Portal - Staff..");
+        return showtime;
+    }
+
+    private void updateShowtimeDetails(int showtimeID) throws IOException {
+        int userChoice;
+
+        Showtime selectedShowtime = this.showtimes.get(showtimeID);
+        if(selectedShowtime == null ) {
+            System.out.println("Showtime doesn't exist!");
+        } else {
+            do {
+                ShowtimeUI.staffUpdateMenu();
+                System.out.println("Please select one of the options above (0-6):");
+                int minChoice = 0;
+                int maxChoice = 6;
+                userChoice = InputController.getUserInt(minChoice, maxChoice);
+
+                switch(userChoice) {
+                    case 1:
+                        System.out.println("Please enter a new date and time for Showtime in the format (dd/MM/yyyy HH:mm)");
+                        LocalDateTime newDateTime = InputController.getDateTimeFromUser();
+                        selectedShowtime.setDateTime(newDateTime);
+                        break;
+                    case 2:
+                        System.out.println("Please enter a new Movie ID: ");
+                        int newMovieID = InputController.getUserInt();
+                        selectedShowtime.setMovieId(newMovieID);
+                        break;
+                    case 3:
+                        System.out.println("Pleaase enter a new Cinema ID: ");
+                        int newCinemaID = InputController.getUserInt();
+                        Cinema newCinema = CompanyController.getInstance().getNewCinema(newCinemaID);
+                        selectedShowtime.setCinema(newCinema);
+                        break;
+                    case 4:
+                        System.out.println("Please enter new cineplex name: ");
+                        String newCineplexName = InputController.getUserString();
+                        selectedShowtime.setCineplexName(newCineplexName);
+                        break;
+                    case 5:
+                        System.out.println("Please enter new cinema availability status: ");
+                        String newCinemaAvailability = InputController.getUserString();
+                        while(!checkIfValidCinemaAvailability(newCinemaAvailability)){
+                            newCinemaAvailability = InputController.getUserString();
+                        }
+                        selectedShowtime.setStatus(CinemaAvailability.valueOf(newCinemaAvailability));
+
+                        break;
+                    case 6:
+                        System.out.println("Please enter a new movie type: ");
+                        String newMovieType = InputController.getUserString();
+                        while(!checkIfValidMovieType(newMovieType)) {
+                            newMovieType = InputController.getUserString();
+                        }
+                        selectedShowtime.setMovieType(MovieType.valueOf(newMovieType));
+                        break;
+                    default:
+                        System.out.println("Invalid Input! Please enter a valid integer between 0 to 6.");
+                        break;
+                }
+            } while(userChoice != 0);
+            this.showtimes.put(showtimeID, selectedShowtime);
+            this.saveShowtime(selectedShowtime, showtimeID);
+        }
+    }
+
+    private boolean checkIfValidCinemaAvailability(String cinemaAvailability) {
+        try {
+            CinemaAvailability cinemaAvailabilityEnum = CinemaAvailability.valueOf(cinemaAvailability);
+            return true;
+        } catch(IllegalArgumentException e) {
+            System.out.println("Invalid cinema status! Please try again");
+            return false;
+        }
+    }
+    private boolean checkIfValidMovieType(String movieType) {
+        try {
+            MovieType movieTypeEnum = MovieType.valueOf(movieType);
+            return true;
+        } catch(IllegalArgumentException e) {
+            System.out.println("Invalid movie type! Please try again");
+            return false;
+        }
+    }
+
+    // saves a showtime object as a .dat file
+    void saveShowtime(Showtime showtimeObj, int showtimeID) throws IOException {
         String filePath = FilePathFinder.findRootPath() + "/src/data/showtimes/showtime_" + showtimeID + ".dat";
         DataSerializer.ObjectSerializer(filePath, showtimeObj);
     }
 
-    private HashMap<String, Showtime> loadData() throws IOException {
-        HashMap<String, Showtime> storedShowtimes = new HashMap<>();
+    private HashMap<Integer, Showtime> loadData() throws IOException {
+        HashMap<Integer, Showtime> storedShowtimes = new HashMap<>();
 
         String filePath = FilePathFinder.findRootPath() + "/src/data/showtimes";
         File folder = new File(filePath);
@@ -251,7 +383,7 @@ public class ShowtimeController {
                 String regex = "\\.(?=[^\\.]+$)";
                 String regex2 = "_";
                 String showtimeID = fileList[i].getName().split(regex)[0].split(regex2)[1];
-                storedShowtimes.put(showtimeID, newShowtimeObj);
+                storedShowtimes.put(Integer.parseInt(showtimeID), newShowtimeObj);
             }
         }
         return storedShowtimes;

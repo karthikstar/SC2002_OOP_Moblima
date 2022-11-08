@@ -1,4 +1,7 @@
 package controllers;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 
@@ -50,6 +53,25 @@ public class InputController {
         }
         return userString;
     }
+
+
+    public static LocalDateTime getDateTimeFromUser(){
+        LocalDateTime userDateTime = null;
+        String date;
+        boolean validInput = false;
+        while(!validInput){
+            try{
+                date = sc.nextLine();
+                userDateTime = LocalDateTime.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+                validInput = true;
+            }
+            catch(DateTimeParseException e){
+                System.out.println("Date and time entered must be of pattern dd/MM/yyyy HH:mm!");
+            }
+        }
+        return userDateTime;
+    }
+
 
 
 }
