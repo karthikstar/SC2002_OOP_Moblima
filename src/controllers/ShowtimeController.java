@@ -1,12 +1,19 @@
 package controllers;
 
 import boundaries.ShowtimeUI;
+import entities.cinema.CinemaAvailability;
 import entities.cinema.Showtime;
 import entities.movie.Movie;
 import entities.movie.MovieStatus;
+import utils.DataSerializer;
+import utils.FilePathFinder;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ShowtimeController {
 // need finish this class
@@ -178,7 +185,7 @@ public class ShowtimeController {
                     System.out.println("Bringing you back to list of showtimes");
                     break;
                 case 1:
-                    this.viewShowtimeDetails();
+                    this.viewShowtimeDetails(showtimeID);
                     break;
                 case 2:
                     this.updateShowtimeDetails();
@@ -186,7 +193,7 @@ public class ShowtimeController {
 //                    System.out.println("Bringing you back to list of showtimes");
                     break;
                 case 3:
-                    this.deleteShowtime();
+                    this.deleteShowtime(showtimeID);
 //                    userChoice = 0;
 //                    System.out.println("Bringing you back to list of showtimes");
                     break;
@@ -199,13 +206,54 @@ public class ShowtimeController {
 
     }
 
-    // TODO retrieveShowtime()
+    private Showtime retrieveShowtime(String showtimeID) {
+        return this.showtimes.get(showtimeID);
+    }
 
-    // TODO viewShowtimeDetails()
+    private void viewShowtimeDetails(String chosenShowtimeID) {
+        DateTimeFormatter dateTimeFormatter= DateTimeFormatter.ofPattern("dd MMM yyyy, hh.mma");
+        // retrieve the showtime obj, corresponding to the chosenShowtimeID
+        Showtime chosenShowtime = this.showtimes.get(chosenShowtimeID);
+        ShowtimeUI.printShowtimeDetails(chosenShowtime);
+    }
 
+    private void deleteShowtime(String showtimeID) throws IOException {
+        Showtime showtimeToDelete = this.showtimes.get(showtimeID);
+        if(showtimeToDelete == null) {
+            System.out.println("This showtime does not exist.");
+        } else {
+            showtimeToDelete.setStatus(CinemaAvailability.FULL_CAPACITY);
+            System.out.println("Showtime has been marked as full capacity and will no longer be viewed by customers.");
+            this.saveShowtime(showtimeToDelete, showtimeID);
+        }
+    }
 
-    // TODO createShowtime()
+ 
 
+    void saveShowtime(Showtime showtimeObj, String showtimeID) throws IOException {
+        String filePath = FilePathFinder.findRootPath() + "/src/data/showtimes/showtime_" + showtimeID + ".dat";
+        DataSerializer.ObjectSerializer(filePath, showtimeObj);
+    }
 
+    private HashMap<String, Showtime> loadData() throws IOException {
+        HashMap<String, Showtime> storedShowtimes = new HashMap<>();
 
+        String filePath = FilePathFinder.findRootPath() + "/src/data/showtimes";
+        File folder = new File(filePath);
+
+        File[] fileList = folder.listFiles();
+        // Deserialize each file in the list , convert them to Showtime Objects, and add to the Hashmap
+        if(fileList != null) {
+            for(int i = 0; i < fileList.length; i++) {
+                String path = fileList[i].getPath();
+
+                Showtime newShowtimeObj = (Showtime) DataSerializer.ObjectDeserializer(path);
+                String regex = "\\.(?=[^\\.]+$)";
+                String regex2 = "_";
+                String showtimeID = fileList[i].getName().split(regex)[0].split(regex2)[1];
+                storedShowtimes.put(showtimeID, newShowtimeObj);
+            }
+        }
+        return storedShowtimes;
+    }
 }

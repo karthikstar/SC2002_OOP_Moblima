@@ -9,7 +9,8 @@ public class Showtime implements Serializable {
     private String showTimeId;
     private LocalDateTime dateTime;
     private String cineplexName;
-    private int cinemaNumber;
+
+    private int cinemaID;
     private String movieId;
     private MovieType movieType;
     private Cinema cinema;
@@ -36,13 +37,13 @@ public class Showtime implements Serializable {
 
 
     //Constructors
-    public Showtime(String showTimeId, LocalDateTime dateTime, String cineplexName, int cinemaNumber, String movieId, MovieType type, Cinema cinema, CinemaAvailability status) {
+    public Showtime(String showTimeId, LocalDateTime dateTime, String cineplexName, int cinemaID, String movieId, MovieType movieType, Cinema cinema, CinemaAvailability status) {
         this.showTimeId = showTimeId;
         this.dateTime = dateTime;
         this.cineplexName = cineplexName;
-        this.cinemaNumber = cinemaNumber;
+        this.cinemaID = cinemaID;
         this.movieId = movieId;
-        this.type = type;
+        this.movieType = movieType;
         this.cinema = cinema;
         this.status = status;
     }
@@ -72,12 +73,12 @@ public class Showtime implements Serializable {
         this.cineplexName = cineplexName;
     }
 
-    public int getCinemaNumber() {
-        return cinemaNumber;
+    public int getCinemaID() {
+        return cinemaID;
     }
 
-    public void setCinemaNumber(int cinemaNumber) {
-        this.cinemaNumber = cinemaNumber;
+    public void setCinemaID(int cinemaNumber) {
+        this.cinemaID = cinemaNumber;
     }
 
     public String getMovieId() {
