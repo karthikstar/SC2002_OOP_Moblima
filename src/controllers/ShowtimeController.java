@@ -43,7 +43,7 @@ public class ShowtimeController {
     void getMovieShowtimes(int movieID, String userType) throws IOException {
         int userChoice;
         // Get showtime Ids for a particular movie
-        ArrayList<Integer> showtimeIdsForMovie = MovieController.getInstance().getMoviebyID(movieID).getShowTimeIds();
+        ArrayList<Integer> showtimeIdsForMovie = MovieController.getInstance().getMoviebyID(movieID).getShowtimeIDs();
         ArrayList<Showtime> showtimeList = new ArrayList<Showtime>();
 
         for(int i = 0; i < showtimeIdsForMovie.size(); i++) {
@@ -258,7 +258,7 @@ public class ShowtimeController {
         cinemaAvailability = CinemaAvailability.OPEN_FOR_SALES;
 
         System.out.println("Available Movie Types: ");
-        ArrayList<MovieType> ListOfMovieTypes = MovieController.getInstance().getMoviebyID(movieID);
+        ArrayList<MovieType> ListOfMovieTypes = MovieController.getInstance().getMovieTypesbyID(movieID);
 
         ShowtimeUI.printListOfMovieTypes(ListOfMovieTypes);
 

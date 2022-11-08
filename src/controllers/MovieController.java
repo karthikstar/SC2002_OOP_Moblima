@@ -161,10 +161,10 @@ public class MovieController {
                             this.removeMovie(movie);
                             break;
                         case 4:
-                            ReviewManager.getInstance().printReviews(movie.getReviews());
+                            ReviewController.getInstance().printReviews(movie.getReviews());
                             break;
                         case 5:
-                            ReviewManager.getInstance().deleteReview(movie.getReviews());
+                            ReviewController.getInstance().deleteReview(movie.getReviews());
                             break;
                         case 0:
                             System.out.println("Back to Movie Listings......");
@@ -184,13 +184,13 @@ public class MovieController {
                     choice = InputController.getUserInt(0, 3);
                     switch (choice) {
                         case 1:
-                            ShowtimeManager.getInstance().getMovieShowtimes(movie.getId(),userType);
+                            ShowtimeController.getInstance().getMovieShowtimes(movie.getId(),userType);
                             break;
                         case 2:
-                            ReviewManager.getInstance().printReviews(movie.getReviews());
+                            ReviewController.getInstance().printReviews(movie.getReviews());
                             break;
                         case 3:
-                            ReviewManager.getInstance().addReview(movie.getId());
+                            ReviewController.getInstance().addReview(movie.getId());
                             break;
                         case 0:
                             System.out.println("Back to Movie Listings......");
@@ -526,6 +526,10 @@ public class MovieController {
 
     public Movie getMoviebyID(int movieID){
         return movies.get(movieID);
+    }
+
+    public ArrayList<MovieType> getMovieTypesbyID(int movieID){
+        return movies.get(movieID).getType();
     }
 
     public void increaseTicketsSold(int movieID, long ticketsSold){
