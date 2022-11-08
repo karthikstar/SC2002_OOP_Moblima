@@ -1,0 +1,76 @@
+package controllers;
+
+import entities.cinema.Cinema;
+import entities.cinema.Cineplex;
+import entities.cinema.Company;
+import utils.DataSerializer;
+import utils.FilePathFinder;
+
+import java.io.IOException;
+
+public class CompanyController {
+    private Company company;
+
+    private static CompanyController single_instance = null;
+
+    public static CompanyController getInstance() throws IOException {
+        if(single_instance == null) {
+            single_instance = new CompanyController();
+        }
+        return single_instance;
+    }
+
+    // constructor of CompanyController - will try loading data first, if data not found, will create a file
+    private CompanyController() throws IOException {
+        Company storedDataOfCompany = this.loadData();
+        // if no data found
+        if(storedDataOfCompany == null) {
+            this.company = new Company();
+            this.saveData();
+            System.out.println("File has been created for company");
+        } else { // if there is data
+            this.company = storedDataOfCompany;
+        }
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+
+//  returns a new cloned copy of cinema for showtimeController to create a new showtime.
+    // this copy is
+    public Cinema generateNewCinema(String cineplexCode, int cinemaID) throws IOException {
+        for(int i = 0; i < this.company.getCineplexList().size(); i++) {
+            Cineplex cineplex = this.company.getCineplexList().get(i);
+            if(cineplex.getCineplexCode().equals(cineplexCode)){
+                Cinema newCinema = new Cinema(cineplexCode, cinemaID);
+
+                // get a copy of the oldCinema - position of cinema in list is cinemaID - 1.
+                Cinema oldCinema = cineplex.getCinemaList().get(cinemaID - 1);
+
+                // copy over same details to this newCinema
+                newCinema.setCineplexCode(oldCinema.getCineplexCode());
+                newCinema.setCineplexName(oldCinema.getCineplexName());
+                newCinema.setCinemaID(oldCinema.getCinemaID());
+                newCinema.setCinemaType(oldCinema.getCinemaType());
+                newCinema.setTotalNOfSeats(oldCinema.getTotalNOfSeats());
+                newCinema.setOccupiedNoOfSeats(oldCinema.getOccupiedNoOfSeats());
+                newCinema.setCinemaSeatLayout(oldCinema.getCinemaSeatLayout());
+                return newCinema;
+            }
+        }
+        return null;
+    }
+
+    public Company loadData() throws IOException {
+        String filePath = FilePathFinder.findRootPath() + "/src/data/company/company.dat";
+        return (Company) DataSerializer.ObjectDeserializer(filePath);
+    }
+
+    public void saveData() throws IOException {
+        String filePath = FilePathFinder.findRootPath() + "/src/data/company/company.dat";
+        DataSerializer.ObjectSerializer(filePath, this.company);
+    }
+
+}
