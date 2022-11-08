@@ -8,9 +8,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 
 public class Movie implements Serializable {
-
+    private static int idCounter = 1;
     //Attributes
-    private int id;
+    private int id = -1;
     private String title;
     private MovieRating rating;
     private ArrayList<MovieGenre> genres;
@@ -20,11 +20,11 @@ public class Movie implements Serializable {
     private String language;
     private String synopsis;
     private String director;
-    private ArrayList<String> cast;
     private long ticketsSold = 0;
+    private ArrayList<String> cast;
     private ArrayList<MovieReview> reviews;
     private ArrayList<MovieType> type;
-    private ArrayList<String> showtimeIDs;
+    private ArrayList<Integer> showtimeIDs;
 
     //Constructors
     public Movie(){
@@ -32,10 +32,10 @@ public class Movie implements Serializable {
         this.cast = new ArrayList<String>();
         this.type = new ArrayList<MovieType>();
         this.reviews = new ArrayList<MovieReview>();
-        this.showtimeIDs = new ArrayList<String>();
+        this.showtimeIDs = new ArrayList<Integer>();
     }
     public Movie(
-            int id, String title, MovieRating rating, ArrayList<MovieType> type, String synopsis, int duration, LocalDate movieOpeningDate, LocalDate movieEndDate, String language, String director, ArrayList<MovieGenre> genres,  ArrayList<String> cast
+            int id, String title, MovieRating rating, ArrayList<MovieType> type, String synopsis, int duration, LocalDate movieOpeningDate, LocalDate movieEndDate, String language, String director, ArrayList<MovieGenre> genres, int ticketsSold,  ArrayList<String> cast
     ){
         this.id = id;
         this.title = title;
@@ -47,10 +47,11 @@ public class Movie implements Serializable {
         this.movieEndDate = movieEndDate;
         this.language = language;
         this.director = director;
+        this.ticketsSold = ticketsSold;
         this.cast = cast;
         this.genres = genres;
         this.reviews = new ArrayList<MovieReview>();
-        this.showtimeIDs = new ArrayList<String>();
+        this.showtimeIDs = new ArrayList<Integer>();
     }
 
     public MovieStatus getShowStatus() {
@@ -83,6 +84,21 @@ public class Movie implements Serializable {
         }
     }
 
+    // Used as a comparator function for sorting. Assumes there is >1 review already (checked in Controller).
+    public Double getOverallStarsDouble() {
+        double sum = 0;
+        for(MovieReview review : reviews){
+            sum += review.getNumOfStars();
+        }
+        return sum/reviews.size();
+    }
+
+    public static int requestId() {
+        int request = idCounter;
+        idCounter++;
+        return request;
+    }
+
     @Override
     public String toString(){
         String overallCast = "";
@@ -107,6 +123,13 @@ public class Movie implements Serializable {
             allTypes = allTypes.concat(getType().get(i) + ", ");
         allTypes = allTypes.substring(0, allTypes.length()-2);
 
+        String allShowTimeId = "";
+        for (int i=0; i<getShowtimeIDs().size(); i++)
+            allShowTimeId = allShowTimeId.concat(getShowtimeIDs().get(i) + ", ");
+        allShowTimeId = allShowTimeId.substring(0, allShowTimeId.length()-2);
+        if(allShowTimeId.equals(""))
+            allShowTimeId = "N/A";
+
         String details = "";
         details += "ID: " + getId() + "\n"
                 + "Title: " + getTitle() + "\n"
@@ -120,8 +143,9 @@ public class Movie implements Serializable {
                 + "Opening date: " +  getMovieOpeningDateString() + "\n"
                 + "End date: " +  getMovieEndDateString() + "\n"
                 + "Director: " + getDirector() + "\n"
+                + "Tickets Sold: " + getTicketsSold() + "\n"
                 + "Cast: " + overallCast + "\n"
-                + "Tickets Sold" + String.valueOf(getTicketsSold()) + "\n"
+                + "Showtime IDs: " + allShowTimeId + "\n"
                 + "Overall review stars: " + getOverallStars() + "\n"
                 + "Reviews: \n\n" + reviews;
         return details + "\n";
@@ -208,20 +232,20 @@ public class Movie implements Serializable {
         this.director = director;
     }
 
-    public ArrayList<String> getCast() {
-        return cast;
-    }
-
-    public void setCast(ArrayList<String> cast) {
-        this.cast = cast;
-    }
-
     public long getTicketsSold() {
         return ticketsSold;
     }
 
     public void setTicketsSold(long ticketsSold) {
         this.ticketsSold = ticketsSold;
+    }
+
+    public ArrayList<String> getCast() {
+        return cast;
+    }
+
+    public void setCast(ArrayList<String> cast) {
+        this.cast = cast;
     }
 
     public ArrayList<MovieReview> getReviews() {
@@ -240,11 +264,11 @@ public class Movie implements Serializable {
         this.type = type;
     }
 
-    public ArrayList<String> getShowtimeIDs() {
+    public ArrayList<Integer> getShowtimeIDs() {
         return showtimeIDs;
     }
 
-    public void setShowtimeIDs(ArrayList<String> showtimeIDs) {
+    public void setShowtimeIDs(ArrayList<Integer> showtimeIDs) {
         this.showtimeIDs = showtimeIDs;
     }
 
@@ -254,5 +278,22 @@ public class Movie implements Serializable {
 
     public String getMovieEndDateString() {
         return movieEndDate.format(DateTimeFormatter.ofPattern("EEEE, dd/MM/yyyy"));
+    }
+
+
+    // Adding to the ArrayLists
+    public void addMovieReview(MovieReview review) {
+        reviews.add(review);
+    }
+
+    public void removeMovieReview(int reviewID) {
+        for (int i=0;i<getReviews().size(); i++)
+            if (getReviews().get(i).equals(reviewID)) {
+                reviews.remove(i);
+            }
+    }
+
+    public void addShowtimeID(int showtimeID) {
+        showtimeIDs.add(showtimeID);
     }
 }

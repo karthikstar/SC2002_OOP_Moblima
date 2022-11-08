@@ -1,27 +1,20 @@
 // MAYBE CHANGE GETUSERINT THINGS LATER!
 package controllers;
 
-import boundaries.movie.MovieMainMenuUI;
-import boundaries.movie.MovieByStatusUI;
-import boundaries.movie.MovieOptionsUI;
-import entities.movie.Movie;
-import entities.movie.MovieGenre;
-import entities.movie.MovieRating;
-import entities.movie.MovieReview;
-import entities.movie.MovieStatus;
-import entities.movie.MovieType;
+import boundaries.movie.*;
+import entities.movie.*;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.lang.Double;
 
 public class MovieController {
 
     Scanner sc = new Scanner(System.in);
-    private Map<String,Movie> movies;
+    private Map<Integer,Movie> movies;
     private void MovieManager() {
-        this.movies= new HashMap<String,Movie>();
+        this.movies= new HashMap<Integer,Movie>();
         this.load();
     }
 
@@ -72,7 +65,7 @@ public class MovieController {
             switch (choice) {
                 case 1:
                     ArrayList<Movie> allShowingMovies = new ArrayList<Movie>();
-                    for (Map.Entry<String, Movie> indivMovie : movies.entrySet()) {
+                    for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
                         if (indivMovie.getValue().getShowStatus().equals("COMING_SOON") ||
                                 indivMovie.getValue().getShowStatus().equals("ADVANCE_SALES") ||
                                 indivMovie.getValue().getShowStatus().equals("NOW_SHOWING")) {
@@ -83,7 +76,7 @@ public class MovieController {
                     break;
                 case 2:
                     ArrayList<Movie> comingSoon = new ArrayList<Movie>();
-                    for (Map.Entry<String, Movie> indivMovie : movies.entrySet()) {
+                    for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
                         if (indivMovie.getValue().getShowStatus().equals("COMING_SOON")) {
                             comingSoon.add(indivMovie.getValue());
                         }
@@ -92,7 +85,7 @@ public class MovieController {
                     break;
                 case 3:
                     ArrayList<Movie> advanceSales = new ArrayList<Movie>();
-                    for (Map.Entry<String, Movie> indivMovie : movies.entrySet()) {
+                    for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
                         if (indivMovie.getValue().getShowStatus().equals("ADVANCE_SALES")) {
                             advanceSales.add(indivMovie.getValue());
                         }
@@ -101,7 +94,7 @@ public class MovieController {
                     break;
                 case 4:
                     ArrayList<Movie> nowShowing = new ArrayList<Movie>();
-                    for (Map.Entry<String, Movie> indivMovie : movies.entrySet()) {
+                    for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
                         if (indivMovie.getValue().getShowStatus().equals("NOW_SHOWING")) {
                             nowShowing.add(indivMovie.getValue());
                         }
@@ -110,7 +103,7 @@ public class MovieController {
                     break;
                 case 5:
                     ArrayList<Movie> endShowing = new ArrayList<Movie>();
-                    for (Map.Entry<String, Movie> indivMovie : movies.entrySet()) {
+                    for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
                         if (indivMovie.getValue().getShowStatus().equals("END_OF_SHOWING")) {
                             endShowing.add(indivMovie.getValue());
                         }
@@ -131,7 +124,6 @@ public class MovieController {
                     System.out.println((i+1) + ") " + list.get(i).getTitle() + " [" + list.get(i).getShowStatus().toString()+ "]");
                 }
 
-                int choice = -1;
                 do {
                     System.out.println("Please select the movie to view information for (Enter 0 to exit).");
                     System.out.printf("Enter choice: ");
@@ -304,45 +296,259 @@ public class MovieController {
         do {
             System.out.println(newMovie.toString());
             System.out.println();
-            System.out.println(	"========================= ADD MOVIE ====================\n" +
-                    " 1. Submit movie                                      \n" +
-                    " 2. Edit movie                                        \n" +
-                    " 0. Discard movie, back to Movie Menu                 \n"+
-                    "========================================================");
-            System.out.println("Enter choice: ");
+            MovieAddUI.printMenu();
 
-            while (!sc.hasNextInt()) {
-                System.out.println("Invalid input type. Please enter an integer value between 0-2.");
-                sc.next(); // Remove newline character
-            }
+            choice = InputController.getUserInt(0,2);
 
-            choice1 = sc.nextInt();
-
-            switch (choice1) {
+            switch (choice) {
                 case 1:
-                    String movieID = IDHelper.getLatestID("movie");
-                    newMovie.setMovieID(movieID);
+                    newMovie.setId(Movie.requestId());
                     this.save(newMovie);
-                    this.movies.put(newMovie.getMovieID(), newMovie);
+                    this.movies.put(newMovie.getId(), newMovie);
 
-                    System.out.println("Movie created! Back to Movie Menu......");
-                    choice1 = 0;
+                    System.out.println("Movie created! Back to Movie Main Menu......");
+                    choice = 0;
                     break;
                 case 2:
                     this.editMovies(newMovie);
                     break;
                 case 0:
-                    System.out.println("Movie discarded. Back to Movie Menu......");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please enter a number between 0-2");
+                    System.out.println("Back to Movie Main Menu......");
                     break;
             }
-
         } while (choice != 0);
     }
 
+    private void editMovies(Movie movieEditable){
+        int choice;
+        do {
+            System.out.println("Current movie details:\n" + movieEditable.toString());
+            MovieAddUI.printMenu();
+            choice = InputController.getUserInt(0,11);
+            switch(choice) {
+                case 1:
+                    System.out.println("Enter new title: ");
+                    movieEditable.setTitle(InputController.getUserString());
+                    break;
+                case 2:
+                    System.out.println("Choose a new movie rating: ");
+                    for(int i=0;i<MovieRating.values().length;i++){
+                        System.out.println(i+1 + ". " +MovieRating.values()[i].toString());
+                    }
+                    int choice2 = InputController.getUserInt(1,MovieRating.values().length)-1;
+                    System.out.println("You picked "+MovieRating.values()[choice2].toString() + ".");
+                    movieEditable.setRating(MovieRating.values()[choice2]);
+                    break;
+                case 3:
+                    ArrayList<MovieGenre> tempGenreList= new ArrayList<MovieGenre>();
+                    System.out.println("Genre List: ");
+                    for(int i=0;i<MovieGenre.values().length;i++)System.out.println(i+1 +". " +MovieGenre.values()[i].toString());
+                    System.out.println("Enter number of genres: ");
+                    int numGenres = InputController.getUserInt();
+                    for (int i=0;i<numGenres;i++) {
+                        System.out.printf("Enter choice number of genre %d: ", i+1);
+                        choice = InputController.getUserInt()-1;
+                        System.out.println("You picked "+MovieGenre.values()[choice].toString() + ".");
+                        tempGenreList.add(MovieGenre.values()[choice]);
+                    }
+                    movieEditable.setGenres(tempGenreList);
+                    break;
+                case 4:
+                    System.out.println("Enter new duration (in minutes): ");
+                    movieEditable.setDuration(InputController.getUserInt());
+                    break;
+                case 5:
+                    System.out.println("Enter new opening date: ");
+                    String newOpeningDate = InputController.getUserString();
+                    DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    LocalDate date = LocalDate.parse(newOpeningDate, dateFormat);
+                    movieEditable.setMovieOpeningDate(date);
+                    break;
+                case 6:
+                    System.out.println("Enter new end date: ");
+                    String newEndDate = InputController.getUserString();
+                    dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    date = LocalDate.parse(newEndDate, dateFormat);
+                    movieEditable.setMovieEndDate(date);
+                    break;
+                case 7:
+                    System.out.println("Enter revised language: ");
+                    movieEditable.setLanguage(InputController.getUserString());
+                    break;
+                case 8:
+                    System.out.println("Enter new synopsis: ");
+                    movieEditable.setSynopsis(InputController.getUserString());
+                    break;
+                case 9:
+                    System.out.println("Enter revised director: ");
+                    movieEditable.setDirector(InputController.getUserString());
+                    break;
+                case 10:
+                    System.out.println("Enter new number of tickets sold: ");
+                    movieEditable.setTicketsSold(InputController.getUserLong());
+                    break;
+                case 11:
+                    System.out.println("Enter new number of cast members: ");
+                    int castSize = InputController.getUserInt();
+                    ArrayList<String> newCastList = new ArrayList<String>();
+                    for (int i = 0; i < castSize; i++) {
+                        System.out.println("Enter cast member name: ");
+                        newCastList.add(InputController.getUserString());
+                    }
+                    movieEditable.setCast(newCastList);
+                    break;
+                case 12:
+                    ArrayList<MovieType> tempTypeList= new ArrayList<MovieType>();
+                    System.out.println("Type List: ");
+                    for(int i=0;i<MovieType.values().length;i++)System.out.println(i+1 +". " +MovieType.values()[i].toString());
+                    System.out.println("Enter number of movie types: ");
+                    int numTypes = InputController.getUserInt();
+                    for (int i=0;i<numTypes;i++) {
+                        System.out.printf("Enter choice number of type %d: ", i+1);
+                        choice = InputController.getUserInt()-1;
+                        System.out.println("You picked "+MovieType.values()[choice].toString() + ".");
+                        tempTypeList.add(MovieType.values()[choice]);
+                    }
+                    movieEditable.setType(tempTypeList);
+                    break;
+                case 0:
+                    System.out.println("Edits Completed.");
+                    break;
+            }
+        } while (choice != 0);
+        save(movieEditable);
+    }
+
+    // Only removes movie from viewing by customer.
+    private void removeMovie(Movie movie) {
+        LocalDate today = LocalDate.now();
+        movie.setMovieEndDate(today.minusDays(1));
+        save(movie);
+    }
+
+    public void viewTop5(String userType) {
+        int choice, choice2;
+
+        do {
+            if (userType.equals("Customer")) {
+                ViewTop5UI.printCustomerMenu();
+            } else if (userType.equals("Staff")) {
+                ViewTop5UI.printStaffMenu();
+            }
+
+            choice = InputController.getUserInt(0,2);
+
+            ArrayList<Movie> top5Movies = new ArrayList<Movie>();
+
+            switch (choice) {
+                case 1:
+                    for(Map.Entry<Integer, Movie> entry : movies.entrySet()){
+                        if(entry.getValue().getShowStatus().equals("ADVANCE_SALES")|| entry.getValue().getShowStatus().equals("NOW_SHOWING")){
+                            top5Movies.add(entry.getValue());
+                        }
+                    }
+
+                    top5Movies.sort(Comparator.comparingLong(Movie::getTicketsSold).reversed());
+
+                    if(top5Movies.size()==0){
+                        System.out.println("No Movies Found.");
+                        break;
+
+                    } else {
+                        for (int i=0;i<Math.min(5, top5Movies.size());i++) {
+                            System.out.println(i+1 +". "+ top5Movies.get(i).getTitle() +" (Number of Tickets Sold:  "+ top5Movies.get(i).getTicketsSold()+")");
+                        }
+                    }
+                    break;
+                case 2:
+                    for(Map.Entry<Integer, Movie> entry : movies.entrySet()){
+                        if(entry.getValue().getShowStatus().equals("ADVANCE_SALES")|| entry.getValue().getShowStatus().equals("NOW_SHOWING")){
+                            top5Movies.add(entry.getValue());
+                        }
+                    }
+
+                    // Gets rids of those movies with <= 1 review
+                    for(int i=top5Movies.size()-1;i>=0;i--){
+                        if(top5Movies.get(i).getReviews().size() <= 1){
+                            top5Movies.remove(i);
+                        }
+                    }
+                    top5Movies.sort(Comparator.comparingDouble(Movie::getOverallStarsDouble).reversed());
+
+                    if(top5Movies.size()==0){
+                        System.out.println("No Movies Found.");
+                        break;
+                    } else {
+                        for (int i=0;i<Math.min(5, top5Movies.size());i++) {
+                            System.out.println(i+1 +". "+top5Movies.get(i).getTitle() +" (Review Score:  "+ top5Movies.get(i).getOverallStars()+")");
+                        }
+                    }
+                    break;
+                case 0:
+                    System.out.println("Back to Previous Menu ...");
+                    break;
+            }
+
+            if (userType.equals("Customer")) {
+                do {
+                    System.out.println("Choose a movie (Press 0 to exit): ");
+
+                    choice2 = InputController.getUserInt(0,5)-1;
+
+                    System.out.println(top5Movies.get(choice2).toString());
+                    indivMovieOptions(top5Movies.get(choice2),userType);
+                    choice2 = -1;
+                } while (choice2 != -1);
+                System.out.println("Back to Top 5 Movie Listing...");
+            }
+        } while (choice != 0);
+    }
+
+//    private void load() {
+//        File folder = new File("C:/Users/Klaus/Downloads/cz2002-oodp-moblima-design-project-master/data/movies");
+//
+//        File[] listOfFiles = folder.listFiles();
+//
+//        if(listOfFiles != null){
+//            for(int i=0;i<listOfFiles.length;i++){
+//                String filepath = listOfFiles[i].getPath(); // Returns full path incl file name and type
+//                Movie newMovie = (Movie)SerializerHelper.deSerializeObject(filepath);
+//                movies.put(newMovie.getMovieID(), newMovie);
+//            }
+//        }
+//    }
+//
+//    private void save(Movie movie) {
+//        String filepath = ProjectRootPathFinder.findProjectRootPath() + "/data/movies/movie_"+movie.getMovieID()+".dat";
+//        SerializerHelper.serializeObject(movie, filepath);
+//        System.out.println("Movies Saved!");
+//    }
+
+    public Movie getMoviebyID(int movieID){
+        return movies.get(movieID);
+    }
+
+    public void increaseTicketsSold(int movieID, long ticketsSold){
+        movies.get(movieID).setTicketsSold(movies.get(movieID).getTicketsSold() + ticketsSold);
+    }
+
+    void addReview(int movieID, MovieReview review){
+        Movie movie = movies.get(movieID);
+        movie.addMovieReview(review);
+        save(movie);
+    }
 
 
+    void removeReview(int movieID, int reviewID){
+        Movie movie = movies.get(movieID);
+        movie.removeMovieReview(reviewID);
+        save(movie);
+    }
+
+    void updateShowtimes(int movieID, int showtimeID) {
+        Movie movie = movies.get(movieID);
+        movie.addShowtimeID(showtimeID);
+        save(movie);
+    }
 
 }
