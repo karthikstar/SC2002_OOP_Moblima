@@ -2,10 +2,8 @@ package controllers;
 
 import boundaries.BookingUI;
 import entities.booking.Booking;
-import entities.cinema.CinemaAvailability;
-import entities.cinema.ShowTime;
+import entities.cinema.Showtime;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,7 +19,7 @@ public class BookingController {
 
     private Booking booking = null; // refers to current booking
 
-    private ShowTime showTime = null; // refers to current selected showtime
+    private Showtime showTime = null; // refers to current selected showtime
 
     public Boolean exitBooking = false;
     public static BookingController single_instance = null;
@@ -52,7 +50,7 @@ public class BookingController {
     }
 
     // Initialise Seat Selection Process
-    public void initSeatSelection(ShowTime showtime) {
+    public void initSeatSelection(Showtime showtime) {
         setShowTime(showtime);
 
         // set CinemaSeatingLayout to a cloned copy so that we don't change the originial seating layout until confirmation
@@ -344,11 +342,11 @@ public class BookingController {
         }
     }
 
-    public ShowTime getShowtime() {
+    public Showtime getShowtime() {
         return showTime;
     }
 
-    public void setShowTime(ShowTime showTime) {
+    public void setShowTime(Showtime showTime) {
         this.showTime = showTime;
     }
 

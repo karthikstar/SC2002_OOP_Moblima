@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 import entities.movie.MovieType;
 
 
-public class ShowTime implements Serializable {
+public class Showtime implements Serializable {
     private String showTimeId;
     private LocalDateTime dateTime;
     private String cineplexName;
     private int cinemaNumber;
     private String movieId;
-    private MovieType type;
+    private MovieType movieType;
     private Cinema cinema;
     private CinemaAvailability status;
 
@@ -36,7 +36,7 @@ public class ShowTime implements Serializable {
 
 
     //Constructors
-    public ShowTime(String showTimeId, LocalDateTime dateTime, String cineplexName, int cinemaNumber, String movieId, MovieType type, Cinema cinema, CinemaAvailability status) {
+    public Showtime(String showTimeId, LocalDateTime dateTime, String cineplexName, int cinemaNumber, String movieId, MovieType type, Cinema cinema, CinemaAvailability status) {
         this.showTimeId = showTimeId;
         this.dateTime = dateTime;
         this.cineplexName = cineplexName;
@@ -88,12 +88,12 @@ public class ShowTime implements Serializable {
         this.movieId = movieId;
     }
 
-    public MovieType getType() {
-        return type;
+    public MovieType getMovieType() {
+        return movieType;
     }
 
-    public void setType(MovieType type) {
-        this.type = type;
+    public void setMovieType(MovieType movieType) {
+        this.movieType = movieType;
     }
 
     public Cinema getCinema() {
