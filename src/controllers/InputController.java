@@ -41,6 +41,21 @@ public class InputController {
         return userInt;
     }
 
+    public static long getUserLong() {
+        long userLong = -1;
+        boolean isValidLong = false;
+        while(!isValidLong) {
+            if(sc.hasNextLong()){
+                userLong = sc.nextLong();
+                isValidLong = true;
+            } else {
+                System.out.println("Wrong Input! Please enter a valid long");
+            }
+            sc.nextLine();
+        }
+        return userLong;
+    }
+
     public static String getUserString() {
         String userString = "";
 
