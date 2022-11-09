@@ -1,41 +1,38 @@
 package entities.movie;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Represents a Review of a Movie in the system
  */
 //@SuppressWarnings("serial")
 public class MovieReview implements Serializable {
+    private static int idCounter = 1;
     private int reviewId;
-    /**
-     * this Review's username (email)
-     */
     private String username;
-
-    /**
-     * this Review's number of stars
-     */
-    private double numOfStars;
-
-    /**
-     * this Review's additional comment (optional)
-     */
+    private int numOfStars;
     private String comment;
+    private int movieId;
+    private LocalDateTime dateTime;
 
-
-    /**
-     * Creates a Review with the given attributes
-     * Additional comment is optional
-     * @param username              this Review's username (email)
-     * @param numOfStars            this Review's number of stars
-     * @param Comment     this Review's additional comment (optional)
-     */
-    public MovieReview(int Id, String username, double numOfStars, String Comment){
+    public MovieReview() {
+        this.dateTime = LocalDateTime.now();
+    }
+    public MovieReview(int Id, String username, int numOfStars, String Comment, int movieId){
         this.reviewId = Id;
         this.username = username;
         this.numOfStars = numOfStars;
         this.comment = Comment;
+        this.movieId = movieId;
+        this.dateTime = LocalDateTime.now();
+    }
+
+    public static int requestId() {
+        int request = idCounter;
+        idCounter++;
+        return request;
     }
 
     public int getReviewId() {
@@ -54,7 +51,7 @@ public class MovieReview implements Serializable {
     /** Get number of stars given by the reviewer of this Review
      * @return double   Reviewer's number of stars given for this Review
      */
-    public double getNumOfStars(){
+    public int getNumOfStars(){
         return this.numOfStars;
     }
 
@@ -74,7 +71,7 @@ public class MovieReview implements Serializable {
      * Change the number of stars given by the reviewer of this Review
      * @param numOfStars    Reviewer's new number of stars for this Review
      */
-    public void setNumOfStars(double numOfStars){
+    public void setNumOfStars(int numOfStars){
         this.numOfStars = numOfStars;
     }
 
@@ -87,6 +84,21 @@ public class MovieReview implements Serializable {
         this.comment = Comment;
     }
 
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
 
     /**
      * String to return when this Movie_Goer is being called
@@ -99,7 +111,8 @@ public class MovieReview implements Serializable {
         String details = "";
         details += "        Review ID: " + getReviewId() + "\n"
                 +  "        Username: " + getUsername() + "\n"
-                +  "        Number of stars: " + String.valueOf(getNumOfStars()) + "\n"
+                +  "        Date & Time: " + getDateTime().format(DateTimeFormatter.ofPattern("dd MMM yyyy, hh.mma")) + "\n"
+                +  "        Number of stars: " + String.valueOf(getNumOfStars()) + "/5\n"
                 +  "        Comment: " + getComment();
         return details;
     }
