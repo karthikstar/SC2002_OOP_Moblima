@@ -18,8 +18,6 @@ public class TicketController {
         return single_instance;
     }
 
-    private Scanner sc = new Scanner(System.in);
-
     // Attributes
     private ArrayList<Ticket> selectedTickets = new ArrayList<Ticket>();
 

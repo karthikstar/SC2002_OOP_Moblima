@@ -97,6 +97,39 @@ public class InputController {
         return userDateTime;
     }
 
+    public static String getUserEmail(){
+        String pattern = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        String input = "";
+        boolean validInput = false;
+        while(!validInput){
+            input = InputController.getUserString();
+            if(input.matches(pattern)){
+                validInput = true;
+            }
+            else{
+                System.out.println("Must match email pattern!");
+            }
+        }
+        return input;
+    }
+
+    public static String getUserMobileNumber(){
+        String pattern = "\\d{8}";
+        String input = "";
+        boolean validInput = false;
+        while(!validInput){
+            input = InputController.getUserString();
+            if(input.matches(pattern) && (input.startsWith("9")||input.startsWith("8"))){
+                validInput = true;
+            }
+            else{
+                System.out.println("Must be valid mobile number (8 digits long, starts with either 8 or 9)");
+            }
+        }
+        return input;
+    }
+
+
 
 
 }
