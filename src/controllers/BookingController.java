@@ -4,7 +4,12 @@ import boundaries.BookingUI;
 import entities.booking.Booking;
 import entities.cinema.CinemaAvailability;
 import entities.cinema.Showtime;
+import utils.DataSerializer;
+import utils.FilePathFinder;
 
+import javax.xml.crypto.Data;
+import java.awt.print.Book;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -139,6 +144,50 @@ public class BookingController {
 
             }
         }
+
+    }
+
+    // finaliseBooking() is called once booking is confirmed and payment is made.
+    public void finaliseBooking() {
+        // confirm all the selected seats
+        for(int i = 0; i < getSelectedSeats().size(); i++){
+            updateCinemaSeatingLayout("confirmSeat", getSelectedSeats().get(i));
+        }
+
+        // Update the current showtime with the new cinema seating plan
+        getShowtime().getCinema().setCinemaSeatLayout(getCinemaSeatingLayout());
+        getShowtime().updateAvailability();
+
+        // Save the new showtime status
+        ShowtimeController.getInstance().saveShowtime(getShowtime(), getShowtime().getShowTimeId());
+
+        // Create a new booking and fill it up with confirmed info
+        setBooking(new Booking());
+
+        // Update Booking's Date and time
+        getBooking().setDateTime(getShowtime().getDateTime());
+
+        // Update booking with movie id, cineplexName and cinema id
+        getBooking().setMovieID(showTime.getMovieId());
+        getBooking().setCineplexName(showTime.getCineplexName());
+        getBooking().setCinemaID(showTime.getCinema().getCinemaID());
+
+        getBooking().setBookingID(Booking.getBookingCount()); // no need to +1 as we intiialised new booking, which increments count by 1.
+
+        System.out.println("Your booking has been confirmed! Here are the details:");
+        getBooking().printBookingDetails();
+
+        System.out.println("Please print a copy of it for your reference");
+        System.out.println("Returning back to main screen..");
+
+        // store booking in serialized file
+        String filePath = FilePathFinder.findRootPath() +"/src/data/bookings/booking_" + getBooking().getBookingID() + ".dat";
+        DataSerializer.ObjectSerializer(filePath, getBooking());
+
+        // reset BookingController instance, as well as ticketcontroller, and transactioncontroller.
+        TicketController.getInstance().reset();
+        TransactionController.getInstance().reset();
+        resetData();
 
     }
 

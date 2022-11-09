@@ -99,7 +99,8 @@ public class CustomerController {
         // else, create new customer,
         else {
             currentCustomer = new CustomerAccount(customerName,email, mobileNo);
-            currentCustomer.setCustomerID(CustomerAccount.getCustomerAccountCount() + 1); // need recheck id implementation.
+            currentCustomer.setCustomerID(CustomerAccount.getCustomerAccountCount()); // no need to + 1, as when we instantiate, count increases by 1 hence we can use that for id
+
 
             idEmailHash.put(email, currentCustomer.getCustomerID());
             idMobileHash.put(mobileNo, currentCustomer.getCustomerID());
