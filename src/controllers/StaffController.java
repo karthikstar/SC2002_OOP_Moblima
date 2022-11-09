@@ -27,7 +27,7 @@ public class StaffController {
             String readLine;
 
             while((readLine = br.readLine()) != null) {
-                String[] values = readLine.split(":");
+                String[] values = readLine.split(",");
                 if (values[0].equals(username) && values[1].equals(password)) {
                     br.close();
                     return true;
