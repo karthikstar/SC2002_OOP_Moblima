@@ -13,7 +13,7 @@ public class Booking implements Serializable {
     private String cineplexName;
     private int cinemaNumber;
     private String movieTitle;
-    private Transaction transaction;
+    private String transactionId;
 
     public void printBookingDetails() {
         System.out.println("-----------------------------------------------------------------------------");
@@ -24,7 +24,7 @@ public class Booking implements Serializable {
         System.out.printf("Movie: %s\n", getMovieTitle());
         System.out.printf("Cineplex: %s\n", getCineplexName());
         System.out.printf("Hall: %d\n", getcinemaNumber());
-        System.out.printf("Transaction ID: %s\n\n", getTransaction().getTransactionID());
+        System.out.printf("Transaction ID: %s\n\n", getTransactionId());
         System.out.printf("Seats: ");
         for (int i = 0; i < getTicketsBought().size(); i++) {
             System.out.printf("%s ", getTicketsBought().get(i).getSeatID());
@@ -36,14 +36,14 @@ public class Booking implements Serializable {
 
 
     //Constructor
-    public Booking(Integer bookingID, LocalDateTime dateTime, ArrayList<Ticket> ticketsBought, String cineplexName, int cinemaNumber, String movieTitle, Transaction transaction) {
+    public Booking(Integer bookingID, LocalDateTime dateTime, ArrayList<Ticket> ticketsBought, String cineplexName, int cinemaNumber, String movieTitle, String transactionId) {
         this.bookingID = bookingID;
         this.dateTime = dateTime;
         this.ticketsBought = ticketsBought;
         this.cineplexName = cineplexName;
         this.cinemaNumber = cinemaNumber;
         this.movieTitle = movieTitle;
-        this.transaction = transaction;
+        this.transactionId = transactionId;
     }
 
 
@@ -96,11 +96,11 @@ public class Booking implements Serializable {
         this.movieTitle = movieTitle;
     }
 
-    public Transaction getTransaction() {
-        return transaction;
+    public String getTransactionId() {
+        return transactionId;
     }
 
-    public void setTransaction(Transaction transaction) {
-        this.transaction = transaction;
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
     }
 }
