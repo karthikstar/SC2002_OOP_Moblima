@@ -227,13 +227,14 @@ public class ShowtimeController {
         int showtimeID = Showtime.getShowtimeCounter() + 1;
         int cinemaID;
         String cineplexName;
+        String cineplexCode;
         CinemaAvailability cinemaAvailability;
         MovieType movieType;
 
         System.out.println("Enter a date and time for showtime, in the format dd/MM/yyyy HH:mm.");
         LocalDateTime localDateTime = InputController.getDateTimeFromUser();
 
-        ArrayList<Cineplex> ListOfCineplex = CompanyController.getInstance().getCompany().getCineplexes();
+        ArrayList<Cineplex> ListOfCineplex = CompanyController.getInstance().getCompany().getCineplexList();
 
         // print list of cineplexes available
         ShowtimeUI.printListOfCineplexes(ListOfCineplex);
@@ -241,6 +242,7 @@ public class ShowtimeController {
         int maxChoice = ListOfCineplex.size();
         int userChoice = InputController.getUserInt(minChoice, maxChoice) - 1;
         cineplexName = ListOfCineplex.get(userChoice).getCineplexName();
+        cineplexCode = ListOfCineplex.get(userChoice).getCineplexCode();
 
         // Selection of Cinema
         ArrayList<Cinema> ListOfCinemas = ListOfCineplex.get(userChoice).getCinemaList();
@@ -253,11 +255,12 @@ public class ShowtimeController {
 
         cinemaID = ListOfCinemas.get(userChoiceCinema).getCinemaID();
 
-        Cinema newCinema = CompanyController.getInstance.getNewCinema(cinemaID);
+        Cinema newCinema = CompanyController.getInstance().generateNewCinema(cineplexCode, cinemaID);
 
         cinemaAvailability = CinemaAvailability.OPEN_FOR_SALES;
 
         System.out.println("Available Movie Types: ");
+        ArrayList<MovieType> ListOfMovieTypes = MovieController.getInstance().getMoviebyID(movieID).getType();
         ArrayList<MovieType> ListOfMovieTypes = MovieController.getInstance().getMovieTypesbyID(movieID);
 
         ShowtimeUI.printListOfMovieTypes(ListOfMovieTypes);
@@ -269,7 +272,7 @@ public class ShowtimeController {
         int userChoiceMovieType = InputController.getUserInt(minChoiceMovieType, maxChoiceMovieType) - 1;
         movieType = ListOfMovieTypes.get(userChoiceMovieType);
 
-        Showtime showtime = new Showtime(showtimeID, localDateTime, cineplexName, cinemaID, movieID, movieType, newCinema, cinemaAvailability );
+        Showtime showtime = new Showtime(showtimeID, localDateTime, cineplexName, cineplexCode, cinemaID, movieID, movieType, newCinema, cinemaAvailability );
 
         MovieController.getInstance().updateShowtimes(movieID, showtimeID);
         this.showtimes.put(showtimeID, showtime);
@@ -307,13 +310,14 @@ public class ShowtimeController {
                     case 3:
                         System.out.println("Pleaase enter a new Cinema ID: ");
                         int newCinemaID = InputController.getUserInt();
-                        Cinema newCinema = CompanyController.getInstance().getNewCinema(newCinemaID);
+                        Cinema newCinema = CompanyController.getInstance().generateNewCinema(selectedShowtime.getCineplexCode(), newCinemaID);
                         selectedShowtime.setCinema(newCinema);
                         break;
                     case 4:
                         System.out.println("Please enter new cineplex name: ");
                         String newCineplexName = InputController.getUserString();
                         selectedShowtime.setCineplexName(newCineplexName);
+
                         break;
                     case 5:
                         System.out.println("Please enter new cinema availability status: ");
