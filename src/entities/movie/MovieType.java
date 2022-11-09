@@ -1,13 +1,15 @@
 package entities.movie;
 
+import entities.booking.PriceChanger;
+
 /**
  * Enumerated type for better readability and easier referencing to attribute
  */
-public enum MovieType {
+public enum MovieType implements PriceChanger {
     TWO_D("2D"),
     THREE_D("3D"),
     ATMOS("ATMOS"),
-    BLOCKBUSTER ("BLOCKBUSTER");
+    BLOCKBUSTER ("2D BLOCKBUSTER"); //Only applicable to 2D!
 
     private final String type;
 
@@ -16,6 +18,10 @@ public enum MovieType {
     }
 
     public String getType(){
+        return type;
+    }
+
+    public String toString(){
         return type;
     }
 }

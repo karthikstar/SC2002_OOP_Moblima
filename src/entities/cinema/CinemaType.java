@@ -1,6 +1,8 @@
 package entities.cinema;
 
-public enum CinemaType {
+import entities.booking.PriceChanger;
+
+public enum CinemaType implements PriceChanger {
     STANDARD("STANDARD"),
     PLATINUM("PLATINUM");
     private final String name;
@@ -8,6 +10,7 @@ public enum CinemaType {
         this.name = name;
     }
 
+    @Override
     public String toString() {
         return name;
     }

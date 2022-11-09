@@ -2,6 +2,7 @@ package controllers;
 
 import entities.booking.Ticket;
 import entities.booking.TicketType;
+import entities.cinema.CinemaType;
 import entities.cinema.Showtime;
 import entities.movie.Movie;
 
@@ -118,23 +119,27 @@ public class TicketController {
 
         for (TicketType type : TicketType.values()) {
             // Get base price based on ticket type
-            prices.put(type, PriceController.getInstance().getPrice("BASE"));
+            prices.put(type, PriceController.getInstance().getPrice((CinemaType.STANDARD)));
 
             // Update price based on ticket type
-            prices.put(type, prices.get(type) + priceList.getPrice(type.toString()));
+            prices.put(type, prices.get(type) + priceList.getPrice(type));
 
             // Update price based on date (see if it's a holiday)
-            prices.put(type, prices.get(type) + priceList.getPrice(showtime.getDateTime().toLocalDate()));
+            Boolean isHoliday = HolidayController.getInstance().isHoliday(showtime.getDateTime().toLocalDate());
+            if (isHoliday){
+                prices.put(type, prices.get(type) + priceList.getPrice(TicketType.HOLIDAY));
+            }
 
             // Update price based on day of week
-            String day = showtime.getDateTime().getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.getDefault());
-            prices.put(type, prices.get(type) + priceList.getPrice(day.toUpperCase()));
+            if (showtime.isWeekend()){
+                prices.put(type, prices.get(type) + priceList.getPrice(TicketType.WEEKEND));
+            }
 
-            // Update price based on movie format
-            prices.put(type, prices.get(type) + priceList.getPrice(showtime.getMovieType().toString()));
+            // Update price based on movie type
+            prices.put(type, prices.get(type) + priceList.getPrice(showtime.getMovieType()));
 
             // Update price based on cinema type
-            prices.put(type, prices.get(type) + priceList.getPrice(showtime.getCinema().getCinemaType().toString()));
+            prices.put(type, prices.get(type) + priceList.getPrice(showtime.getCinema().getCinemaType()));
         }
     }
 
