@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class Booking implements Serializable {
 
-    private String bookingID;
+    private Integer bookingID;
     private LocalDateTime dateTime;
     private ArrayList<Ticket> ticketsBought;
     private String cineplexName;
@@ -18,7 +18,7 @@ public class Booking implements Serializable {
     public void printBookingDetails() {
         System.out.println("-----------------------------------------------------------------------------");
 
-        System.out.printf("Booking ID: %s\n", getBookingID());
+        System.out.printf("Booking ID: %d\n", getBookingID());
         DateTimeFormatter format= DateTimeFormatter.ofPattern("dd MMM yyyy, hh.mma");
         System.out.printf("Booking Time: %s\n", getDateTime().format(format));
         System.out.printf("Movie: %s\n", getMovieTitle());
@@ -36,7 +36,7 @@ public class Booking implements Serializable {
 
 
     //Constructor
-    public Booking(String bookingID, LocalDateTime dateTime, ArrayList<Ticket> ticketsBought, String cineplexName, int cinemaNumber, String movieTitle, String transactionId) {
+    public Booking(Integer bookingID, LocalDateTime dateTime, ArrayList<Ticket> ticketsBought, String cineplexName, int cinemaNumber, String movieTitle, String transactionId) {
         this.bookingID = bookingID;
         this.dateTime = dateTime;
         this.ticketsBought = ticketsBought;
@@ -48,11 +48,11 @@ public class Booking implements Serializable {
 
 
     //Getters & Setters
-    public String getBookingID() {
+    public Integer getBookingID() {
         return bookingID;
     }
 
-    public void setBookingID(String bookingID) {
+    public void setBookingID(Integer bookingID) {
         this.bookingID = bookingID;
     }
 

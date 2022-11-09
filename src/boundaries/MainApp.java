@@ -36,7 +36,7 @@ public class MainApp {
             switch (choice) {
                 case 1:
                     System.out.println("Lets bring you to the customer page..");
-                    CustomerUI.getInstance().displayCustomerUI();
+                    CustomerApp.getInstance().displayCustomerUI();
                     break;
                 case 2:
                     System.out.println("Lets bring you to the staff page..");
