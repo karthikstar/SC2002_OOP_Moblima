@@ -5,12 +5,9 @@ import entities.booking.PaymentMethod;
 import entities.booking.Ticket;
 import entities.booking.TicketType;
 import entities.booking.Transaction;
-import entities.movie.MovieGenre;
 import utils.DataSerializer;
 import utils.FilePathFinder;
 
-import javax.xml.crypto.Data;
-import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;

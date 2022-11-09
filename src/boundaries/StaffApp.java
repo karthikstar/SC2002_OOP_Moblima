@@ -3,6 +3,7 @@ package boundaries;
 import controllers.InputController;
 import controllers.MovieController;
 import controllers.StaffController;
+import controllers.SystemSettingsController;
 import entities.movie.Movie;
 
 public class StaffApp {
@@ -91,7 +92,7 @@ public class StaffApp {
                     MovieController.getInstance().viewTop5("Staff");
                     break;
                 case 2:
-                    SystemsSettingsController.getInstance().displayMenu(); // change accordingly.
+                    SystemSettingsController.getInstance().main(); // change accordingly.
                     break;
                 case 3:
                     MovieController.getInstance().movieMenuStaff();
