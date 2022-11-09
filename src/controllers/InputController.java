@@ -59,6 +59,21 @@ public class InputController {
         return userLong;
     }
 
+    public static double getUserDouble() {
+        double userDouble = -1.0;
+        boolean isValidDouble = false;
+        while(!isValidDouble) {
+            if(sc.hasNextDouble()){
+                userDouble = sc.nextDouble();
+                isValidDouble = true;
+            } else {
+                System.out.println("Wrong Input! Please enter a valid double.");
+            }
+            sc.nextLine();
+        }
+        return userDouble;
+    }
+
     public static String getUserString() {
         String userString = "";
 
