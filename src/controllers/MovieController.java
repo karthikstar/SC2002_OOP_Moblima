@@ -3,11 +3,13 @@ package controllers;
 
 import boundaries.movie.*;
 import entities.movie.*;
+import utils.DataSerializer;
+import utils.FilePathFinder;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.lang.Double;
 
 public class MovieController {
 
@@ -504,25 +506,24 @@ public class MovieController {
         } while (choice != 0);
     }
 
-//    private void load() {
-//        File folder = new File("C:/Users/Klaus/Downloads/cz2002-oodp-moblima-design-project-master/data/movies");
-//
-//        File[] listOfFiles = folder.listFiles();
-//
-//        if(listOfFiles != null){
-//            for(int i=0;i<listOfFiles.length;i++){
-//                String filepath = listOfFiles[i].getPath(); // Returns full path incl file name and type
-//                Movie newMovie = (Movie)SerializerHelper.deSerializeObject(filepath);
-//                movies.put(newMovie.getMovieID(), newMovie);
-//            }
-//        }
-//    }
-//
-//    private void save(Movie movie) {
-//        String filepath = ProjectRootPathFinder.findProjectRootPath() + "/data/movies/movie_"+movie.getMovieID()+".dat";
-//        SerializerHelper.serializeObject(movie, filepath);
-//        System.out.println("Movies Saved!");
-//    }
+    private void load() {
+        File[] listOfFiles = new File[0];
+        listOfFiles = new File(FilePathFinder.findRootPath() + "/src/data/movies").listFiles();
+
+        if(listOfFiles != null){
+            for(int i=0;i<listOfFiles.length;i++){
+                String path = listOfFiles[i].getPath(); // Returns full path incl file name and type
+                Movie newMovie = (Movie) DataSerializer.ObjectDeserializer(path);
+                movies.put(newMovie.getId(), newMovie);
+            }
+        }
+    }
+
+    private void save(Movie movie) {
+        String path = FilePathFinder.findRootPath() + "src/data/movies/movie_"+movie.getId()+".dat";
+        DataSerializer.ObjectSerializer(path,movie);
+        System.out.println("Movies updated!");
+    }
 
     public Movie getMoviebyID(int movieID){
         return movies.get(movieID);
@@ -536,14 +537,14 @@ public class MovieController {
         movies.get(movieID).setTicketsSold(movies.get(movieID).getTicketsSold() + ticketsSold);
     }
 
-    void addReview(int movieID, MovieReview review){
+    void addReview(int movieID, MovieReview review) {
         Movie movie = movies.get(movieID);
         movie.addMovieReview(review);
         save(movie);
     }
 
 
-    void removeReview(int movieID, int reviewID){
+    void removeReview(int movieID, int reviewID) {
         Movie movie = movies.get(movieID);
         movie.removeMovieReview(reviewID);
         save(movie);

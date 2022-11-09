@@ -12,7 +12,6 @@ import utils.DataSerializer;
 import utils.FilePathFinder;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,14 +22,14 @@ public class ShowtimeController {
 
     private static ShowtimeController single_instance = null;
 
-    public static ShowtimeController getInstance() throws IOException {
+    public static ShowtimeController getInstance() {
         if(single_instance == null) {
             single_instance = new ShowtimeController();
         }
         return single_instance;
     }
 
-    private ShowtimeController() throws IOException {
+    private ShowtimeController() {
         // load data from .dat files
         HashMap<Integer, Showtime> showTimeHashMap = this.loadData();
 
@@ -40,7 +39,7 @@ public class ShowtimeController {
     }
 
     // retrieves a list of showtimes for a particular movieID - CALL THIS From MovieController.
-    void getMovieShowtimes(int movieID, String userType) throws IOException {
+    void getMovieShowtimes(int movieID, String userType) {
         int userChoice;
         // Get showtime Ids for a particular movie
         ArrayList<Integer> showtimeIdsForMovie = MovieController.getInstance().getMoviebyID(movieID).getShowtimeIDs();
@@ -167,7 +166,7 @@ public class ShowtimeController {
     }
 
 
-    private void staffShowtimeOperations(int showtimeID) throws IOException {
+    private void staffShowtimeOperations(int showtimeID) {
         int userChoice;
         do {
             ShowtimeUI.staffShowtimeOperationsMenu();
@@ -212,7 +211,7 @@ public class ShowtimeController {
         ShowtimeUI.printShowtimeDetails(chosenShowtime);
     }
 
-    private void deleteShowtime(int showtimeID) throws IOException {
+    private void deleteShowtime(int showtimeID) {
         Showtime showtimeToDelete = this.showtimes.get(showtimeID);
         if(showtimeToDelete == null) {
             System.out.println("This showtime does not exist.");
@@ -223,7 +222,7 @@ public class ShowtimeController {
         }
     }
 
-    private Showtime createShowtime(int movieID) throws IOException {
+    private Showtime createShowtime(int movieID) {
         int showtimeID = Showtime.getShowtimeCounter() + 1;
         int cinemaID;
         String cineplexName;
@@ -260,7 +259,6 @@ public class ShowtimeController {
         cinemaAvailability = CinemaAvailability.OPEN_FOR_SALES;
 
         System.out.println("Available Movie Types: ");
-        ArrayList<MovieType> ListOfMovieTypes = MovieController.getInstance().getMoviebyID(movieID).getType();
         ArrayList<MovieType> ListOfMovieTypes = MovieController.getInstance().getMovieTypesbyID(movieID);
 
         ShowtimeUI.printListOfMovieTypes(ListOfMovieTypes);
@@ -282,7 +280,7 @@ public class ShowtimeController {
         return showtime;
     }
 
-    private void updateShowtimeDetails(int showtimeID) throws IOException {
+    private void updateShowtimeDetails(int showtimeID) {
         int userChoice;
 
         Showtime selectedShowtime = this.showtimes.get(showtimeID);
@@ -366,12 +364,12 @@ public class ShowtimeController {
     }
 
     // saves a showtime object as a .dat file
-    void saveShowtime(Showtime showtimeObj, int showtimeID) throws IOException {
+    void saveShowtime(Showtime showtimeObj, int showtimeID) {
         String filePath = FilePathFinder.findRootPath() + "/src/data/showtimes/showtime_" + showtimeID + ".dat";
         DataSerializer.ObjectSerializer(filePath, showtimeObj);
     }
 
-    private HashMap<Integer, Showtime> loadData() throws IOException {
+    private HashMap<Integer, Showtime> loadData() {
         HashMap<Integer, Showtime> storedShowtimes = new HashMap<>();
 
         String filePath = FilePathFinder.findRootPath() + "/src/data/showtimes";
