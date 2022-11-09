@@ -6,14 +6,13 @@ import entities.cinema.Company;
 import utils.DataSerializer;
 import utils.FilePathFinder;
 
-import java.io.IOException;
 
 public class CompanyController {
     private Company company;
 
     private static CompanyController single_instance = null;
 
-    public static CompanyController getInstance() throws IOException {
+    public static CompanyController getInstance() {
         if(single_instance == null) {
             single_instance = new CompanyController();
         }
@@ -21,7 +20,7 @@ public class CompanyController {
     }
 
     // constructor of CompanyController - will try loading data first, if data not found, will create a file
-    private CompanyController() throws IOException {
+    private CompanyController() {
         Company storedDataOfCompany = this.loadData();
         // if no data found
         if(storedDataOfCompany == null) {
@@ -40,7 +39,7 @@ public class CompanyController {
 
 //  returns a new cloned copy of cinema for showtimeController to create a new showtime.
     // this copy is
-    public Cinema generateNewCinema(String cineplexCode, int cinemaID) throws IOException {
+    public Cinema generateNewCinema(String cineplexCode, int cinemaID) {
         for(int i = 0; i < this.company.getCineplexList().size(); i++) {
             Cineplex cineplex = this.company.getCineplexList().get(i);
             if(cineplex.getCineplexCode().equals(cineplexCode)){
@@ -63,12 +62,12 @@ public class CompanyController {
         return null;
     }
 
-    public Company loadData() throws IOException {
+    public Company loadData() {
         String filePath = FilePathFinder.findRootPath() + "/src/data/company/company.dat";
         return (Company) DataSerializer.ObjectDeserializer(filePath);
     }
 
-    public void saveData() throws IOException {
+    public void saveData() {
         String filePath = FilePathFinder.findRootPath() + "/src/data/company/company.dat";
         DataSerializer.ObjectSerializer(filePath, this.company);
     }

@@ -19,7 +19,7 @@ public class Cinema implements Serializable {
 
 //    private ArrayList<Session> sessions;
 
-    public Cinema(String cineplexCode, int cinemaID) throws IOException {
+    public Cinema(String cineplexCode, int cinemaID) {
         this.cineplexCode = cineplexCode;
         this.cinemaSeatLayout = new ArrayList<String>();
         this.cinemaID = cinemaID;
@@ -84,12 +84,17 @@ public class Cinema implements Serializable {
         }
 
     }
-    private void loadSeatingPlanFromFile(String cineplexCode, int cinemaID) throws IOException {
+    private void loadSeatingPlanFromFile(String cineplexCode, int cinemaID) {
         String filePath = FilePathFinder.findRootPath();
         filePath = filePath + "/src/data/cinemas/" + cineplexCode + "_" + cinemaID +".txt";
 
 
-        FileReader frStream = new FileReader( filePath );
+        FileReader frStream = null;
+        try {
+            frStream = new FileReader( filePath );
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Seating Plan files not found!");
+        }
         BufferedReader brStream = new BufferedReader( frStream );
         String inputLine;
 

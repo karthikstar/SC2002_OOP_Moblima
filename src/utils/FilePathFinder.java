@@ -4,14 +4,16 @@ import java.io.File;
 import java.io.IOException;
 
 public class FilePathFinder {
-    public static String findRootPath() throws IOException {
+    public static String findRootPath() {
         File directory = new File("./");
-        String filePath = directory.getCanonicalPath();
+        String filePath = null;
 
-        if (filePath == null) {
-            throw new IOException("Unable to find filepath!");
-        } else {
-            return filePath;
+        try {
+            filePath = directory.getCanonicalPath();
+        } catch (IOException e) {
+            throw new RuntimeException("Unable to find filepath!");
         }
+
+        return filePath;
     }
 }
