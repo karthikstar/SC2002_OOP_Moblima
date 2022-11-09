@@ -25,4 +25,14 @@ public class BookingUI {
         );
         System.out.println("Please select an option between 0 to 3");
     }
+
+    public static void printCustomerBookingHistoryMenu() {
+        System.out.println("How do you want to check your booking history?");
+        System.out.printf(
+                "1. Check Booking History via Email Address\n" +
+                "2. Check Booking History via Mobile Number\n" +
+                "0. Back to Customer Interface\n"
+        );
+        System.out.println("Please select an option between 0 to 2");
+    }
 }
