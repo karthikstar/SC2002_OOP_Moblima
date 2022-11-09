@@ -4,6 +4,7 @@ package controllers;
 import boundaries.movie.*;
 import entities.movie.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -26,7 +27,7 @@ public class MovieController {
         return single_instance;
     }
 
-    public void movieMenuStaff() {
+    public void movieMenuStaff() throws IOException {
         int choice;
 
         do {
@@ -54,7 +55,7 @@ public class MovieController {
         } while (choice != 0);
     }
 
-    public void viewMovies(String userType) {
+    public void viewMovies(String userType) throws IOException {
         int choice;
 
         do {
@@ -117,7 +118,7 @@ public class MovieController {
         } while (choice != 0);
     }
 
-        private void selectMovie(ArrayList<Movie> list, String userType) {
+        private void selectMovie(ArrayList<Movie> list, String userType) throws IOException {
             int choice, choice2;
             do {
                 for(int i = 0 ; i < list.size() ; i++) {
@@ -144,7 +145,7 @@ public class MovieController {
             } while (choice2 != 0);
         }
 
-        private void indivMovieOptions (Movie movie, String userType) {
+        private void indivMovieOptions (Movie movie, String userType) throws IOException {
             if (userType.equals("Staff")) {
                 int choice;
                 do {
@@ -203,7 +204,7 @@ public class MovieController {
             }
         }
 
-    private void searchMovies(String userType){
+    private void searchMovies(String userType) throws IOException {
         System.out.println("Please enter your search: ");
         String search = InputController.getUserString().toLowerCase();
 
@@ -426,7 +427,7 @@ public class MovieController {
         save(movie);
     }
 
-    public void viewTop5(String userType) {
+    public void viewTop5(String userType) throws IOException {
         int choice, choice2;
 
         do {
