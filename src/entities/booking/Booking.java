@@ -7,13 +7,17 @@ import java.time.LocalDateTime;
 
 public class Booking implements Serializable {
 
-    private Integer bookingID;
+    private int bookingID;
     private LocalDateTime dateTime;
     private ArrayList<Ticket> ticketsBought;
     private String cineplexName;
-    private int cinemaNumber;
+    private int cinemaID;
     private String movieTitle;
     private String transactionId;
+
+    private int movieID;
+
+    private static int bookingCount = 0;
 
     public void printBookingDetails() {
         System.out.println("-----------------------------------------------------------------------------");
@@ -23,7 +27,7 @@ public class Booking implements Serializable {
         System.out.printf("Booking Time: %s\n", getDateTime().format(format));
         System.out.printf("Movie: %s\n", getMovieTitle());
         System.out.printf("Cineplex: %s\n", getCineplexName());
-        System.out.printf("Hall: %d\n", getcinemaNumber());
+        System.out.printf("Cinema ID / Hall No: %d\n", getCinemaID());
         System.out.printf("Transaction ID: %s\n\n", getTransactionId());
         System.out.printf("Seats: ");
         for (int i = 0; i < getTicketsBought().size(); i++) {
@@ -36,19 +40,33 @@ public class Booking implements Serializable {
 
 
     //Constructor
-    public Booking(Integer bookingID, LocalDateTime dateTime, ArrayList<Ticket> ticketsBought, String cineplexName, int cinemaNumber, String movieTitle, String transactionId) {
+    public Booking(Integer bookingID, LocalDateTime dateTime, ArrayList<Ticket> ticketsBought, String cineplexName, int cinemaID, String movieTitle, int movieID, String transactionId) {
         this.bookingID = bookingID;
         this.dateTime = dateTime;
         this.ticketsBought = ticketsBought;
         this.cineplexName = cineplexName;
-        this.cinemaNumber = cinemaNumber;
+        this.cinemaID = cinemaID;
         this.movieTitle = movieTitle;
+        this.movieID = movieID;
         this.transactionId = transactionId;
+        bookingCount++;
+    }
+
+    public Booking(){
+        bookingCount++;
     }
 
 
+    public static int getBookingCount() {
+        return bookingCount;
+    }
+
+    public static void setBookingCount(int bookingCount) {
+        Booking.bookingCount = bookingCount;
+    }
+
     //Getters & Setters
-    public Integer getBookingID() {
+    public int getBookingID() {
         return bookingID;
     }
 
@@ -80,12 +98,12 @@ public class Booking implements Serializable {
         this.cineplexName = cineplexName;
     }
 
-    public int getcinemaNumber() {
-        return cinemaNumber;
+    public int getCinemaID() {
+        return cinemaID;
     }
 
-    public void setcinemaNumber(int cinemaNumber) {
-        this.cinemaNumber = cinemaNumber;
+    public void setCinemaID(int cinemaNumber) {
+        this.cinemaID = cinemaNumber;
     }
 
     public String getMovieTitle() {
@@ -102,5 +120,13 @@ public class Booking implements Serializable {
 
     public void setTransactionId(String transactionId) {
         this.transactionId = transactionId;
+    }
+
+    public void setMovieID(int movieID) {
+        this.movieID = movieID;
+    }
+
+    public int getMovieID() {
+        return movieID;
     }
 }

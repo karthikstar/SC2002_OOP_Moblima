@@ -10,6 +10,7 @@ import utils.DataSerializer;
 import utils.FilePathFinder;
 
 import javax.xml.crypto.Data;
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,6 +80,9 @@ public class TransactionController {
                     int input2 = InputController.getUserInt(1,4) - 1;
                     System.out.println("You picked "+ PaymentMethod.values()[input2].toString() + ".");
                     this.paymentMethod = PaymentMethod.values()[input2];
+
+                    // call finaliseBooking() in BookingController to finalise booking, and inject updated info into other controllers
+                    BookingController.getInstance().finaliseBooking();
                     break;
             }
         }
