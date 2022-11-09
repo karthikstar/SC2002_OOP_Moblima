@@ -1,10 +1,11 @@
 package boundaries;
+import controllers.InputController;
+
 import java.util.Scanner;
 
 //Main App
 public class MainApp {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         int choice;
 
         String logo = "\n" +
@@ -25,27 +26,26 @@ public class MainApp {
                     "2. Staff\n" +
                     "0. Exit\n"
             );
-            System.out.println("Select Option: ");
+            System.out.println("Please select an option between 0 to 2: ");
 
-            while (!sc.hasNextInt()) {
-                System.out.println("Please enter a valid option - 1 for Customer, 2 for Staff, 0 to exit");
-                sc.next();
-            }
-            choice = sc.nextInt();
+            int minChoice = 0;
+            int maxChoice = 2;
+
+            choice = InputController.getUserInt(minChoice, maxChoice);
 
             switch (choice) {
+                case 0:
+                    System.out.println("Thank you for using our app! Goodbye");
+                    break;
                 case 1:
-                    System.out.println("Lets bring you to the customer page..");
                     CustomerApp.getInstance().displayCustomerUI();
                     break;
                 case 2:
-                    System.out.println("Lets bring you to the staff page..");
-                    break;
-                case 0:
-                    System.out.println("Goodbye");
+                    StaffApp.getInstance().displayStaffUI();
                     break;
                 default:
-                    System.out.println("Pls enter a valid choice between 0 and 2");
+                    System.out.println("Please enter a valid choice between 0 to 2");
+                    break;
             }
         } while (choice != 0);
     }
