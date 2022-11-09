@@ -108,7 +108,7 @@ public class TransactionController {
         }
 
         // Booking fee
-        System.out.printf("%-40s%-20.2fx%-19d%-20.2f\n", "BOOKING FEE", PriceController.getInstance().getPrice("BOOKING"), 1, PriceController.getInstance().getPrice("BOOKING"));
+        System.out.printf("%-40s%-20.2fx%-19d%-20.2f\n", "BOOKING FEE", 1.5, 1, 1.5);
 
         // Net total
         System.out.println("-----------------------------------------------------------------------------------------");
@@ -153,7 +153,7 @@ public class TransactionController {
             totalPrice += ticketPrices.get(item.getKey()) * item.getValue();
         }
 
-        totalPrice += PriceController.getInstance().getPrice("BOOKING");
+        totalPrice += 1.5;
         transaction.setTotalPrice(totalPrice);
     }
 

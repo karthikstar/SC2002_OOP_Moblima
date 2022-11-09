@@ -1,6 +1,7 @@
 package entities.cinema;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import entities.movie.MovieType;
 
@@ -120,5 +121,17 @@ public class Showtime implements Serializable {
 
     public static int getShowtimeCounter() {
         return showtimeCounter;
+    }
+
+    public boolean isWeekend(){
+        if(dateTime.getDayOfWeek() == DayOfWeek.SATURDAY || dateTime.getDayOfWeek() == DayOfWeek.SUNDAY){
+            return true;
+        }
+        else if(dateTime.getDayOfWeek() == DayOfWeek.FRIDAY && dateTime.getHour()>18){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
