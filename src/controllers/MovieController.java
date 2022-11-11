@@ -359,7 +359,6 @@ public class MovieController {
 
             switch (choice) {
                 case 1:
-                    newMovie.setId(Movie.requestId());
                     this.save(newMovie);
                     this.movies.put(newMovie.getId(), newMovie);
 

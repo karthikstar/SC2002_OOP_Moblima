@@ -1,8 +1,7 @@
 CINEPLEX ORCHARD
-3
+ORC_3
 PLATINUM
 30
-0
 |           SCREEN           |
 |____________________________|
 

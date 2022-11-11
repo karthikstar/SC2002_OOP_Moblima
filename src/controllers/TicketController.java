@@ -95,7 +95,7 @@ public class TicketController {
         }
     }
 
-
+// DID WE INCREASE NO. OF TICKETS SOLD IN THE MOVIE OBJECT?
     public void confirmTicketSelection() {
         BookingController.getInstance().getBooking().setTicketsBought(selectedTickets);
         int movieID = BookingController.getInstance().getShowtime().getMovieId();

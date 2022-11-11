@@ -42,11 +42,11 @@ public class CompanyController {
     public Cinema generateNewCinema(String cinemaID) {
         for(int i = 0; i < this.company.getCineplexList().size(); i++) {
             Cineplex cineplex = this.company.getCineplexList().get(i);
-            if(cineplex.getCineplexCode().equals(cinemaID.split("_"))){
+            if(cineplex.getCineplexCode().equals(cinemaID.split("_")[0])){
                 Cinema newCinema = new Cinema(cinemaID);
 
                 // get a copy of the oldCinema - position of cinema in list is cinemaID - 1.
-                Cinema oldCinema = cineplex.getCinemaList().get(cinemaID - 1);
+                Cinema oldCinema = cineplex.getCinemaList().get(Integer.parseInt(cinemaID.split("_")[1]) - 1);
 
                 // copy over same details to this newCinema
                 newCinema.setCineplexCode(oldCinema.getCineplexCode());
@@ -54,7 +54,6 @@ public class CompanyController {
                 newCinema.setCinemaID(oldCinema.getCinemaID());
                 newCinema.setCinemaType(oldCinema.getCinemaType());
                 newCinema.setTotalNOfSeats(oldCinema.getTotalNOfSeats());
-                newCinema.setOccupiedNoOfSeats(oldCinema.getOccupiedNoOfSeats());
                 newCinema.setCinemaSeatLayout(oldCinema.getCinemaSeatLayout());
                 return newCinema;
             }

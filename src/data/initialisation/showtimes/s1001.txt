@@ -1,6 +1,4 @@
-s1001
 11/11/2019 10:30
-Abominable
-TWOD
-AAA
-The Cathay
+1
+TWO_D
+AMK_1

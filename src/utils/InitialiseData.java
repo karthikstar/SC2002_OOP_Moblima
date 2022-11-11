@@ -1,6 +1,7 @@
 package utils;
 
 import entities.cinema.Cinema;
+import entities.cinema.CinemaType;
 import entities.cinema.Showtime;
 import entities.movie.Movie;
 import entities.movie.MovieGenre;
@@ -132,7 +133,6 @@ public class InitialiseData {
         File[] showtimeFiles = getAllFiles(pathOfFolder);
 
         // Load filename of cinemas into an array
-
         String pathForCinemas = path + "/cinemas";
         File[] cinemaFiles = getAllFiles(pathForCinemas);
 
@@ -150,13 +150,10 @@ public class InitialiseData {
 
             try {
                 FileReader frStream = new FileReader(showtimeFilePath);
-                BufferedReader brStream = new BufferedReader( frStream );
+                BufferedReader brStream = new BufferedReader(frStream);
                 String lineString;
 
                 Showtime newShowtime = new Showtime();
-
-                // showtime id
-                newShowtime.setShowTimeId(newShowtime.getShowTimeId());
 
                 // showtime date and time
                 lineString = brStream.readLine();
@@ -164,18 +161,11 @@ public class InitialiseData {
                 newShowtime.setDateTime(LocalDateTime.parse(lineString, dateTimeFormatter));
 
                 // Showtime movie_id
-
-                // read the movieName first from the showtime file
                 lineString = brStream.readLine();
-                String movieName = lineString;
-
-                // find the movieID in movies that matches this movieName, and setMovieID for showtime
-                for(int j = 0; j < movies.size(); j++) {
-                    if(movies.get(j).equals(movieName)) {
-                        // set movieID for this particular new showtime
-                        newShowtime.setMovieId(movies.get(j).getId());
-                        // add showtimeID to that movie as well
-                        movies.get(j).addShowtimeID(newShowtime.getShowTimeId());
+                newShowtime.setMovieId(Integer.parseInt(lineString));
+                for (Movie movie : movies) {
+                    if (movie.getId() == Integer.parseInt(lineString)) {
+                        movie.addShowtimeID(newShowtime.getShowTimeId());
                         break;
                     }
                 }
@@ -184,13 +174,32 @@ public class InitialiseData {
                 lineString = brStream.readLine();
                 newShowtime.setMovieType(MovieType.valueOf(lineString));
 
-                // Showtime cinema instance
+                // Showtime cinema creation
+                lineString = brStream.readLine(); // CinemaID
+                Cinema newCinema;
 
-                lineString = brStream.readLine();
-                String cineplexCode = lineString.split("_")[0];
-                String cinemaID = lineString.split("_")[1];
-                String cinemaFilePath = path + "/" + lineString +".txt";
+                if (cinemas.contains(lineString + ".txt")) {
+                    String cinemaFilePath = pathForCinemas + "/" + lineString + ".txt";
+                    newCinema = initialiseCinemaData(lineString, cinemaFilePath);
+                }
+                else {
+                    String cinemaFilePath = pathForCinemas + "/" + lineString + ".txt";
+                    newCinema = initialiseCinemaData(lineString, cinemaFilePath);
+                }
+                newShowtime.setCinema(newCinema);
 
+                // Set seating layout for showtime to cinema's (empty for now)
+                newShowtime.setCinemaSeatLayout(newCinema.getCinemaSeatLayout());
+
+                // Update Availability Status
+                newShowtime.updateAvailability();
+
+                brStream.close(); // Close file
+
+                // Serialize showtime file
+                String storagePath = FilePathFinder.findRootPath() + "/data/showtimes/showtime_" + newShowtime.getShowTimeId() + ".dat";
+
+                DataSerializer.ObjectSerializer(storagePath, newShowtime);
 
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
@@ -198,33 +207,49 @@ public class InitialiseData {
                 throw new RuntimeException(e);
             }
         }
-
-
+        return movies;
     }
 
-    public Cinema initCinemaData(String cinemaID, String path) {
+    public Cinema initialiseCinemaData(String cinemaID, String filePath) {
         Cinema newCinema = new Cinema(cinemaID);
+
         try {
-            FileReader frStream = new FileReader(path);
-            BufferedReader brStream = new BufferedReader(frStream);
+            FileReader frStream = new FileReader( filePath );
+            BufferedReader brStream = new BufferedReader( frStream );
             String lineString;
+
             int i = 0;
-
-
-            ArrayList<String> cinemaLayout = new ArrayList<>();
+            ArrayList<String> seatingPlan = new ArrayList<String>();
 
             do {
                 lineString = brStream.readLine();
-                if(lineString == null) {
-                    break;
-                }
 
-                switch(i){
+                switch (i) {
                     case 0:
-
+                        newCinema.setCineplexName(lineString);
+                        break;
+                    case 1:
+                        newCinema.setCinemaID(lineString);
+                        newCinema.setCineplexCode(lineString.split("_")[0]);
+                        break;
+                    case 2:
+                        newCinema.setCinemaType(CinemaType.valueOf(lineString));
+                        break;
+                    case 3:
+                        newCinema.setTotalNOfSeats(Integer.parseInt(lineString));
+                        break;
+                    default:
+                        seatingPlan.add(lineString);
+                        break;
                 }
+                i++;
+            } while (lineString != null);
 
-            } while(lineString != null);
+            brStream.close();
+
+            newCinema.setCinemaSeatLayout(seatingPlan);
+
+            return newCinema;
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -232,6 +257,5 @@ public class InitialiseData {
             throw new RuntimeException(e);
         }
     }
-
 
 }

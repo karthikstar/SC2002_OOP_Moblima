@@ -40,7 +40,8 @@ public class Movie implements Serializable {
     public Movie(
             int id, String title, MovieRating rating, ArrayList<MovieType> type, String synopsis, int duration, LocalDate movieOpeningDate, LocalDate movieEndDate, String language, String director, ArrayList<MovieGenre> genres, int ticketsSold,  ArrayList<String> cast
     ){
-        this.id = id;
+        this.id = idCounter;
+        idCounter++;
         this.title = title;
         this.rating = rating;
         this.type = type;

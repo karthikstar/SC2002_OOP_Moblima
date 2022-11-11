@@ -1,8 +1,7 @@
 CINEPLEX JEM
-3
+JEM_3
 PLATINUM
 24
-0
 |           SCREEN           |
 |____________________________|
 

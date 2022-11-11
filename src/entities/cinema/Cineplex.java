@@ -89,7 +89,7 @@ public class Cineplex implements Serializable {
     }
     public void generateCinemas(String cineplexCode, int noOfCinemas) throws IOException {
         for(int i = 1; i <= noOfCinemas; i++) {
-            Cinema cinema = new Cinema(cineplexCode, i);
+            Cinema cinema = new Cinema(cineplexCode);
             this.cinemaList.add(cinema);
 //            break; // REMOVE THIS AFTER all txt files for cinemas are settled
         }

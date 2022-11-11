@@ -13,16 +13,14 @@ public class Cinema implements Serializable {
     private CinemaType cinemaType;
 
     private int totalNOfSeats;
-
-    private int occupiedNoOfSeats;
     private ArrayList<String> cinemaSeatLayout;
 
 //    private ArrayList<Session> sessions;
 
     public Cinema(String cinemaID) {
+        this.cinemaID = cinemaID;
         this.cineplexCode = cinemaID.split("_")[0];
         this.cinemaSeatLayout = new ArrayList<String>();
-        this.cinemaID = cinemaID;
 
         this.loadSeatingPlanFromFile(cinemaID);
     }
@@ -45,9 +43,6 @@ public class Cinema implements Serializable {
     public int getTotalNOfSeats() {
         return totalNOfSeats;
     }
-    public int getOccupiedNoOfSeats() {
-        return occupiedNoOfSeats;
-    }
     public ArrayList<String> getCinemaSeatLayout() {
         return cinemaSeatLayout;
     }
@@ -69,10 +64,6 @@ public class Cinema implements Serializable {
 
     public void setTotalNOfSeats(int totalNOfSeats) {
         this.totalNOfSeats = totalNOfSeats;
-    }
-
-    public void setOccupiedNoOfSeats(int occupiedNoOfSeats) {
-        this.occupiedNoOfSeats = occupiedNoOfSeats;
     }
 
     public void setCinemaSeatLayout(ArrayList<String> cinemaSeatLayout) {
@@ -125,10 +116,6 @@ public class Cinema implements Serializable {
                     case 3:
                         this.setTotalNOfSeats(Integer.parseInt(inputLine));
                         System.out.println("Total No Of Seats: " + inputLine);
-                        break;
-                    case 4:
-                        System.out.println("Total No Of Occupied Seats: " + inputLine);
-                        this.setOccupiedNoOfSeats(Integer.parseInt(inputLine));
                         break;
                     default:
                         seatLayout.add(inputLine);

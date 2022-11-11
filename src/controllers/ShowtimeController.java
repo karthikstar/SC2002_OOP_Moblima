@@ -270,7 +270,7 @@ public class ShowtimeController {
         int userChoiceMovieType = InputController.getUserInt(minChoiceMovieType, maxChoiceMovieType) - 1;
         movieType = ListOfMovieTypes.get(userChoiceMovieType);
 
-        Showtime showtime = new Showtime(showtimeID, localDateTime, cineplexName, cineplexCode, cinemaID, movieID, movieType, newCinema, cinemaAvailability );
+        Showtime showtime = new Showtime(showtimeID, localDateTime, movieID, movieType, newCinema, cinemaAvailability );
 
         MovieController.getInstance().updateShowtimes(movieID, showtimeID);
         this.showtimes.put(showtimeID, showtime);
@@ -289,9 +289,9 @@ public class ShowtimeController {
         } else {
             do {
                 ShowtimeUI.staffUpdateMenu();
-                System.out.println("Please select one of the options above (0-6):");
+                System.out.println("Please select one of the options above (0-5):");
                 int minChoice = 0;
-                int maxChoice = 6;
+                int maxChoice = 5;
                 userChoice = InputController.getUserInt(minChoice, maxChoice);
 
                 switch(userChoice) {
@@ -306,18 +306,12 @@ public class ShowtimeController {
                         selectedShowtime.setMovieId(newMovieID);
                         break;
                     case 3:
-                        System.out.println("Pleaase enter a new Cinema ID: ");
-                        int newCinemaID = InputController.getUserInt();
-                        Cinema newCinema = CompanyController.getInstance().generateNewCinema(selectedShowtime.getCineplexCode(), newCinemaID);
+                        System.out.println("Please enter a new Cinema ID: ");
+                        String newCinemaID = InputController.getUserString();
+                        Cinema newCinema = CompanyController.getInstance().generateNewCinema(newCinemaID);
                         selectedShowtime.setCinema(newCinema);
                         break;
                     case 4:
-                        System.out.println("Please enter new cineplex name: ");
-                        String newCineplexName = InputController.getUserString();
-                        selectedShowtime.setCineplexName(newCineplexName);
-
-                        break;
-                    case 5:
                         System.out.println("Please enter new cinema availability status: ");
                         String newCinemaAvailability = InputController.getUserString();
                         while(!checkIfValidCinemaAvailability(newCinemaAvailability)){
@@ -326,7 +320,7 @@ public class ShowtimeController {
                         selectedShowtime.setStatus(CinemaAvailability.valueOf(newCinemaAvailability));
 
                         break;
-                    case 6:
+                    case 5:
                         System.out.println("Please enter a new movie type: ");
                         String newMovieType = InputController.getUserString();
                         while(!checkIfValidMovieType(newMovieType)) {
@@ -335,7 +329,7 @@ public class ShowtimeController {
                         selectedShowtime.setMovieType(MovieType.valueOf(newMovieType));
                         break;
                     default:
-                        System.out.println("Invalid Input! Please enter a valid integer between 0 to 6.");
+                        System.out.println("Invalid Input! Please enter a valid integer between 0 to 5.");
                         break;
                 }
             } while(userChoice != 0);

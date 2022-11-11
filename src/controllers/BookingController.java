@@ -158,6 +158,9 @@ public class BookingController {
         getShowtime().getCinema().setCinemaSeatLayout(getCinemaSeatingLayout());
         getShowtime().updateAvailability();
 
+        // Increase number of occupied seats & tickets sold
+        getShowtime().increaseOccupiedNoOfSeats(getSelectedSeats().size());
+
         // Save the new showtime status
         ShowtimeController.getInstance().saveShowtime(getShowtime(), getShowtime().getShowTimeId());
 
@@ -169,7 +172,7 @@ public class BookingController {
 
         // Update booking with movie id, cineplexName and cinema id
         getBooking().setMovieID(showTime.getMovieId());
-        getBooking().setCineplexName(showTime.getCineplexName());
+        getBooking().setCineplexName(showTime.getCinema().getCineplexName());
         getBooking().setCinemaID(showTime.getCinema().getCinemaID());
 
         getBooking().setBookingID(Booking.getBookingCount()); // no need to +1 as we intiialised new booking, which increments count by 1.
