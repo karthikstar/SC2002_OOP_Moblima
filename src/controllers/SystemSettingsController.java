@@ -73,7 +73,7 @@ public class SystemSettingsController {
      */
     public void createHoliday() {
         System.out.println("Enter holiday date to add: ");
-        LocalDate holiday = InputController.getDateTimeFromUser().toLocalDate();
+        LocalDate holiday = InputController.getDate();
         if (HolidayController.getInstance().isHoliday(holiday)) {
             System.out.println("Holiday date already exists in database!\n");
             return;

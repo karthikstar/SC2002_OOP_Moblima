@@ -46,9 +46,9 @@ public class StaffApp {
                     System.out.println("Bringing you back to Main Interface");
                     break;
                 case 1:
-                    System.out.println("Enter Your Username:");
+                    System.out.println("Enter Your Username: ");
                     String username = InputController.getUserString();
-                    System.out.println("Enter Your Password:");
+                    System.out.println("Enter Your Password: ");
                     String password = InputController.getUserString();
 
                     boolean isValidLogin = StaffController.getInstance().login(username, password);
