@@ -643,6 +643,7 @@ public class MovieController {
 
     public void increaseTicketsSold(int movieID, long ticketsSold){
         movies.get(movieID).setTicketsSold(movies.get(movieID).getTicketsSold() + ticketsSold);
+        save(getMoviebyID(movieID));
     }
 
     void addReview(int movieID, MovieReview review) {

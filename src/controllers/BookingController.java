@@ -186,6 +186,7 @@ public class BookingController {
 
         // Update booking with movie id, cineplexName and cinema id
         getBooking().setMovieID(showTime.getMovieId());
+        getBooking().setMovieTitle(MovieController.getInstance().getMoviebyID(getBooking().getMovieID()).getTitle());
         getBooking().setCineplexName(showTime.getCinema().getCineplexName());
         getBooking().setCinemaID(showTime.getCinema().getCinemaID());
 

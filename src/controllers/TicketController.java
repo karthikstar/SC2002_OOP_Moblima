@@ -40,7 +40,7 @@ public class TicketController {
 
         exit = false;
         int maxTickets = selectedSeats.size(); // Total number of tickets available for selection
-        int ticketChoices = TicketType.values().length; // Number of ticket choices available
+        int ticketChoices = TicketType.values().length-2; // Number of ticket choices available
         int ticketsLeft = maxTickets; // Tracks number of tickets left for selection
         int choice;
 
