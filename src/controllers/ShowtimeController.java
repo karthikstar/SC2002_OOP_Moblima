@@ -117,8 +117,13 @@ public class ShowtimeController {
                         System.out.println("Bringing you back to MovieController.."); // probs change naming??
                         break;
                     case 1:
-                        int showtimeID = showtimeIdsForMovie.get(userChoice);
-                        this.chosenShowtimeCust(showtimeID);
+                        System.out.printf("Please select one of the choices (%d to %d) to view, else enter 0 to return back.\n", 1, showtimeList.size());
+                        ShowtimeUI.printShowtimesChoice(showtimeList);
+                        int showtimeChoice = InputController.getUserInt(0, showtimeList.size());
+                        if(showtimeChoice != 0) {
+                            int showtimeID = showtimeIdsForMovie.get(showtimeChoice - 1);
+                            this.chosenShowtimeCust(showtimeID);
+                        }
                         break;
                     default:
                         System.out.println("Invalid Input! Please enter a valid integer between 0 to 1.");

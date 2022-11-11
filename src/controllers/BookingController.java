@@ -1,7 +1,10 @@
 package controllers;
 
 import boundaries.BookingUI;
+import boundaries.CustomerApp;
+import boundaries.MainApp;
 import entities.booking.Booking;
+import entities.booking.Ticket;
 import entities.cinema.CinemaAvailability;
 import entities.cinema.Showtime;
 import utils.DataSerializer;
@@ -10,6 +13,7 @@ import utils.FilePathFinder;
 import javax.xml.crypto.Data;
 import java.awt.print.Book;
 import java.io.File;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -59,27 +63,33 @@ public class BookingController {
     public void initSeatSelection(Showtime showtime) {
         setShowTime(showtime);
 
+//        showtime.getCinema().printCinemaSeatLayout();
+//        System.exit(0);
+
         // set CinemaSeatingLayout to a cloned copy so that we don't change the originial seating layout until confirmation
         ArrayList<String> SeatingLayoutClone = cloneCinemaSeatingLayout(showtime.getCinema().getCinemaSeatLayout());
+
         setCinemaSeatingLayout(SeatingLayoutClone);
 
 
         // Looking for row with seat column numbers.
         for(int row = 0; row < getCinemaSeatingLayout().size(); row++) {
 
+            System.out.println("exec row "+row);
             String rowString = getCinemaSeatingLayout().get(row);
 
-            if(rowString.length() == 0 || rowString == null) {
+            if(rowString.length() == 0) {
                 continue;
             }
 
             int colIndex = 0;
-            Boolean foundSeatColumnRow = false;
+            boolean foundSeatColumnRow = false;
 
             while(colIndex < rowString.length()){
                 char c = rowString.charAt(colIndex);
 
                 if(Character.isDigit(c)) {
+
                     foundSeatColumnRow = true;
                     String seatColumnNo = Character.toString(c);
 
@@ -133,7 +143,7 @@ public class BookingController {
                     break;
                 case 3: //Ticket Selection - requires at least 1 seat to be selected. if no seats selected, dont allow ticket selection
                     if(getSelectedSeats().size() > 0){
-//                        TicketManager
+                        TicketController.getInstance().startTicketSelection(getShowtime(),getSelectedSeats());
                     } else {
                         System.out.println("You have not added any seats! Please select at least one seat before entering into our Ticketing Portal");
                     }
@@ -167,6 +177,10 @@ public class BookingController {
         // Create a new booking and fill it up with confirmed info
         setBooking(new Booking());
 
+        //confirm tickets and transaction
+        TicketController.getInstance().confirmTicketSelection();
+        TransactionController.getInstance().confirmTransaction();
+
         // Update Booking's Date and time
         getBooking().setDateTime(getShowtime().getDateTime());
 
@@ -191,7 +205,6 @@ public class BookingController {
         TicketController.getInstance().reset();
         TransactionController.getInstance().reset();
         resetData();
-
     }
 
     private void addSeat() {
@@ -337,7 +350,7 @@ public class BookingController {
 
                     } else {
                         // Seat has already been occupied
-                        System.out.println("Invalid seat selection! This seat has either been selected by you previously or is already occupied.");
+                        System.out.println("Invalid seat selection! This seat has either been selected by you previously/ already occupied / not available for selection.");
                         return false;
                     }
 
@@ -422,17 +435,17 @@ public class BookingController {
     }
 
     private ArrayList<String> cloneCinemaSeatingLayout(ArrayList<String> cinemaSeatingLayout) {
-        ArrayList<String> cinemaSeatingLayoutClone = new ArrayList<>();
-        for(int i = 0; i < cinemaSeatingLayout.size(); i++) {
-            cinemaSeatingLayoutClone.add(cinemaSeatingLayout.get(i));
-            i++;
+        ArrayList<String> seatingLayoutCopy = new ArrayList<>();
+
+        for(int i = 0; i < cinemaSeatingLayout.size();i++) {
+            seatingLayoutCopy.add(cinemaSeatingLayout.get(i));
         }
-        return cinemaSeatingLayoutClone;
+        return seatingLayoutCopy;
     }
 
     public void displaySeatingPlan(ArrayList<String> cinemaSeatingLayout) {
         String rowString;
-        for(int row = 0; row < cinemaSeatingLayout.size(); row++ ) {
+        for(int row = 0; row < cinemaSeatingLayout.size() - 1; row++ ) {
             rowString = cinemaSeatingLayout.get(row);
             if(rowString.length() == 0) {
                 System.out.println();

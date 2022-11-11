@@ -26,8 +26,19 @@ public class ShowtimeUI {
         }
     }
 
+    public static void printShowtimesChoice(ArrayList<Showtime> showtimeList) {
+        for(int i = 0; i < showtimeList.size(); i++) {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy, hh.mma");
+            System.out.println((i+1) + ".");
+            System.out.printf("\tCineplex Name: %s, CinemaID / Hall No: %s\n", showtimeList.get(i).getCinema().getCineplexName(), showtimeList.get(i).getCinema().getCinemaID().split("_")[1]);
+            System.out.printf("\t Movie Type: %s\n" , showtimeList.get(i).getMovieType());
+            System.out.println("\t Date & Time: " + showtimeList.get(i).getDateTime().format(dateTimeFormatter));
+            System.out.println();
+        }
+    }
+
     public static void custShowtimeMenu() {
-        System.out.println("Showtime Portal - Customers");
+        System.out.println("What would you like to do now?");
         System.out.printf(
                 "1. View Specific Showtime\n" +
                 "0. Back to Individual Movie Options\n"
@@ -37,7 +48,8 @@ public class ShowtimeUI {
 
     public static void custChosenShowtimeMenu() {
         System.out.printf(
-                "1. View all details of showtime\n"+
+                "What would you like to do with this selected showtime?\n" +
+                "1. View all details of this showtime\n"+
                 "2. Book this showtime\n" +
                 "0. Back to list of showtimes\n"
         );
@@ -101,7 +113,6 @@ public class ShowtimeUI {
         System.out.println("Occupied No. Of Seats " + chosenShowtime.getOccupiedNoOfSeats());
         System.out.println("Cinema Seat Layout: ");
         chosenShowtime.getCinema().printCinemaSeatLayout();
-        System.out.println("The end");
     }
 
     public static void printListOfCineplexes(ArrayList<Cineplex> listOfCineplexes) {
