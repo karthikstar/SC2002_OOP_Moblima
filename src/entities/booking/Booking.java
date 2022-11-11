@@ -11,7 +11,7 @@ public class Booking implements Serializable {
     private LocalDateTime dateTime;
     private ArrayList<Ticket> ticketsBought;
     private String cineplexName;
-    private int cinemaID;
+    private String cinemaID;
     private String movieTitle;
     private String transactionId;
 
@@ -27,7 +27,7 @@ public class Booking implements Serializable {
         System.out.printf("Booking Time: %s\n", getDateTime().format(format));
         System.out.printf("Movie: %s\n", getMovieTitle());
         System.out.printf("Cineplex: %s\n", getCineplexName());
-        System.out.printf("Cinema ID / Hall No: %d\n", getCinemaID());
+        System.out.printf("Cinema ID / Hall No: %s\n", getCinemaID());
         System.out.printf("Transaction ID: %s\n\n", getTransactionId());
         System.out.printf("Seats: ");
         for (int i = 0; i < getTicketsBought().size(); i++) {
@@ -40,7 +40,7 @@ public class Booking implements Serializable {
 
 
     //Constructor
-    public Booking(Integer bookingID, LocalDateTime dateTime, ArrayList<Ticket> ticketsBought, String cineplexName, int cinemaID, String movieTitle, int movieID, String transactionId) {
+    public Booking(Integer bookingID, LocalDateTime dateTime, ArrayList<Ticket> ticketsBought, String cineplexName, String cinemaID, String movieTitle, int movieID, String transactionId) {
         this.bookingID = bookingID;
         this.dateTime = dateTime;
         this.ticketsBought = ticketsBought;
@@ -98,12 +98,12 @@ public class Booking implements Serializable {
         this.cineplexName = cineplexName;
     }
 
-    public int getCinemaID() {
+    public String getCinemaID() {
         return cinemaID;
     }
 
-    public void setCinemaID(int cinemaNumber) {
-        this.cinemaID = cinemaNumber;
+    public void setCinemaID(String cinemaID) {
+        this.cinemaID = cinemaID;
     }
 
     public String getMovieTitle() {

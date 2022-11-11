@@ -3,24 +3,27 @@ package entities.cinema;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 import entities.movie.MovieType;
 
 
 public class Showtime implements Serializable {
 
-    private static int showtimeCounter = 0;
+    private static int idCounter = 1;
     private int showTimeId;
     private LocalDateTime dateTime;
     private String cineplexName;
 
     private String cineplexCode;
 
-    private int cinemaID;
+    private String cinemaID;
     private int movieId;
     private MovieType movieType;
     private Cinema cinema;
     private CinemaAvailability status;
 
+    private ArrayList<String> cinemaSeatLayout;
 
     // To be ran everytime tickets are bought somehow?
     public void updateAvailability(){
@@ -36,10 +39,13 @@ public class Showtime implements Serializable {
     }
 
 
-
+    public Showtime() {
+        this.showTimeId = idCounter;
+        idCounter++;
+    }
 
     //Constructors
-    public Showtime(int showTimeId, LocalDateTime dateTime, String cineplexName, String cineplexCode, int cinemaID, int movieId, MovieType movieType, Cinema cinema, CinemaAvailability status) {
+    public Showtime(int showTimeId, LocalDateTime dateTime, String cineplexName, String cineplexCode, String cinemaID, int movieId, MovieType movieType, Cinema cinema, CinemaAvailability status) {
         this.showTimeId = showTimeId;
         this.dateTime = dateTime;
         this.cineplexName = cineplexName;
@@ -49,7 +55,6 @@ public class Showtime implements Serializable {
         this.movieType = movieType;
         this.cinema = cinema;
         this.status = status;
-        showtimeCounter++;
     }
 
     //Getters & Setters
@@ -79,12 +84,12 @@ public class Showtime implements Serializable {
         this.cineplexName = cineplexName;
     }
 
-    public int getCinemaID() {
+    public String getCinemaID() {
         return cinemaID;
     }
 
-    public void setCinemaID(int cinemaNumber) {
-        this.cinemaID = cinemaNumber;
+    public void setCinemaID(String cinemaID) {
+        this.cinemaID = cinemaID;
     }
 
     public int getMovieId() {
@@ -119,8 +124,8 @@ public class Showtime implements Serializable {
         this.status = status;
     }
 
-    public static int getShowtimeCounter() {
-        return showtimeCounter;
+    public static int getIdCounter() {
+        return idCounter;
     }
 
     public boolean isWeekend(){
@@ -133,5 +138,13 @@ public class Showtime implements Serializable {
         else{
             return false;
         }
+    }
+
+    public void setCinemaSeatLayout(ArrayList<String> cinemaSeatLayout) {
+        this.cinemaSeatLayout = cinemaSeatLayout;
+    }
+
+    public ArrayList<String> getCinemaSeatLayout() {
+        return cinemaSeatLayout;
     }
 }
