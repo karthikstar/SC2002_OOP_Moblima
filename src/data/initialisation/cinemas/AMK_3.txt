@@ -1,8 +1,7 @@
 CINEPLEX AMK HUB
-3
+AMK_3
 PLATINUM
 24
-0
 |            SCREEN              |
 |________________________________|
 
