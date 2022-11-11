@@ -172,7 +172,7 @@ public class ReviewController {
     }
 
     private void save(MovieReview review) {
-        String path = FilePathFinder.findRootPath() + "src/data/reviews/review_"+review.getReviewId()+".dat";
+        String path = FilePathFinder.findRootPath() + "/src/data/reviews/review_"+review.getReviewId()+".dat";
         DataSerializer.ObjectSerializer(path,review);
         System.out.println("Review updated!");
     }

@@ -71,10 +71,9 @@ public class Cinema implements Serializable {
     }
 
     public void printCinemaSeatLayout() {
-        for(int i = 0; i < this.getCinemaSeatLayout().size(); i++) {
+        for(int i = 0; i < this.getCinemaSeatLayout().size() - 1; i++) { // minus one
             System.out.println(this.getCinemaSeatLayout().get(i));
         }
-
     }
     private void loadSeatingPlanFromFile(String cinemaID) {
         String filePath = FilePathFinder.findRootPath();

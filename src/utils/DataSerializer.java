@@ -5,6 +5,7 @@ import java.io.*;
 public class DataSerializer {
     public static void ObjectSerializer(String filename, Object obj) {
         try {
+            System.out.println("show file path" + filename);
             FileOutputStream file = new FileOutputStream(filename);
             ObjectOutputStream out = new ObjectOutputStream(file);
             out.writeObject(obj);

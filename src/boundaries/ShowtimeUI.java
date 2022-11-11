@@ -18,7 +18,7 @@ public class ShowtimeUI {
         } else {
             for(int i = 0; i < showtimeList.size(); i++) {
                 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy, hh.mma");
-                System.out.printf("%d. Cineplex Name: %s, CinemaID / Hall No: %d\n", showtimeList.get(i).getCinema().getCineplexName(), showtimeList.get(i).getCinema().getCinemaID());
+                System.out.printf("Cineplex Name: %s, CinemaID / Hall No: %s\n", showtimeList.get(i).getCinema().getCineplexName(), showtimeList.get(i).getCinema().getCinemaID().split("_")[1]);
                 System.out.printf("\t Movie Type: %s\n" , showtimeList.get(i).getMovieType());
                 System.out.println("\t Date & Time: " + showtimeList.get(i).getDateTime().format(dateTimeFormatter));
                 System.out.println();
@@ -101,6 +101,7 @@ public class ShowtimeUI {
         System.out.println("Occupied No. Of Seats " + chosenShowtime.getOccupiedNoOfSeats());
         System.out.println("Cinema Seat Layout: ");
         chosenShowtime.getCinema().printCinemaSeatLayout();
+        System.out.println("The end");
     }
 
     public static void printListOfCineplexes(ArrayList<Cineplex> listOfCineplexes) {

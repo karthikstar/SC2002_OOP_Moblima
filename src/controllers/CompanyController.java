@@ -63,6 +63,7 @@ public class CompanyController {
 
     public Company loadData() {
         String filePath = FilePathFinder.findRootPath() + "/src/data/company/company.dat";
+        System.out.println("xd" + filePath);
         return (Company) DataSerializer.ObjectDeserializer(filePath);
     }
 

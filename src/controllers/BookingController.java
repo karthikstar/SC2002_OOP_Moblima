@@ -434,7 +434,7 @@ public class BookingController {
         String rowString;
         for(int row = 0; row < cinemaSeatingLayout.size(); row++ ) {
             rowString = cinemaSeatingLayout.get(row);
-            if(rowString.length() == 0 || rowString == null) {
+            if(rowString.length() == 0) {
                 System.out.println();
                 continue;
             } else {
