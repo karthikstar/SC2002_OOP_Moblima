@@ -19,6 +19,8 @@ public class MovieReview implements Serializable {
 
     public MovieReview() {
         this.dateTime = LocalDateTime.now();
+        this.setReviewId(idCounter);
+        idCounter++;
     }
     public MovieReview(int Id, String username, int numOfStars, String Comment, int movieId){
         this.reviewId = Id;
@@ -98,6 +100,10 @@ public class MovieReview implements Serializable {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public static int getIdCounter() {
+        return idCounter;
     }
 
     /**
