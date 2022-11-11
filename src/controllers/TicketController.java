@@ -66,12 +66,11 @@ public class TicketController {
                 while (choice >= 1 && choice <= 3) {
                     System.out.println("There are no tickets left available for selection, please proceed to payment or add/clear seats!");
                     System.out.println("Please enter a choice: ");
-                    choice = InputController.getUserInt(0,ticketChoices+2);
+                    choice = InputController.getUserInt();
                 }
             } else {
                 choice = InputController.getUserInt(0,ticketChoices+2);
             }
-
 
             if (choice == 0) {
                 reset();
