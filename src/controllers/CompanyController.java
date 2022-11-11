@@ -39,11 +39,11 @@ public class CompanyController {
 
 //  returns a new cloned copy of cinema for showtimeController to create a new showtime.
     // this copy is
-    public Cinema generateNewCinema(String cineplexCode, int cinemaID) {
+    public Cinema generateNewCinema(String cinemaID) {
         for(int i = 0; i < this.company.getCineplexList().size(); i++) {
             Cineplex cineplex = this.company.getCineplexList().get(i);
-            if(cineplex.getCineplexCode().equals(cineplexCode)){
-                Cinema newCinema = new Cinema(cineplexCode, cinemaID);
+            if(cineplex.getCineplexCode().equals(cinemaID.split("_"))){
+                Cinema newCinema = new Cinema(cinemaID);
 
                 // get a copy of the oldCinema - position of cinema in list is cinemaID - 1.
                 Cinema oldCinema = cineplex.getCinemaList().get(cinemaID - 1);

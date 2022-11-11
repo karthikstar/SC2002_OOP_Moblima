@@ -223,8 +223,8 @@ public class ShowtimeController {
     }
 
     private Showtime createShowtime(int movieID) {
-        int showtimeID = Showtime.getShowtimeCounter() + 1;
-        int cinemaID;
+        int showtimeID = Showtime.getIdCounter() + 1;
+        String cinemaID;
         String cineplexName;
         String cineplexCode;
         CinemaAvailability cinemaAvailability;
@@ -254,7 +254,7 @@ public class ShowtimeController {
 
         cinemaID = ListOfCinemas.get(userChoiceCinema).getCinemaID();
 
-        Cinema newCinema = CompanyController.getInstance().generateNewCinema(cineplexCode, cinemaID);
+        Cinema newCinema = CompanyController.getInstance().generateNewCinema(cinemaID);
 
         cinemaAvailability = CinemaAvailability.OPEN_FOR_SALES;
 

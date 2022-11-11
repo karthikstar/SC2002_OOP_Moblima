@@ -9,8 +9,9 @@ import java.time.LocalDate;
 
 public class Movie implements Serializable {
     private static int idCounter = 1;
+
     //Attributes
-    private int id = -1;
+    private int id;
     private String title;
     private MovieRating rating;
     private ArrayList<MovieGenre> genres;
@@ -33,6 +34,8 @@ public class Movie implements Serializable {
         this.type = new ArrayList<MovieType>();
         this.reviews = new ArrayList<MovieReview>();
         this.showtimeIDs = new ArrayList<Integer>();
+        this.id = idCounter;
+        idCounter++;
     }
     public Movie(
             int id, String title, MovieRating rating, ArrayList<MovieType> type, String synopsis, int duration, LocalDate movieOpeningDate, LocalDate movieEndDate, String language, String director, ArrayList<MovieGenre> genres, int ticketsSold,  ArrayList<String> cast
@@ -91,12 +94,6 @@ public class Movie implements Serializable {
             sum += review.getNumOfStars();
         }
         return sum/reviews.size();
-    }
-
-    public static int requestId() {
-        int request = idCounter;
-        idCounter++;
-        return request;
     }
 
     @Override

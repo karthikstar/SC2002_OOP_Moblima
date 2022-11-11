@@ -9,7 +9,7 @@ public class Cinema implements Serializable {
 
     private String cineplexCode;
     private String cineplexName;
-    private int cinemaID;
+    private String cinemaID;
     private CinemaType cinemaType;
 
     private int totalNOfSeats;
@@ -19,11 +19,12 @@ public class Cinema implements Serializable {
 
 //    private ArrayList<Session> sessions;
 
-    public Cinema(String cineplexCode, int cinemaID) {
-        this.cineplexCode = cineplexCode;
+    public Cinema(String cinemaID) {
+        this.cineplexCode = cinemaID.split("_")[0];
         this.cinemaSeatLayout = new ArrayList<String>();
         this.cinemaID = cinemaID;
-        this.loadSeatingPlanFromFile(cineplexCode, cinemaID);
+
+        this.loadSeatingPlanFromFile(cinemaID);
     }
     public String getCineplexName() {
         return cineplexName;
@@ -33,7 +34,7 @@ public class Cinema implements Serializable {
         return cineplexCode;
     }
 
-    public int getCinemaID() {
+    public String getCinemaID() {
         return cinemaID;
     }
 
@@ -58,7 +59,7 @@ public class Cinema implements Serializable {
         this.cineplexName = cineplexName;
     }
 
-    public void setCinemaID(int cinemaID) {
+    public void setCinemaID(String cinemaID) {
         this.cinemaID = cinemaID;
     }
 
@@ -84,9 +85,9 @@ public class Cinema implements Serializable {
         }
 
     }
-    private void loadSeatingPlanFromFile(String cineplexCode, int cinemaID) {
+    private void loadSeatingPlanFromFile(String cinemaID) {
         String filePath = FilePathFinder.findRootPath();
-        filePath = filePath + "/src/data/cinemas/" + cineplexCode + "_" + cinemaID +".txt";
+        filePath = filePath + "/src/data/cinemas/" + cinemaID +".txt";
 
 
         FileReader frStream = null;
@@ -115,7 +116,7 @@ public class Cinema implements Serializable {
                         break;
                     case 1:
                         System.out.println("Cinema ID: " + inputLine);
-                        this.setCinemaID(Integer.parseInt(inputLine));
+                        this.setCinemaID(inputLine);
                         break;
                     case 2:
                         System.out.println("Cinema Type: " + inputLine);
