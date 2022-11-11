@@ -44,6 +44,7 @@ public class StaffApp {
             switch(userChoice){
                 case 0:
                     System.out.println("Bringing you back to Main Interface");
+                    quit = true;
                     break;
                 case 1:
                     System.out.println("Enter Your Username: ");
@@ -65,7 +66,7 @@ public class StaffApp {
                     quit = true;
                     break;
             }
-        } while(quit == false && isLoggedin == false);
+        } while(!quit && !isLoggedin);
     }
 
     public void displayLoggedInUI() {
@@ -73,7 +74,7 @@ public class StaffApp {
 
         do {
             System.out.printf(
-                    "You have succesfully logged in! Here are the list of things that you can do:\n" +
+                    "You have successfully logged in! Here are the list of things that you can do:\n" +
                     "1. View Top 5 Movies\n" +
                     "2. Configure System Settings\n" +
                     "3. Movie Database\n" +

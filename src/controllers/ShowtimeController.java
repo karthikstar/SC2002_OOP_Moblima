@@ -280,7 +280,7 @@ public class ShowtimeController {
         MovieController.getInstance().updateShowtimes(movieID, showtimeID);
         this.showtimes.put(showtimeID, showtime);
         this.saveShowtime(showtime, showtimeID);
-        System.out.println("A new showtime has been succesfully created.");
+        System.out.println("A new showtime has been successfully created.");
         System.out.println("Redirecting you back to Showtime Portal - Staff..");
         return showtime;
     }

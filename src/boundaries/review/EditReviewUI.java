@@ -5,6 +5,7 @@ public class EditReviewUI {
         System.out.println(	"------------------------ EDIT REVIEW OPTIONS --------------------\n" +
                 " 1. Edit Review Comment   						    	\n" +
                 " 2. Edit Number of Stars	   						    	 	 \n" +
+                " 3. Edit Name   						    	 	 \n" +
                 " 0. Editing Complete!				            \n"+
                 "---------------------------------------------------------");
 

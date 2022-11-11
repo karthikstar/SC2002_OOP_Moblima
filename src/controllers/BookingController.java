@@ -189,7 +189,7 @@ public class BookingController {
         getBooking().setCineplexName(showTime.getCinema().getCineplexName());
         getBooking().setCinemaID(showTime.getCinema().getCinemaID());
 
-        getBooking().setBookingID(Booking.getBookingCount()); // no need to +1 as we intiialised new booking, which increments count by 1.
+        getBooking().setBookingID(Booking.getBookingCount()); // no need to +1 as we initialised new booking, which increments count by 1.
 
         System.out.println("Your booking has been confirmed! Here are the details:");
         getBooking().printBookingDetails();
@@ -227,7 +227,7 @@ public class BookingController {
             getStoreRowAndColChoices().get(selectedRow).add(selectedCol);;
 
             // Update Cinema Layout
-            System.out.println("Seat " + seatChoice + " has been succesfully added!");
+            System.out.println("Seat " + seatChoice + " has been successfully added!");
             updateCinemaSeatingLayout("addSeat", seatChoice);
 
         }
@@ -257,7 +257,7 @@ public class BookingController {
 
             // Update Cinema Seating Layout
             updateCinemaSeatingLayout("deleteSeat", seatChoice);
-            System.out.println("You have succesfully removed Seat " + seatChoice + "!");
+            System.out.println("You have successfully removed Seat " + seatChoice + "!");
         }
         // if not valid seat removal, isValidSeatRemoval() will print a error message
     }

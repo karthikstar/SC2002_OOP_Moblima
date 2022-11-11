@@ -104,12 +104,12 @@ public class Movie implements Serializable {
             overallCast = overallCast.concat(getCast().get(i) + ", ");
         overallCast = overallCast.substring(0, overallCast.length()-2);
 
-        String reviews = "";
-        for(int i = 0; i<getReviews().size();i++){
-            reviews += getReviews().get(i) + "\n\n";
-        }
-        if(reviews.equals(""))
-            reviews = "N/A";
+//        String reviews = "";
+//        for(int i = 0; i<getReviews().size();i++){
+//            reviews += getReviews().get(i) + "\n\n";
+//        }
+//        if(reviews.equals(""))
+//            reviews = "N/A";
 
         String allGenres = "";
         for(int i = 0; i<getGenres().size();i++){
@@ -124,9 +124,12 @@ public class Movie implements Serializable {
         String allShowTimeId = "";
         for (int i=0; i<getShowtimeIDs().size(); i++)
             allShowTimeId = allShowTimeId.concat(getShowtimeIDs().get(i) + ", ");
-        allShowTimeId = allShowTimeId.substring(0, allShowTimeId.length()-2);
+
         if(allShowTimeId.equals(""))
             allShowTimeId = "N/A";
+        else {
+            allShowTimeId = allShowTimeId.substring(0, allShowTimeId.length()-2);
+        }
 
         String details = "";
         details += "ID: " + getId() + "\n"
@@ -144,8 +147,8 @@ public class Movie implements Serializable {
                 + "Tickets Sold: " + getTicketsSold() + "\n"
                 + "Cast: " + overallCast + "\n"
                 + "Showtime IDs: " + allShowTimeId + "\n"
-                + "Overall review stars: " + getOverallStars() + "\n"
-                + "Reviews: \n\n" + reviews;
+                + "Overall review stars: " + getOverallStars() + "\n";
+//                + "Reviews: \n\n" + reviews;
         return details + "\n";
     }
 

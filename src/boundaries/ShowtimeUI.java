@@ -41,7 +41,7 @@ public class ShowtimeUI {
         System.out.println("What would you like to do now?");
         System.out.printf(
                 "1. View Specific Showtime\n" +
-                "0. Back to List of Showtimes\n"
+                "0. Back to Individual Movie Options\n"
                 );
         System.out.println("Please select one of the above choices: ");
     }
