@@ -28,7 +28,7 @@ public class ResetData {
 
         // Lastly, Serialise the movie files with showtimes, ticket sales and profit
         for(int j = 0; j < movieList.size(); j++) {
-            String serializeFilePath = FilePathFinder.findRootPath() + "/data/movies/movie_"+ movieList.get(j).getId() +".dat";
+            String serializeFilePath = FilePathFinder.findRootPath() + "/src/data/movies/movie_"+ movieList.get(j).getId() +".dat";
             DataSerializer.ObjectSerializer(serializeFilePath, movieList.get(j));
 
             initialiseData.initSystemFiles();

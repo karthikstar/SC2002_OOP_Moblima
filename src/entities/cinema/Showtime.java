@@ -37,7 +37,7 @@ public class Showtime implements Serializable {
     public Showtime() {
         this.showTimeId = idCounter;
         idCounter++;
-        this.cinemaSeatLayout = cinema.getCinemaSeatLayout();
+//        this.cinemaSeatLayout = cinema.getCinemaSeatLayout();
     }
 
     //Constructors

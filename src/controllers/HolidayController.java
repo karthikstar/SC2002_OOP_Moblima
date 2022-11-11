@@ -15,7 +15,7 @@ public class HolidayController {
             single_instance = new HolidayController();
         return single_instance;
     }
-    public static String path = FilePathFinder.findRootPath() + "src/data/holidays.txt";
+    public static String path = FilePathFinder.findRootPath() + "/src/data/holidays.txt";
 
     public void create(LocalDate holidayDate) {
         Holiday holiday = new Holiday(holidayDate);

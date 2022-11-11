@@ -127,9 +127,9 @@ public class MovieController {
                     case 1:
                         ArrayList<Movie> allShowingMovies = new ArrayList<Movie>();
                         for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals("COMING_SOON") ||
-                                    indivMovie.getValue().getShowStatus().equals("ADVANCE_SALES") ||
-                                    indivMovie.getValue().getShowStatus().equals("NOW_SHOWING")) {
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("COMING_SOON")) ||
+                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES")) ||
+                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))) {
                                 allShowingMovies.add(indivMovie.getValue());
                             }
                         }
@@ -138,7 +138,7 @@ public class MovieController {
                     case 2:
                         ArrayList<Movie> comingSoon = new ArrayList<Movie>();
                         for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals("COMING_SOON")) {
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("COMING_SOON"))) {
                                 comingSoon.add(indivMovie.getValue());
                             }
                         }
@@ -147,7 +147,7 @@ public class MovieController {
                     case 3:
                         ArrayList<Movie> advanceSales = new ArrayList<Movie>();
                         for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals("ADVANCE_SALES")) {
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES"))) {
                                 advanceSales.add(indivMovie.getValue());
                             }
                         }
@@ -156,7 +156,7 @@ public class MovieController {
                     case 4:
                         ArrayList<Movie> nowShowing = new ArrayList<Movie>();
                         for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals("NOW_SHOWING")) {
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))) {
                                 nowShowing.add(indivMovie.getValue());
                             }
                         }
@@ -182,8 +182,7 @@ public class MovieController {
                 }
 
                 do {
-                    System.out.println("Please select the movie to view information for (Enter 0 to exit).");
-                    System.out.printf("Enter choice: ");
+                    System.out.println("Please select a choice for the movie to view information for (Enter 0 to exit).");
                     choice = InputController.getUserInt();
                     choice -= 1;
                     if (choice < -1 || choice >= list.size()) System.out.println("Invalid choice. Please choose a number between 0 and " + list.size());
@@ -518,7 +517,7 @@ public class MovieController {
                     break;
                 case 2:
                     for(Map.Entry<Integer, Movie> entry : movies.entrySet()){
-                        if(entry.getValue().getShowStatus().equals("ADVANCE_SALES")|| entry.getValue().getShowStatus().equals("NOW_SHOWING")){
+                        if(entry.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES"))|| entry.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))){
                             top5Movies.add(entry.getValue());
                         }
                     }
@@ -577,7 +576,7 @@ public class MovieController {
     }
 
     private void save(Movie movie) {
-        String path = FilePathFinder.findRootPath() + "src/data/movies/movie_"+movie.getId()+".dat";
+        String path = FilePathFinder.findRootPath() + "/src/data/movies/movie_"+movie.getId()+".dat";
         DataSerializer.ObjectSerializer(path,movie);
         System.out.println("Movies updated!");
     }

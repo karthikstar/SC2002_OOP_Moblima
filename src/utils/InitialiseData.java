@@ -194,7 +194,7 @@ public class InitialiseData {
                 brStream.close(); // Close file
 
                 // Serialize showtime file
-                String storagePath = FilePathFinder.findRootPath() + "/data/showtimes/showtime_" + newShowtime.getShowTimeId() + ".dat";
+                String storagePath = FilePathFinder.findRootPath() + "/src/data/showtimes/showtime_" + newShowtime.getShowTimeId() + ".dat";
 
                 DataSerializer.ObjectSerializer(storagePath, newShowtime);
 
@@ -311,7 +311,7 @@ public class InitialiseData {
                 }
                 brStream.close();
 
-                String savePath = FilePathFinder.findRootPath() + "/src/data/reviews/review_" + newReview.getReviewId();
+                String savePath = FilePathFinder.findRootPath() + "/src/data/reviews/review_" + newReview.getReviewId() + ".dat";
 
                 DataSerializer.ObjectSerializer(savePath, newReview);
             }
@@ -338,12 +338,15 @@ public class InitialiseData {
     }
 
     public void resetFolders(String folderName) {
-        String path = FilePathFinder.findRootPath() + "/data/" + folderName;
+        String path = FilePathFinder.findRootPath() + "/src/data/" + folderName;
+        System.out.println(path);
         File directory = new File(path);
 
-        for(int i = 0; i < directory.listFiles().length; i++) {
-            if(!directory.listFiles()[i].isDirectory()) {
-                directory.listFiles()[i].delete();
+        if(directory.listFiles() != null) {
+            for(int i = 0; i < directory.listFiles().length; i++) {
+                if(!directory.listFiles()[i].isDirectory()) {
+                    directory.listFiles()[i].delete();
+                }
             }
         }
     }
@@ -356,7 +359,7 @@ public class InitialiseData {
         this.resetFolders("transactions");
         this.resetFolders("bookings");
         this.resetFolders("customers");
-        this.resetFiles("/data/company/company.dat");
-        this.resetFiles("/data/system_settings/system_settings.dat");
+//        this.resetFiles("/src/data/company/company.dat");
+        this.resetFiles("/src/data/system_settings/system_settings.dat");
     }
 }
