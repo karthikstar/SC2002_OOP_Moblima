@@ -113,7 +113,7 @@ public class Movie implements Serializable {
 
         String allGenres = "";
         for(int i = 0; i<getGenres().size();i++){
-            allGenres += getGenres().get(i) + "\n\n";
+            allGenres += getGenres().get(i) + ", ";
         }
 
         String allTypes = "";

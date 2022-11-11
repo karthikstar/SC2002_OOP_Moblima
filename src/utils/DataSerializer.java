@@ -5,7 +5,7 @@ import java.io.*;
 public class DataSerializer {
     public static void ObjectSerializer(String filename, Object obj) {
         try {
-            System.out.println("show file path" + filename);
+            //System.out.println("show file path" + filename);
             FileOutputStream file = new FileOutputStream(filename);
             ObjectOutputStream out = new ObjectOutputStream(file);
             out.writeObject(obj);
@@ -27,7 +27,7 @@ public class DataSerializer {
             objectInputStream.close();
             bufferedInputStream.close();
             fileInputStream.close();
-//            System.out.println(filename + " has been deserialized to an object successfully!");
+            //System.out.println(filename + " has been deserialized to an object successfully!");
             return obj;
         }
         catch (FileNotFoundException e) {
