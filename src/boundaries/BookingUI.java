@@ -20,7 +20,7 @@ public class BookingUI {
             "1. Select a Seat\n" +
             "2. Unselect a seat\n" +
             "3. Confirm Seats and Proceed To Ticketing Portal\n" +
-            "0. Exit" +
+            "0. Exit\n" +
             "------------------------------\n"
         );
         System.out.println("Please select an option between 0 to 3");

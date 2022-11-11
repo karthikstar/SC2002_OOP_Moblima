@@ -248,7 +248,17 @@ public class BookingController {
             getSelectedSeats().remove(seatChoice);
 
             // remove this seat from storeRowAndColChoices
-            getStoreRowAndColChoices().get(selectedRow).remove(selectedCol);
+
+            // First find the index of the selectedCol, in the ArrayList returned by getStoreRowAndColChoices().get(selectedRow)
+            int indexOfSeat = 0;
+            for(indexOfSeat = 0; indexOfSeat< getStoreRowAndColChoices().get(selectedRow).size(); indexOfSeat++) {
+                if(getStoreRowAndColChoices().get(selectedRow).get(indexOfSeat) == selectedCol) {
+                    break;
+                }
+            }
+
+            // we can then remove this selectedCol from the ArrayList returned by getStoreRowAndColChoices().get(selectedRow), based on indexOfSeat
+            getStoreRowAndColChoices().get(selectedRow).remove(indexOfSeat);
 
             // If row now has no col choices stored in it, delete this row
             if(getStoreRowAndColChoices().get(selectedRow).size() <= 0) {
@@ -454,7 +464,7 @@ public class BookingController {
                 System.out.println(rowString);
             }
         }
-        System.out.println("\nLegend: |_| : Available Seat, |X|: Unavailable Seat, |S| : Your Selected Seat");
+        System.out.println("\nLegend: |_| : Available Seat, |X|: Unavailable Seat, |O| : Your Selected Seat(s)");
     }
     public HashMap<Integer, Integer> getStoreColumnNoAndIndex() {
         return storeColumnNoAndIndex;
