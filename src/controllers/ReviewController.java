@@ -62,6 +62,8 @@ public class ReviewController {
 
 //        System.out.println("Enter title of review: ");
 //        newReview.setReviewTitle(sc.nextLine());
+        System.out.println("Enter your name: ");
+        newReview.setUsername(InputController.getUserString());
 
         System.out.println("Enter review: ");
         newReview.setComment(InputController.getUserString());
@@ -138,7 +140,7 @@ public class ReviewController {
         do {
             EditReviewUI.printMenu();
 
-            choice = InputController.getUserInt(0,2);
+            choice = InputController.getUserInt(0,3);
 
             switch (choice) {
                 case 1:
@@ -148,6 +150,10 @@ public class ReviewController {
                 case 2:
                     System.out.println("Enter the new number of stars between 0-5: ");
                     review.setNumOfStars(InputController.getUserInt(0,5));
+                    break;
+                case 3:
+                    System.out.println("Enter your new name entry: ");
+                    review.setUsername(InputController.getUserString());
                     break;
                 case 0:
                     System.out.println("Back to Review Adding Menu...");

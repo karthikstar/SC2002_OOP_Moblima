@@ -11,7 +11,7 @@ public class DataSerializer {
             out.writeObject(obj);
             out.close();
             file.close();
-            System.out.println("Object has been succesfully serialized and stored as " + filename);
+            System.out.println("Object has been successfully serialized and stored as " + filename);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -27,7 +27,7 @@ public class DataSerializer {
             objectInputStream.close();
             bufferedInputStream.close();
             fileInputStream.close();
-            System.out.println(filename + " has been deserialized to an object succesfully!");
+            System.out.println(filename + " has been deserialized to an object successfully!");
             return obj;
         }
         catch (FileNotFoundException e) {

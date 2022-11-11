@@ -34,18 +34,18 @@ public class CustomerApp {
      */
     public void displayCustomerUI() {
         int userChoice = -1;
-        System.out.printf(
-                "---------------------------\n"
-                + "Welcome To the Customer Interface!\n"
-                + "1. View Movies\n"
-                + "2. View Top 5 Movies\n"
-                + "3. View Booking History\n"
-                + "0. Exit To Main Interface\n"
-                + "---------------------------\n"
-        );
 
         System.out.println("Please enter your choice:");
         do {
+            System.out.printf(
+                    "---------------------------\n"
+                            + "Welcome To the Customer Interface!\n"
+                            + "1. View Movies\n"
+                            + "2. View Top 5 Movies\n"
+                            + "3. View Booking History\n"
+                            + "0. Exit To Main Interface\n"
+                            + "---------------------------\n"
+            );
             userChoice = InputController.getUserInt(0,3);
             switch (userChoice){
                 case 0:

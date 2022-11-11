@@ -67,69 +67,9 @@ public class MovieController {
                     case 1:
                         ArrayList<Movie> allShowingMovies = new ArrayList<Movie>();
                         for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals("COMING_SOON") ||
-                                    indivMovie.getValue().getShowStatus().equals("ADVANCE_SALES") ||
-                                    indivMovie.getValue().getShowStatus().equals("NOW_SHOWING")) {
-                                allShowingMovies.add(indivMovie.getValue());
-                            }
-                        }
-                        this.selectMovie(allShowingMovies, userType);
-                        break;
-                    case 2:
-                        ArrayList<Movie> comingSoon = new ArrayList<Movie>();
-                        for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals("COMING_SOON")) {
-                                comingSoon.add(indivMovie.getValue());
-                            }
-                        }
-                        this.selectMovie(comingSoon, userType);
-                        break;
-                    case 3:
-                        ArrayList<Movie> advanceSales = new ArrayList<Movie>();
-                        for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals("ADVANCE_SALES")) {
-                                advanceSales.add(indivMovie.getValue());
-                            }
-                        }
-                        this.selectMovie(advanceSales, userType);
-                        break;
-                    case 4:
-                        ArrayList<Movie> nowShowing = new ArrayList<Movie>();
-                        for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals("NOW_SHOWING")) {
-                                nowShowing.add(indivMovie.getValue());
-                            }
-                        }
-                        this.selectMovie(nowShowing, userType);
-                        break;
-                    case 5:
-                        ArrayList<Movie> endShowing = new ArrayList<Movie>();
-                        for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals("END_OF_SHOWING")) {
-                                endShowing.add(indivMovie.getValue());
-                            }
-                        }
-                        this.selectMovie(endShowing, userType);
-                        break;
-                    case 0:
-                        System.out.println("Back to Movie Main Menu...");
-                        break;
-                }
-            } while (choice != 0);
-        }
-        else if (userType.equals("Customer")) {
-            do {
-                MovieByStatusUI.printCustomerMenu();
-
-                choice = InputController.getUserInt(0,5);
-
-                switch (choice) {
-                    case 1:
-                        ArrayList<Movie> allShowingMovies = new ArrayList<Movie>();
-                        for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("COMING_SOON")) ||
-                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES")) ||
-                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))) {
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("COMING_SOON"))  ||
+                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES"))  ||
+                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING")))  {
                                 allShowingMovies.add(indivMovie.getValue());
                             }
                         }
@@ -163,6 +103,82 @@ public class MovieController {
                         this.selectMovie(nowShowing, userType);
                         break;
                     case 5:
+                        ArrayList<Movie> endShowing = new ArrayList<Movie>();
+                        for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("END_OF_SHOWING"))) {
+                                endShowing.add(indivMovie.getValue());
+                            }
+                        }
+                        this.selectMovie(endShowing, userType);
+                        break;
+                    case 0:
+                        System.out.println("Back to Movie Main Menu...");
+                        break;
+                }
+            } while (choice != 0);
+        }
+        else if (userType.equals("Customer")) {
+            do {
+                MovieByStatusUI.printCustomerMenu();
+
+                choice = InputController.getUserInt(0,5);
+
+                switch (choice) {
+                    case 1:
+                        ArrayList<Movie> allShowingMovies = new ArrayList<Movie>();
+                        for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("COMING_SOON")) ||
+                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES")) ||
+                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))) {
+                                allShowingMovies.add(indivMovie.getValue());
+                            }
+                        }
+                        if (allShowingMovies.size() == 0) {
+                            System.out.println("No Movies that are currently showing!");
+                            break;
+                        }
+                        this.selectMovie(allShowingMovies, userType);
+                        break;
+                    case 2:
+                        ArrayList<Movie> comingSoon = new ArrayList<Movie>();
+                        for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("COMING_SOON"))) {
+                                comingSoon.add(indivMovie.getValue());
+                            }
+                        }
+                        if (comingSoon.size() == 0) {
+                            System.out.println("No Movies that are classified Coming Soon!");
+                            break;
+                        }
+                        this.selectMovie(comingSoon, userType);
+                        break;
+                    case 3:
+                        ArrayList<Movie> advanceSales = new ArrayList<Movie>();
+                        for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES"))) {
+                                advanceSales.add(indivMovie.getValue());
+                            }
+                        }
+                        if (advanceSales.size() == 0) {
+                            System.out.println("No Movies that are on advance sales!");
+                            break;
+                        }
+                        this.selectMovie(advanceSales, userType);
+                        break;
+                    case 4:
+                        ArrayList<Movie> nowShowing = new ArrayList<Movie>();
+                        for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))) {
+                                nowShowing.add(indivMovie.getValue());
+                            }
+                        }
+                        if (nowShowing.size() == 0) {
+                            System.out.println("No Movies that are now showing!");
+                            break;
+                        }
+                        this.selectMovie(nowShowing, userType);
+                        break;
+                    case 5:
                         this.searchMovies(userType);
                         break;
                     case 0:
@@ -176,6 +192,10 @@ public class MovieController {
 
         private void selectMovie(ArrayList<Movie> list, String userType) {
             int choice, choice2;
+            if (list.size() == 0) {
+                System.out.println("No movies found! Going back to previous menu..");
+                return;
+            }
             do {
                 for(int i = 0 ; i < list.size() ; i++) {
                     System.out.println((i+1) + ") " + list.get(i).getTitle() + " [" + list.get(i).getShowStatus().toString()+ "]");
@@ -296,10 +316,20 @@ public class MovieController {
         System.out.println("List of Genres:");
         for(int i=0;i<MovieGenre.values().length;i++)System.out.println(i+1 +". " +MovieGenre.values()[i].toString());
         System.out.println("Enter number of genres: ");
-        int numGenres = InputController.getUserInt();
+        int numGenres = InputController.getUserInt(1,MovieGenre.values().length);
         for (int i=0;i<numGenres;i++) {
             System.out.printf("Enter choice number of genre %d: ", i+1);
-            int choice = InputController.getUserInt()-1;
+            int choice = InputController.getUserInt(1,MovieGenre.values().length)-1;
+            boolean restart = false;
+            for (int z = 0; z < tempGenreList.size(); z++) {
+                if (MovieGenre.values()[choice].equals(tempGenreList.get(z))) {
+                    System.out.println("Genre already added! Select another genre.");
+                    i--;
+                    restart = true;
+                    break;
+                }
+            }
+            if (restart) continue;
             System.out.println("You picked "+MovieGenre.values()[choice].toString() + ".");
             tempGenreList.add(MovieGenre.values()[choice]);
         }
@@ -328,17 +358,38 @@ public class MovieController {
         int numCast = InputController.getUserInt();
         for (int i=0;i<numCast;i++) {
             System.out.printf("Enter name of cast member number %d: ", i+1);
-            tempCastList.add(InputController.getUserString());
+                boolean restart = false;
+                String castName = InputController.getUserString();
+                for (int z = 0; z < tempCastList.size(); z++) {
+                    if (castName.equals(tempCastList.get(z))) {
+                        System.out.println("Cast member already added! Enter another cast member.");
+                        i--;
+                        restart = true;
+                        break;
+                    }
+                }
+                if (restart) continue;
+                tempCastList.add(castName);
         }
         newMovie.setCast(tempCastList);
 
         System.out.println("List of Movie Types: ");
         for(int i=0;i<MovieType.values().length;i++)System.out.println(i+1 +". " +MovieType.values()[i].toString());
         System.out.println("Enter number of movie types to be added: ");
-        int numTypes = InputController.getUserInt();
+        int numTypes = InputController.getUserInt(1,MovieType.values().length);
         for (int i=0;i<numTypes;i++) {
             System.out.printf("Enter choice number of movie type %d: ", i+1);
-            int choice = InputController.getUserInt()-1;
+            int choice = InputController.getUserInt(1,MovieType.values().length)-1;
+            boolean restart = false;
+            for (int z = 0; z < tempTypeList.size(); z++) {
+                if (MovieType.values()[choice].equals(tempTypeList.get(z))) {
+                    System.out.println("Type already added! Select another type.");
+                    i--;
+                    restart = true;
+                    break;
+                }
+            }
+            if (restart) continue;
             System.out.println("You picked "+MovieType.values()[choice].toString() + ".");
             tempTypeList.add(MovieType.values()[choice]);
         }
@@ -374,7 +425,7 @@ public class MovieController {
         } while (choice != 0);
     }
 
-    private void editMovies(Movie movieEditable){
+    private void editMovies (Movie movieEditable){
         int choice;
         do {
             System.out.println("Current movie details:\n" + movieEditable.toString());
@@ -498,7 +549,7 @@ public class MovieController {
             switch (choice) {
                 case 1:
                     for(Map.Entry<Integer, Movie> entry : movies.entrySet()){
-                        if(entry.getValue().getShowStatus().equals("ADVANCE_SALES")|| entry.getValue().getShowStatus().equals("NOW_SHOWING")){
+                        if(entry.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES"))|| entry.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))){
                             top5Movies.add(entry.getValue());
                         }
                     }
@@ -547,12 +598,13 @@ public class MovieController {
             if (userType.equals("Customer")) {
                 do {
                     System.out.println("Choose a movie (Press 0 to exit): ");
+                    int numberOfChoices = top5Movies.size();
+                    choice2 = InputController.getUserInt(0,numberOfChoices)-1;
 
-                    choice2 = InputController.getUserInt(0,5)-1;
-
+                    if (choice2 == -1) break;
                     System.out.println(top5Movies.get(choice2).toString());
                     indivMovieOptions(top5Movies.get(choice2),userType);
-                    choice2 = -1;
+                    break;
                 } while (choice2 != -1);
                 System.out.println("Back to Top 5 Movie Listing...");
             }
