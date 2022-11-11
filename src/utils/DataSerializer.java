@@ -27,7 +27,7 @@ public class DataSerializer {
             objectInputStream.close();
             bufferedInputStream.close();
             fileInputStream.close();
-            System.out.println(filename + " has been deserialized to an object succesfully!");
+//            System.out.println(filename + " has been deserialized to an object succesfully!");
             return obj;
         }
         catch (FileNotFoundException e) {

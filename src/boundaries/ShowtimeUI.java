@@ -101,7 +101,6 @@ public class ShowtimeUI {
         System.out.println("Occupied No. Of Seats " + chosenShowtime.getOccupiedNoOfSeats());
         System.out.println("Cinema Seat Layout: ");
         chosenShowtime.getCinema().printCinemaSeatLayout();
-        System.out.println("The end");
     }
 
     public static void printListOfCineplexes(ArrayList<Cineplex> listOfCineplexes) {
