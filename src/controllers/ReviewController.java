@@ -64,7 +64,7 @@ public class ReviewController {
 //        newReview.setReviewTitle(sc.nextLine());
 
         System.out.println("Enter review: ");
-        newReview.setAdditionalComment(InputController.getUserString());
+        newReview.setComment(InputController.getUserString());
 
         System.out.println("Enter the number of stars between 0-5: ");
         newReview.setNumOfStars(InputController.getUserInt(0,5));
@@ -143,7 +143,7 @@ public class ReviewController {
             switch (choice) {
                 case 1:
                     System.out.println("Enter new review comment: ");
-                    review.setAdditionalComment(InputController.getUserString());
+                    review.setComment(InputController.getUserString());
                     break;
                 case 2:
                     System.out.println("Enter the new number of stars between 0-5: ");

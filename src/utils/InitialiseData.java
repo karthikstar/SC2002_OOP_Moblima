@@ -8,14 +8,11 @@ import entities.cinema.Showtime;
 import entities.movie.*;
 
 import java.io.*;
-import java.nio.Buffer;
-import java.sql.Array;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 public class InitialiseData {
     public File[] getAllFiles(String path) {
@@ -263,7 +260,7 @@ public class InitialiseData {
         return newCinema;
     }
 
-    public ArrayList<Movie> initReviewData(ArrayList<Movie> movies, String path) throws IOException {
+    public ArrayList<Movie> initReviewData(ArrayList<Movie> movies, String path) {
         String pathOfFolder = path + "/reviews";
 
         File[] files = getAllFiles(pathOfFolder);
@@ -290,9 +287,9 @@ public class InitialiseData {
 
                 // Set reviewer name
                 lineString = brStream.readLine();
-                newReview.setReviewerName(lineString);
+                newReview.setUsername(lineString);
 
-                // Review score
+                // Review score (checking if numOfStars <5?)
                 lineString = brStream.readLine();
                 newReview.setNumOfStars(Integer.valueOf(lineString));
 
@@ -301,20 +298,20 @@ public class InitialiseData {
                 DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
                 newReview.setDateTime(LocalDateTime.parse(lineString, dateTimeFormatter));
 
+                // Review Comment
+                lineString = brStream.readLine();
+                newReview.setComment(lineString);
+
                 // update movie
                 for(int k = 0; k < movies.size(); k++) {
-                    // if there is a match in id, update reviews under the movie
                     if(movies.get(k).getId() == newReview.getMovieId()) {
-                        newReview.setMovieId(movies.get(k).getId());
-
-                        // add this newReview into the movie as well
                         movies.get(k).addMovieReview(newReview);
                         break;
                     }
                 }
                 brStream.close();
 
-                String savePath = FilePathFinder.findRootPath() + "/data/reviews/review_" + newReview.getReviewId();
+                String savePath = FilePathFinder.findRootPath() + "/src/data/reviews/review_" + newReview.getReviewId();
 
                 DataSerializer.ObjectSerializer(savePath, newReview);
             }
@@ -322,6 +319,8 @@ public class InitialiseData {
             System.out.println("File not found error "+ e.getMessage());
             e.printStackTrace();
             System.exit(0);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return movies;
     }

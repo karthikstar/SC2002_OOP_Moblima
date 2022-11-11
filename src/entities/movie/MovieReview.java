@@ -49,6 +49,9 @@ public class MovieReview implements Serializable {
         return this.username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     /** Get number of stars given by the reviewer of this Review
      * @return double   Reviewer's number of stars given for this Review
@@ -79,10 +82,10 @@ public class MovieReview implements Serializable {
 
 
     /**
-     * Change the additional comment given by the reviewew of this Review
+     * Change the additional comment given by the reviewer of this Review
      * @param Comment Reviewer's new additional comment for this Review
      */
-    public void setAdditionalComment(String Comment){
+    public void setComment(String Comment){
         this.comment = Comment;
     }
 
@@ -102,16 +105,12 @@ public class MovieReview implements Serializable {
         this.dateTime = dateTime;
     }
 
-    public static int getIdCounter() {
-        return idCounter;
-    }
-
     /**
      * String to return when this Movie_Goer is being called
      * @return String
      */
 
-
+    // Need movie?
     @Override
     public String toString(){
         String details = "";
