@@ -179,7 +179,6 @@ public class CustomerController {
 
         if(files != null) {
             for(int i = 0; i < files.length; i++) {
-
                 String filePath = files[i].getPath();
                 if(filePath.contains(String.valueOf(bookingID))) {
                     booking = (Booking) DataSerializer.ObjectDeserializer(filePath);

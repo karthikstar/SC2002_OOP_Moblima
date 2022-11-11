@@ -1,6 +1,8 @@
 package controllers;
 
 import boundaries.BookingUI;
+import boundaries.CustomerApp;
+import boundaries.MainApp;
 import entities.booking.Booking;
 import entities.booking.Ticket;
 import entities.cinema.CinemaAvailability;
@@ -203,7 +205,6 @@ public class BookingController {
         TicketController.getInstance().reset();
         TransactionController.getInstance().reset();
         resetData();
-
     }
 
     private void addSeat() {
@@ -349,7 +350,7 @@ public class BookingController {
 
                     } else {
                         // Seat has already been occupied
-                        System.out.println("Invalid seat selection! This seat has either been selected by you previously or is already occupied.");
+                        System.out.println("Invalid seat selection! This seat has either been selected by you previously/ already occupied / not available for selection.");
                         return false;
                     }
 

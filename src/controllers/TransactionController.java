@@ -63,8 +63,11 @@ public class TransactionController {
 
                     System.out.println("Please enter your email: ");
                     String userEmail = InputController.getUserEmail();
+                    this.bookerEmail = userEmail;
+
                     System.out.println("Please enter your mobile phone number (no country code): ");
                     String userMobileNumber = InputController.getUserMobileNumber();
+                    this.bookerMobileNo = userMobileNumber;
 
                     for(int i = 0; i< PaymentMethod.values().length; i++)System.out.println(i+1 +". " +PaymentMethod.values()[i].toString());
                     System.out.println("\nPlease select your payment method: ");
