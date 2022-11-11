@@ -27,7 +27,7 @@ public class Booking implements Serializable {
         System.out.printf("Booking Time: %s\n", getDateTime().format(format));
         System.out.printf("Movie: %s\n", getMovieTitle());
         System.out.printf("Cineplex: %s\n", getCineplexName());
-        System.out.printf("Cinema ID / Hall No: %s\n", getCinemaID());
+        System.out.printf("Cinema ID / Hall No: %s\n", getCinemaID().split("_")[1]);
         System.out.printf("Transaction ID: %s\n\n", getTransactionId());
         System.out.printf("Seats: ");
         for (int i = 0; i < getTicketsBought().size(); i++) {
