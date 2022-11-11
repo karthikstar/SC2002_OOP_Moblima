@@ -1,7 +1,10 @@
 package entities.booking;
 
 import entities.cinema.Cinema;
-public class Ticket {
+
+import java.io.Serializable;
+
+public class Ticket implements Serializable {
     private TicketType Type;
     private double Price;
     private String seatID;

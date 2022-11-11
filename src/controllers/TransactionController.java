@@ -61,17 +61,11 @@ public class TransactionController {
                         }
                     }
 
-                    check = false;
-                    while(!check) {
-                        System.out.println("Please enter your email: ");
-                        input = InputController.getUserEmail();
-                    }
+                    System.out.println("Please enter your email: ");
+                    String userEmail = InputController.getUserEmail();
+                    System.out.println("Please enter your mobile phone number (no country code): ");
+                    String userMobileNumber = InputController.getUserMobileNumber();
 
-                    check = false;
-                    while(!check) {
-                        System.out.println("Please enter your mobile phone number (no country code): ");
-                        input = InputController.getUserMobileNumber();
-                    }
                     for(int i = 0; i< PaymentMethod.values().length; i++)System.out.println(i+1 +". " +PaymentMethod.values()[i].toString());
                     System.out.println("\nPlease select your payment method: ");
                     int input2 = InputController.getUserInt(1,4) - 1;
