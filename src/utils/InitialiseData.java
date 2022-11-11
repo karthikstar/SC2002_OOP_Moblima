@@ -1,12 +1,11 @@
 package utils;
 
+import controllers.CompanyController;
+import controllers.SystemSettingsController;
 import entities.cinema.Cinema;
 import entities.cinema.CinemaType;
 import entities.cinema.Showtime;
-import entities.movie.Movie;
-import entities.movie.MovieGenre;
-import entities.movie.MovieRating;
-import entities.movie.MovieType;
+import entities.movie.*;
 
 import java.io.*;
 import java.nio.Buffer;
@@ -16,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class InitialiseData {
     public File[] getAllFiles(String path) {
@@ -252,10 +252,112 @@ public class InitialiseData {
             return newCinema;
 
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            System.out.println("File not found:" + e.getMessage());
+            e.printStackTrace();
+            System.exit(0);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("IO Error: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return newCinema;
+    }
+
+    public ArrayList<Movie> initReviewData(ArrayList<Movie> movies, String path) throws IOException {
+        String pathOfFolder = path + "/reviews";
+
+        File[] files = getAllFiles(pathOfFolder);
+
+        try {
+            for(int i = 0; i < files.length; i++) {
+                String pathOfFile = files[i].getPath();
+                FileReader frStream = new FileReader( pathOfFile );
+                BufferedReader brStream = new BufferedReader( frStream );
+                String lineString;
+
+                MovieReview newReview = new MovieReview();
+
+                // review id alr set during instantiation
+
+                // Set movie id based on checking match of title
+                lineString = brStream.readLine();
+                for(int j = 0; j < movies.size(); j++) {
+                    if(movies.get(j).getTitle().equals(lineString)){
+                        newReview.setMovieId(movies.get(j).getId());
+                        break;
+                    }
+                }
+
+                // Set reviewer name
+                lineString = brStream.readLine();
+                newReview.setReviewerName(lineString);
+
+                // Review score
+                lineString = brStream.readLine();
+                newReview.setNumOfStars(Integer.valueOf(lineString));
+
+                // Review DateTime
+                lineString = brStream.readLine();
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                newReview.setDateTime(LocalDateTime.parse(lineString, dateTimeFormatter));
+
+                // update movie
+                for(int k = 0; k < movies.size(); k++) {
+                    // if there is a match in id, update reviews under the movie
+                    if(movies.get(k).getId() == newReview.getMovieId()) {
+                        newReview.setMovieId(movies.get(k).getId());
+
+                        // add this newReview into the movie as well
+                        movies.get(k).addMovieReview(newReview);
+                        break;
+                    }
+                }
+                brStream.close();
+
+                String savePath = FilePathFinder.findRootPath() + "/data/reviews/review_" + newReview.getReviewId();
+
+                DataSerializer.ObjectSerializer(savePath, newReview);
+            }
+        } catch(FileNotFoundException e) {
+            System.out.println("File not found error "+ e.getMessage());
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return movies;
+    }
+
+    public void initSystemFiles() {
+        CompanyController.getInstance();
+        SystemSettingsController.getInstance();
+    }
+
+    public void resetFiles(String fileName) {
+        String path = FilePathFinder.findRootPath() + "/" + fileName;
+
+        File file = new File(path);
+        file.delete();
+    }
+
+    public void resetFolders(String folderName) {
+        String path = FilePathFinder.findRootPath() + "/data/" + folderName;
+        File directory = new File(path);
+
+        for(int i = 0; i < directory.listFiles().length; i++) {
+            if(!directory.listFiles()[i].isDirectory()) {
+                directory.listFiles()[i].delete();
+            }
         }
     }
 
+
+    public void resetAllData() {
+        this.resetFolders("movies");
+        this.resetFolders("showtimes");
+        this.resetFolders("reviews");
+        this.resetFolders("transactions");
+        this.resetFolders("bookings");
+        this.resetFolders("customers");
+        this.resetFiles("/data/company/company.dat");
+        this.resetFiles("/data/system_settings/system_settings.dat");
+    }
 }
