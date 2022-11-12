@@ -430,8 +430,8 @@ public class MovieController {
         int choice;
         do {
             System.out.println("Current movie details:\n" + movieEditable.toString());
-            MovieAddUI.printMenu();
-            choice = InputController.getUserInt(0,11);
+            MovieEditUI.printMenu();
+            choice = InputController.getUserInt(0,12);
             switch(choice) {
                 case 1:
                     System.out.println("Enter new title: ");
@@ -522,6 +522,7 @@ public class MovieController {
                     System.out.println("Edits Completed.");
                     break;
             }
+            System.out.println();
         } while (choice != 0);
         save(movieEditable);
     }
@@ -619,6 +620,7 @@ public class MovieController {
             System.out.println("Loading Movies...");
             for(int i=0;i<listOfFiles.length;i++){
                 String path = listOfFiles[i].getPath(); // Returns full path incl file name and type
+                //System.out.println(path);
                 Movie newMovie = (Movie) DataSerializer.ObjectDeserializer(path);
                 this.movies.put(newMovie.getId(), newMovie);
             }

@@ -6,6 +6,8 @@ import entities.cinema.Company;
 import utils.DataSerializer;
 import utils.FilePathFinder;
 
+import java.io.File;
+
 
 public class CompanyController {
     private Company company;
@@ -26,7 +28,7 @@ public class CompanyController {
         if(storedDataOfCompany == null) {
             this.company = new Company();
             this.saveData();
-            System.out.println("File has been created for company");
+            System.out.println("File has been created for company.");
         } else { // if there is data
             this.company = storedDataOfCompany;
         }
@@ -61,9 +63,10 @@ public class CompanyController {
         return null;
     }
 
+    File[] listOfFiles = new File(FilePathFinder.findRootPath() + "/src/data/company").listFiles();
+    String filePath = listOfFiles[0].getPath(); // Returns full path incl file name and type
+
     public Company loadData() {
-        String filePath = FilePathFinder.findRootPath() + "/src/data/company/company.dat";
-        System.out.println("xd" + filePath);
         return (Company) DataSerializer.ObjectDeserializer(filePath);
     }
 

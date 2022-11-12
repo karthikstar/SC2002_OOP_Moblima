@@ -22,7 +22,7 @@ public class Showtime implements Serializable {
 
     // To be ran everytime tickets are bought somehow?
     public void updateAvailability(){
-        double percentageFilled = getOccupiedNoOfSeats()/cinema.getTotalNOfSeats();
+        double percentageFilled = (double) getOccupiedNoOfSeats()/cinema.getTotalNOfSeats();
 
         if (percentageFilled < 0.5){
             status = CinemaAvailability.OPEN_FOR_SALES;
@@ -100,7 +100,7 @@ public class Showtime implements Serializable {
         this.status = status;
     }
 
-    public static int getIdCounter() {
+    public int getIdCounter() {
         return idCounter;
     }
 
