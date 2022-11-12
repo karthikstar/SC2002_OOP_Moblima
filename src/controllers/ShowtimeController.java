@@ -119,6 +119,7 @@ public class ShowtimeController {
                     case 1:
                         System.out.printf("Please select one of the choices (%d to %d) to view, else enter 0 to return back.\n", 1, showtimeList.size());
                         ShowtimeUI.printShowtimesChoice(showtimeList);
+                        System.out.printf("Enter choice: ");
                         int showtimeChoice = InputController.getUserInt(0, showtimeList.size());
                         if(showtimeChoice != 0) {
                             int showtimeID = showtimeIdsForMovie.get(showtimeChoice - 1);

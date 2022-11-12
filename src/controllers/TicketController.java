@@ -44,6 +44,9 @@ public class TicketController {
         int ticketsLeft = maxTickets; // Tracks number of tickets left for selection
         int choice;
 
+        System.out.println("\n---------------PRICE LIST---------------");
+        PriceController.getInstance().printAllPriceChangers();
+
         while (!exit) {
 
             ticketsLeft = maxTickets - selectedTickets.size();

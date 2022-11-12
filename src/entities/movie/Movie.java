@@ -67,7 +67,7 @@ public class Movie implements Serializable {
             if (daysBetween > 30) {
                 return MovieStatus.COMING_SOON;
             } else if (daysBetween <= 30 && daysBetween > 0) {
-                return MovieStatus.ADVANCE_SALES;
+                return MovieStatus.PREVIEW;
             } else {
                 return MovieStatus.NOW_SHOWING;
             }
@@ -80,7 +80,7 @@ public class Movie implements Serializable {
             for(MovieReview review : reviews){
                 sum += review.getNumOfStars();
             }
-            DecimalFormat df = new DecimalFormat("#.#");
+            DecimalFormat df = new DecimalFormat("#.0");
             return df.format(sum/reviews.size());
         }
         else {

@@ -68,8 +68,9 @@ public class MovieController {
                         ArrayList<Movie> allShowingMovies = new ArrayList<Movie>();
                         for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
                             if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("COMING_SOON"))  ||
-                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES"))  ||
-                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING")))  {
+                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("PREVIEW"))  ||
+                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING")) ||
+                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("END_OF_SHOWING")))  {
                                 allShowingMovies.add(indivMovie.getValue());
                             }
                         }
@@ -87,7 +88,7 @@ public class MovieController {
                     case 3:
                         ArrayList<Movie> advanceSales = new ArrayList<Movie>();
                         for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES"))) {
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("PREVIEW"))) {
                                 advanceSales.add(indivMovie.getValue());
                             }
                         }
@@ -128,7 +129,7 @@ public class MovieController {
                         ArrayList<Movie> allShowingMovies = new ArrayList<Movie>();
                         for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
                             if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("COMING_SOON")) ||
-                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES")) ||
+                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("PREVIEW")) ||
                                     indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))) {
                                 allShowingMovies.add(indivMovie.getValue());
                             }
@@ -155,12 +156,12 @@ public class MovieController {
                     case 3:
                         ArrayList<Movie> advanceSales = new ArrayList<Movie>();
                         for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES"))) {
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("PREVIEW"))) {
                                 advanceSales.add(indivMovie.getValue());
                             }
                         }
                         if (advanceSales.size() == 0) {
-                            System.out.println("No Movies that are on advance sales!");
+                            System.out.println("No Movies that are on preview!");
                             break;
                         }
                         this.selectMovie(advanceSales, userType);
@@ -214,7 +215,7 @@ public class MovieController {
 
                 // PART TO DIRECT INTO MOVIE SPECIFIC STUFF!!! ALWAYS DO WHILE LOOP THE BRANCHESSSS!!!!
                 indivMovieOptions(list.get(choice), userType);
-                System.out.println("Enter 0 to return to Movie Menu \n" +
+                System.out.println("\nEnter 0 to return to Movie Menu \n" +
                         "Enter any other number (no decimal) to return to list of movies:");
                 choice2 = InputController.getUserInt();
             } while (choice2 != 0);
@@ -549,7 +550,7 @@ public class MovieController {
             switch (choice) {
                 case 1:
                     for(Map.Entry<Integer, Movie> entry : movies.entrySet()){
-                        if(entry.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES"))|| entry.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))){
+                        if(entry.getValue().getShowStatus().equals(MovieStatus.valueOf("PREVIEW"))|| entry.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))){
                             top5Movies.add(entry.getValue());
                         }
                     }
@@ -568,7 +569,7 @@ public class MovieController {
                     break;
                 case 2:
                     for(Map.Entry<Integer, Movie> entry : movies.entrySet()){
-                        if(entry.getValue().getShowStatus().equals(MovieStatus.valueOf("ADVANCE_SALES"))|| entry.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))){
+                        if(entry.getValue().getShowStatus().equals(MovieStatus.valueOf("PREVIEW"))|| entry.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))){
                             top5Movies.add(entry.getValue());
                         }
                     }

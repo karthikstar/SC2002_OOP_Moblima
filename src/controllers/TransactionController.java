@@ -95,18 +95,18 @@ public class TransactionController {
         System.out.printf("%-40s%-20s%-20s%-20s\n", "Item", "Unit Price", "Quantity", "Net Price");
         for (Map.Entry<TicketType, Integer> item : ticketCount.entrySet()) {
             // Item and quantity
-            System.out.printf("%-40s%-20.2fx%-19d", item.getKey().toString() + " TICKET", ticketPrices.get(item.getKey()), item.getValue());
+            System.out.printf("%-40sS$ %-20.2fx%-16d", item.getKey().toString() + " TICKET", ticketPrices.get(item.getKey()), item.getValue());
 
             // Net price (item price multiplied by amount of items)
-            System.out.printf("%-20.2f\n", ticketPrices.get(item.getKey()) * item.getValue());
+            System.out.printf("S$ %-20.2f\n", ticketPrices.get(item.getKey()) * item.getValue());
         }
 
         // Booking fee
-        System.out.printf("%-40s%-20.2fx%-19d%-20.2f\n", "BOOKING FEE", 1.5, 1, 1.5);
+        System.out.printf("%-40sS$ %-20.2fx%-16dS$ %-20.2f\n", "BOOKING FEE", 1.5, 1, 1.5);
 
         // Net total
         System.out.println("-----------------------------------------------------------------------------------------");
-        System.out.printf("%-80s%-20.2f\n", "NET TOTAL (INCL. GST)", transaction.getTotalPrice());
+        System.out.printf("%-80sS$ %-20.2f\n", "NET TOTAL (INCL. GST)", transaction.getTotalPrice());
         System.out.println("-----------------------------------------------------------------------------------------");
     }
 
