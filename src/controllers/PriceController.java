@@ -7,17 +7,28 @@ import entities.cinema.CinemaType;
 import entities.cinema.Showtime;
 import entities.movie.MovieType;
 import entities.booking.Holiday;
+import utils.DataSerializer;
+import utils.FilePathFinder;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PriceController {
+public class PriceController implements Serializable {
     // Attributes
     private static PriceController single_instance = null;
 
     public static PriceController getInstance() {
-        if (single_instance == null)
+        if (single_instance != null) save();
+        File f = new File (FilePathFinder.findRootPath() + "/src/data/system_settings/prices.dat");
+        if (f.exists()) single_instance = load();
+        if (single_instance == null) {
             single_instance = new PriceController();
+        }
+
         return single_instance;
     }
 
@@ -99,5 +110,15 @@ public class PriceController {
 
     public Map<PriceChanger,Double> getAllPriceChangers(){
         return priceMap;
+    }
+
+    public static void save() {
+        String path = FilePathFinder.findRootPath() + "/src/data/system_settings/prices.dat";
+        DataSerializer.ObjectSerializer(path, single_instance);
+    }
+
+    public static PriceController load() {
+        String path = FilePathFinder.findRootPath() + "/src/data/system_settings/prices.dat";
+        return (PriceController) DataSerializer.ObjectDeserializer(path);
     }
 }

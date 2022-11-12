@@ -72,7 +72,13 @@ public class SystemSettingsController {
                     break;
             }
             if (choice >= 5 && choice <= 11) {
+                PriceController.getInstance().save();
                 System.out.println("Price updated!");
+            }
+
+            if (choice >= 2 && choice <= 3) {
+                HolidayController.getInstance().save();
+                System.out.println("Holidays updated!");
             }
         }
     }
@@ -104,7 +110,10 @@ public class SystemSettingsController {
         else{
             System.out.println("\nCurrently declared holidays: (sorted by date - earliest to latest)");
             Collections.sort(holList);
-            holList.forEach(Holiday ->  System.out.println(Holiday.getHolidayDateToString()));
+            for (int i = 0; i < holList.size();i++)
+            {
+                System.out.println((i+1) + ") " +  holList.get(i).getHolidayDateToString());
+            }
         }
         System.out.println();
         return true;

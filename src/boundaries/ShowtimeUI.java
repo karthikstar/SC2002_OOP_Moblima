@@ -117,6 +117,10 @@ public class ShowtimeUI {
 
     public static void printListOfCineplexes(ArrayList<Cineplex> listOfCineplexes) {
         System.out.println("List of Cineplexes:");
+        if (listOfCineplexes.size() == 0) {
+            System.out.println("No Cineplexes in database!");
+            return;
+        }
         for(int i = 0; i < listOfCineplexes.size(); i++) {
             System.out.println(i + 1 + ". " + listOfCineplexes.get(i).getCineplexName());
         }

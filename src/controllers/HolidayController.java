@@ -1,18 +1,24 @@
 package controllers;
 
 import entities.booking.Holiday;
+import utils.DataSerializer;
 import utils.FilePathFinder;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class HolidayController {
+public class HolidayController implements Serializable{
     private static HolidayController single_instance = null;
 
     public static HolidayController getInstance() {
-        if (single_instance == null)
+        if (single_instance != null) save();
+        File f = new File (FilePathFinder.findRootPath() + "/src/data/system_settings/holidays.dat");
+        if (f.exists()) single_instance = load();
+        if (single_instance == null) {
             single_instance = new HolidayController();
+        }
+
         return single_instance;
     }
     public static String path = FilePathFinder.findRootPath() + "/src/data/holidays.txt";
@@ -81,6 +87,15 @@ public class HolidayController {
         }
     }
 
+    public static void save() {
+        String path = FilePathFinder.findRootPath() + "/src/data/system_settings/holidays.dat";
+        DataSerializer.ObjectSerializer(path, single_instance);
+    }
+
+    public static HolidayController load() {
+        String path = FilePathFinder.findRootPath() + "/src/data/system_settings/holidays.dat";
+        return (HolidayController) DataSerializer.ObjectDeserializer(path);
+    }
 
 
 }

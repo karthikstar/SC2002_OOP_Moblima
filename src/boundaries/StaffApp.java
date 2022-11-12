@@ -76,8 +76,8 @@ public class StaffApp {
             System.out.printf(
                     "You have successfully logged in! Here are the list of things that you can do:\n" +
                     "1. View Top 5 Movies\n" +
-                    "2. Configure System Settings\n" +
-                    "3. Movie Database\n" +
+                    "2. Configure System Settings (Holiday Dates & Prices)\n" +
+                    "3. Movie Options Menu (ShowTimes can be edited per movie) \n" +
                     "0. Exit from Staff Portal\n"
             );
 

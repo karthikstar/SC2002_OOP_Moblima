@@ -1,9 +1,11 @@
 package utils;
 
 import controllers.CompanyController;
+import controllers.PriceController;
 import controllers.SystemSettingsController;
 import entities.cinema.Cinema;
 import entities.cinema.CinemaType;
+import entities.cinema.Company;
 import entities.cinema.Showtime;
 import entities.movie.*;
 
@@ -260,6 +262,7 @@ public class InitialiseData {
         return newCinema;
     }
 
+
     public ArrayList<Movie> initReviewData(ArrayList<Movie> movies, String path) {
         String pathOfFolder = path + "/reviews";
 
@@ -328,6 +331,7 @@ public class InitialiseData {
     public void initSystemFiles() {
         CompanyController.getInstance();
         SystemSettingsController.getInstance();
+        PriceController.getInstance();
     }
 
     public void resetFiles(String fileName) {
@@ -359,7 +363,7 @@ public class InitialiseData {
         this.resetFolders("transactions");
         this.resetFolders("bookings");
         this.resetFolders("customers");
-//        this.resetFiles("/src/data/company/company.dat");
-        this.resetFiles("/src/data/system_settings/system_settings.dat");
+        this.resetFolders("system_settings");
+        this.resetFiles("/src/data/company/company.dat");
     }
 }

@@ -46,9 +46,14 @@ public class Company implements Serializable {
         this.cineplexCodeList = cineplexCodeList;
     }
 
-    public void addCineplex(String cineplexCode) throws IOException {
+    public void addCineplex(String cineplexCode) {
         // initialise a new cineplex by passing a cineplex code
-        Cineplex newCineplex = new Cineplex(cineplexCode);
+        Cineplex newCineplex = null;
+        try {
+            newCineplex = new Cineplex(cineplexCode);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         this.cineplexList.add(newCineplex);
         this.cineplexCodeList.add(newCineplex.getCineplexCode());
     }
@@ -65,7 +70,6 @@ public class Company implements Serializable {
             int lineCount = 0;
 
             do {
-                lineCount = 0;
                 inputLine = brStream.readLine();
                 if(inputLine == null){
                     break;
@@ -79,7 +83,7 @@ public class Company implements Serializable {
                 }
                 lineCount++;
 
-            } while(inputLine != null);
+            } while(inputLine != "");
             brStream.close();
         } catch (IOException e) {
             System.out.println("IO Error: " + e.getMessage());
