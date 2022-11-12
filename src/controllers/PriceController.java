@@ -58,12 +58,20 @@ public class PriceController {
         }
     }
 
-    public String getAllPriceChangersToString(){
-        String result = "";
+    public void printAllPriceChangers(){
+        String result1 = "";
         for(PriceChanger priceChanger : priceMap.keySet()){
-            result += priceChanger.toString() + " $" + priceMap.get(priceChanger) + "\n";
+            if (priceChanger.equals(TicketType.valueOf("STUDENT")) || priceChanger.equals(TicketType.valueOf("SENIOR")) || priceChanger.equals(TicketType.valueOf("ADULT")) )
+                result1 += priceChanger.toString() + " - $" + priceMap.get(priceChanger) + "\n";
         }
-        return result;
+        String result2 = "";
+        for(PriceChanger priceChanger : priceMap.keySet()){
+            if (!priceChanger.equals(MovieType.valueOf("TWO_D")) && !priceChanger.equals(CinemaType.valueOf("STANDARD")) && !priceChanger.equals(TicketType.valueOf("STUDENT")) && !priceChanger.equals(TicketType.valueOf("SENIOR")) && !priceChanger.equals(TicketType.valueOf("ADULT")) )
+                result2 += priceChanger.toString() + " - $" + priceMap.get(priceChanger) + "\n";
+        }
+
+        System.out.printf("Base Price for each Ticket Type: \n%s",result1);
+        System.out.printf("\nAdditional Fees according to Type: \n%s\n",result2);
     }
 
     // Getters
@@ -79,6 +87,9 @@ public class PriceController {
     public void changePriceChanger(PriceChanger priceChanger, double newPrice){
         if(priceMap.containsKey(priceChanger)){
             priceMap.replace(priceChanger, newPrice);
+        }
+        else {
+            System.out.printf("Price List does not contain %s", priceChanger);
         }
     }
 

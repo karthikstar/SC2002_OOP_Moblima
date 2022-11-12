@@ -1,0 +1,11 @@
+ANFF22: Disney And Pixar's Luca
+ANIMATION
+Enrico Casarosa
+Jacob Tremblay,Jack Dylan Grazer,Emma Berman,Maya Rudolph,Marco Barricelli
+Set in a beautiful seaside town on the Italian Riviera, Disney and Pixar’s original feature film Luca is a coming-of-age story about one young boy experiencing an unforgettable summer filled with gelato, pasta and endless scooter rides. Luca (voice of Jacob Tremblay) shares these adventures with his newfound best friend, Alberto (voice of Jack Dylan Grazer), but all the fun is threatened by a deeply-held secret: they are sea monsters from another world just below the water’s surface.
+G
+TWO_D,THREE_D
+95
+English
+23/11/2022
+26/01/2023

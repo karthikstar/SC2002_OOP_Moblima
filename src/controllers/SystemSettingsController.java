@@ -4,10 +4,13 @@ import boundaries.systemsettings.SystemSettingMainPageUI;
 import entities.booking.Holiday;
 import entities.booking.TicketType;
 import entities.cinema.CinemaType;
+import entities.movie.Movie;
 import entities.movie.MovieType;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class SystemSettingsController {
     private static SystemSettingsController single_instance = null;
@@ -26,36 +29,40 @@ public class SystemSettingsController {
         boolean exit  = false;
         while (!exit){
             SystemSettingMainPageUI.printMenu();
-            int choice = InputController.getUserInt(0,10);
+            int choice = InputController.getUserInt(0,11);
             switch (choice) {
                 case 1:
-                    createHoliday();
-                    break;
-                case 2:
-                    deleteHoliday();
-                    break;
-                case 3:
                     listAllHolidays();
                     break;
+                case 2:
+                    createHoliday();
+                    break;
+                case 3:
+                    deleteHoliday();
+                    break;
                 case 4:
-                    updateMovieTypePrice();
+                    System.out.println("\n---------------PRICE LIST---------------");
+                    PriceController.getInstance().printAllPriceChangers();
                     break;
                 case 5:
-                    updateCinemaTypePrice();
+                    updateMovieTypePrice();
                     break;
                 case 6:
-                    updateStudentPrice();
+                    updateCinemaTypePrice();
                     break;
                 case 7:
-                    updateSeniorPrice();
+                    updateStudentPrice();
                     break;
                 case 8:
-                    updateAdultPrice();
+                    updateSeniorPrice();
                     break;
                 case 9:
-                    updateWeekendPrice();
+                    updateAdultPrice();
                     break;
                 case 10:
+                    updateWeekendPrice();
+                    break;
+                case 11:
                     updateHolidayPrice();
                     break;
                 case 0:
@@ -63,6 +70,9 @@ public class SystemSettingsController {
                     break;
                 default:
                     break;
+            }
+            if (choice >= 5 && choice <= 11) {
+                System.out.println("Price updated!");
             }
         }
     }
@@ -75,7 +85,7 @@ public class SystemSettingsController {
         System.out.println("Enter holiday date to add: ");
         LocalDate holiday = InputController.getDate();
         if (HolidayController.getInstance().isHoliday(holiday)) {
-            System.out.println("Holiday date already exists in database!\n");
+            System.out.println("\nHoliday date already exists in database!\n");
             return;
         }
         HolidayController.getInstance().create(holiday);
@@ -92,7 +102,8 @@ public class SystemSettingsController {
             return false;
         }
         else{
-            System.out.println("\nCurrently declared holidays: \n");
+            System.out.println("\nCurrently declared holidays: (sorted by date - earliest to latest)");
+            Collections.sort(holList);
             holList.forEach(Holiday ->  System.out.println(Holiday.getHolidayDateToString()));
         }
         System.out.println();

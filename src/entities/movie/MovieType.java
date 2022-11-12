@@ -9,7 +9,7 @@ public enum MovieType implements PriceChanger {
     TWO_D("2D"),
     THREE_D("3D"),
     ATMOS("ATMOS"),
-    BLOCKBUSTER ("2D BLOCKBUSTER"); //Only applicable to 2D!
+    BLOCKBUSTER ("BLOCKBUSTER"); //Only applicable to 2D!
 
     private final String type;
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Holiday implements Serializable,PriceChanger {
+public class Holiday implements Serializable,PriceChanger, Comparable<Holiday> {
 
     private LocalDate holidayDate;
     public Holiday (LocalDate holidayDate) {
@@ -26,5 +26,10 @@ public class Holiday implements Serializable,PriceChanger {
     @Override
     public String toString() {
         return "This holiday is on " + this.getHolidayDateToString();
+    }
+
+    @Override
+    public int compareTo(Holiday o) {
+        return getHolidayDate().compareTo(o.getHolidayDate());
     }
 }
