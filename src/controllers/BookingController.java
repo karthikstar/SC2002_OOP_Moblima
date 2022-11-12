@@ -75,7 +75,7 @@ public class BookingController {
         // Looking for row with seat column numbers.
         for(int row = 0; row < getCinemaSeatingLayout().size(); row++) {
 
-            System.out.println("exec row "+row);
+            System.out.println(row);
             String rowString = getCinemaSeatingLayout().get(row);
 
             if(rowString.length() == 0) {
