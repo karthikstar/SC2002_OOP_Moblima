@@ -13,12 +13,12 @@ public class ShowtimeUI {
     public static void printShowtimes(ArrayList<Showtime> showtimeList) {
         System.out.println("Here are the available showtimes for the movie you're looking for:");
 
-        if(showtimeList.size() <= 0) {
+        if(showtimeList.size() == 0) {
             System.out.println("Unfortunately, no showtimes are available for this movie.");
         } else {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy, hh.mma");
             for(int i = 0; i < showtimeList.size(); i++) {
-                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy, hh.mma");
-                System.out.printf("%d) Cineplex Name: %s, CinemaID | Hall No: %s\n", i+1, showtimeList.get(i).getCinema().getCineplexName(), showtimeList.get(i).getCinema().getCinemaID().split("_")[1]);
+                System.out.printf((i+1) + ") Cineplex Name: %s, CinemaID | Hall No: %s\n", showtimeList.get(i).getCinema().getCineplexName(), showtimeList.get(i).getCinema().getCinemaID().split("_")[1]);
                 System.out.printf("\t Movie Type: %s\n" , showtimeList.get(i).getMovieType());
                 System.out.println("\t Date & Time: " + showtimeList.get(i).getDateTime().format(dateTimeFormatter));
                 System.out.println();
@@ -60,7 +60,7 @@ public class ShowtimeUI {
         System.out.printf(
                 "1. View / Edit / Delete a Showtime\n" +
                 "2. Create New Showtime\n" +
-                "0. Back to List of Showtimes\n"
+                "0. Back to List of Movie Options\n"
                 );
         System.out.println("Please select one of the above choices: ");
     }
@@ -93,9 +93,8 @@ public class ShowtimeUI {
                 "1. Showtime Date and Time\n" +
                 "2. Movie ID\n" +
                 "3. Cinema\n" +
-                "4. Cineplex Name\n" +
-                "5. Cinema Availability\n" +
-                "6. Movie Type\n" +
+                "4. Cinema Availability\n" +
+                "5. Movie Type\n" +
                 "0. Back to selected showtime menu\n"
         );
     }
@@ -128,11 +127,10 @@ public class ShowtimeUI {
     public static void printListOfCinemas(ArrayList<Cinema> listOfCinemas) {
         System.out.println("List of Cinemas:");
         for(int i = 0; i < listOfCinemas.size(); i++) {
-            System.out.println(i + 1 + ". " + listOfCinemas.get(i).getCineplexName());
+            System.out.println(i + 1 + ". " + listOfCinemas.get(i).getCineplexCode() + "_" + (i+1));
         }
     }
     public static void printListOfMovieTypes(ArrayList<MovieType> listOfMovieTypes) {
-        System.out.println("List of Cinemas:");
         for(int i = 0; i < listOfMovieTypes.size(); i++) {
             System.out.println(i + 1 + ". " + listOfMovieTypes.get(i).toString());
         }
