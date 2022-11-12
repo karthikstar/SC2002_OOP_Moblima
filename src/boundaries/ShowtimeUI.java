@@ -21,6 +21,7 @@ public class ShowtimeUI {
                 System.out.printf((i+1) + ") Cineplex Name: %s, CinemaID | Hall No: %s\n", showtimeList.get(i).getCinema().getCineplexName(), showtimeList.get(i).getCinema().getCinemaID().split("_")[1]);
                 System.out.printf("\t Movie Type: %s\n" , showtimeList.get(i).getMovieType());
                 System.out.println("\t Date & Time: " + showtimeList.get(i).getDateTime().format(dateTimeFormatter));
+                System.out.println("\t Seating Availability: " + showtimeList.get(i).getStatus());
                 System.out.println();
             }
         }
