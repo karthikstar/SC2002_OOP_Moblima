@@ -1,6 +1,7 @@
 package utils;
 
 import controllers.CompanyController;
+import controllers.HolidayController;
 import controllers.PriceController;
 import controllers.SystemSettingsController;
 import entities.cinema.Cinema;
@@ -332,6 +333,7 @@ public class InitialiseData {
         CompanyController.getInstance();
         SystemSettingsController.getInstance();
         PriceController.getInstance();
+        HolidayController.getInstance();
     }
 
     public void resetFiles(String fileName) {

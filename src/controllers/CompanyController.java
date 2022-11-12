@@ -60,14 +60,17 @@ public class CompanyController {
                 return newCinema;
             }
         }
+        System.out.println("Failed to generate new cinema!");
         return null;
     }
 
-    File[] listOfFiles = new File(FilePathFinder.findRootPath() + "/src/data/company").listFiles();
-    String filePath = listOfFiles[0].getPath(); // Returns full path incl file name and type
 
     public Company loadData() {
-        return (Company) DataSerializer.ObjectDeserializer(filePath);
+        System.out.println("Company Files loaded!");
+        String filePath = FilePathFinder.findRootPath() + "/src/data/company/company.dat";
+        File f = new File(filePath);
+        if (f.exists()) return (Company) DataSerializer.ObjectDeserializer(filePath);
+        else return null;
     }
 
     public void saveData() {

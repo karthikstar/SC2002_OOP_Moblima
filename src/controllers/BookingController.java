@@ -191,6 +191,7 @@ public class BookingController {
         getBooking().setCinemaID(showTime.getCinema().getCinemaID());
 
         getBooking().setBookingID(Booking.getBookingCount()); // no need to +1 as we initialised new booking, which increments count by 1.
+        CustomerController.getInstance().storeBooking(booking.getBookingID());
 
         System.out.println("Your booking has been confirmed! Here are the details:");
         getBooking().printBookingDetails();
