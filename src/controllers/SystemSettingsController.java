@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * Class that manages the functionalities required in that of a computation of prices in a showtime for various ticket types.
+ * SystemSettingsController is a Class that manages the functionalities required in that of a computation of prices in a showtime for various ticket types.
  */
 public class SystemSettingsController {
     /**
@@ -31,7 +31,7 @@ public class SystemSettingsController {
     }
 
     /**
-     * Main method that enables staff to configure system settings such as holiday dates & prices and also view them.
+     * Main method that enables staff to configure system settings such as holiday dates and prices and also view them.
      */
     public void main() {
         boolean exit  = false;

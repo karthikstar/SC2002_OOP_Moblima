@@ -10,7 +10,7 @@ import entities.movie.MovieType;
 import utils.FilePathFinder;
 
 /**
- * Class that represents the individual showtime object, which has its own seating plans and other specific attributes such as movie & movie type shown.
+ * Class that represents the individual showtime object, which has its own seating plans and other specific attributes such as movie and movie type shown.
  */
 public class Showtime implements Serializable {
     /**
@@ -125,15 +125,15 @@ public class Showtime implements Serializable {
 
     /**
      * Getter for the date and time of the showtime.
-     * @return Date & Time of showtime
+     * @return Date and Time of showtime
      */
     public LocalDateTime getDateTime() {
         return dateTime;
     }
 
     /**
-     * Setter for the date & time of the showitme.
-     * @param dateTime Date & Time of showtime
+     * Setter for the date and time of the showitme.
+     * @param dateTime Date and Time of showtime
      */
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;

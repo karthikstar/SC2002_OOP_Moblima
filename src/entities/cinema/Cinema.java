@@ -200,12 +200,9 @@ public class Cinema implements Serializable {
                 lineCount++;
             } while (inputLine != null);
 
-            //System.out.println("\n\nNew Cinema Showtime Generated!");
-
             brStream.close();
 
             this.setCinemaSeatLayout(seatLayout);
-//            this.printCinemaSeatLayout();
 
         } catch (IOException e) {
             System.out.println("IO error: " + e.getMessage());

@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 /**
- * Class that manages the functionalities required for staff.
+ * StaffController is a class that manages the functionalities required for staff.
  */
 public class StaffController {
     /**

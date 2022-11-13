@@ -4,7 +4,7 @@ import controllers.InputController;
 import java.util.Scanner;
 
 /**
- * Main Application Access.
+ * MainApp is a class that provides the main application access to the entire application
  */
 public class MainApp {
     public static void main(String[] args) {

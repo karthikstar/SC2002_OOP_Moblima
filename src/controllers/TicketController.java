@@ -10,7 +10,7 @@ import java.time.format.TextStyle;
 import java.util.*;
 
 /**
- * Class that manages the functionalities required in that of a ticket.
+ * TicketController is a Class that manages the functionalities required in that of a ticket.
  */
 public class TicketController {
     /**
@@ -186,7 +186,7 @@ public class TicketController {
     }
 
     /**
-     * Resets the selected tickets HashMap & and ticket count HashMap.
+     * Resets the selected tickets HashMap and ticket count HashMap.
      */
     private void clearTicketSelection() {
         selectedTickets.clear();

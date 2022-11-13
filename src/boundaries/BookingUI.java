@@ -15,8 +15,10 @@ public class BookingUI {
      * Singleton Constructor
      */
     public static BookingUI single_instance = null;
+
     /**
-     * Singleton Constructor
+     * Instantiates the BookingUI singleton and creates an instance if one does not already exist
+     * @return an instance of BookingUI
      */
     public static BookingUI getInstance()
     {

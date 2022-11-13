@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
- * Stores all the functionalities that manages the showtimes side of the application.
+ * ShowtimeUI is a class that stores all the functionalities that manages the showtimes side of the application.
  */
 public class ShowtimeUI {
     /**

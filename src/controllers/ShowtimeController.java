@@ -155,7 +155,7 @@ public class ShowtimeController {
     }
 
     /**
-     * Individual Showtime options available such as viewing details & booking the showtime.
+     * Individual Showtime options available such as viewing details and booking the showtime.
      * @param chosenShowtimeID ID of showtime chosen.
      */
     private void chosenShowtimeCust(int chosenShowtimeID) {
