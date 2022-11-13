@@ -382,6 +382,7 @@ public class InitialiseData {
      * @param folderName Directory path for all files to be deleted
      */
     public void resetFolders(String folderName) {
+        int z = 0;
         String path = FilePathFinder.findRootPath() + "/src/data/" + folderName;
         System.out.println(path);
         File directory = new File(path);
@@ -395,6 +396,8 @@ public class InitialiseData {
                         list[i].delete();
                     }
                 }
+                z++;
+                if (z>1000)break;
             } while (list.length!=1);
         }
     }
