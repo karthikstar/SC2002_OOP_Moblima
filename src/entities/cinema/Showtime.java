@@ -1,16 +1,18 @@
 package entities.cinema;
 
+import java.io.File;
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import entities.movie.MovieType;
+import utils.FilePathFinder;
 
 
 public class Showtime implements Serializable {
 
-    private static int idCounter = 1;
+    private static int idCounter = getNumberOfExistingShowtimes() + 1;
     private int showTimeId;
     private LocalDateTime dateTime;
     private int movieId;
@@ -40,7 +42,6 @@ public class Showtime implements Serializable {
 //        this.cinemaSeatLayout = cinema.getCinemaSeatLayout();
     }
 
-    //Constructors
     public Showtime(int showTimeId, LocalDateTime dateTime, int movieId, MovieType movieType, Cinema cinema, CinemaAvailability status) {
         this.showTimeId = showTimeId;
         this.dateTime = dateTime;
@@ -48,6 +49,23 @@ public class Showtime implements Serializable {
         this.movieType = movieType;
         this.cinema = cinema;
         this.status = status;
+    }
+
+    private static int getNumberOfExistingShowtimes() {
+        String path = FilePathFinder.findRootPath() + "/src/data/showtimes";
+        try {
+            File directory = new File(path);
+            File[] files = directory.listFiles();
+        } catch(Exception e) {
+            return 0;
+        }
+
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        if(files.length != 0) {
+            return files.length;
+        }
+        return 0;
     }
 
     //Getters & Setters

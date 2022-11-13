@@ -1,5 +1,8 @@
 package entities.movie;
 
+import utils.FilePathFinder;
+
+import java.io.File;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  */
 //@SuppressWarnings("serial")
 public class MovieReview implements Serializable {
-    private static int idCounter = 1;
+    private static int idCounter = getNumberOfExistingReviews() + 1;
     private int reviewId;
     private String username;
     private int numOfStars;
@@ -35,6 +38,23 @@ public class MovieReview implements Serializable {
         int request = idCounter;
         idCounter++;
         return request;
+    }
+
+    private static int getNumberOfExistingReviews() {
+        String path = FilePathFinder.findRootPath() + "/src/data/reviews";
+        try {
+            File directory = new File(path);
+            File[] files = directory.listFiles();
+        } catch(Exception e) {
+            return 0;
+        }
+
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        if(files.length != 0) {
+            return files.length;
+        }
+        return 0;
     }
 
     public int getReviewId() {
