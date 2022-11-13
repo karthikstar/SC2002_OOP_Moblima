@@ -26,7 +26,7 @@ public class MainApp {
                     "2. Staff\n" +
                     "0. Exit\n"
             );
-            System.out.println("Please select an option between 0 to 2: ");
+            System.out.println("Please select one of the above choices between 0 to 2: ");
 
             int minChoice = 0;
             int maxChoice = 2;
