@@ -1,6 +1,12 @@
 package boundaries.movie;
 
+/**
+ * MovieMainMenuUI is a class that contains static methods to print movie main menu for staff
+ */
 public class MovieMainMenuUI extends MovieUI {
+    /**
+     * Print movie menu for staff
+     */
     public static void printStaffMenu() {
             System.out.println(
                     generateTitleWithLines("MOVIE MAIN MENU (STAFF)") +

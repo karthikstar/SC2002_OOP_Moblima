@@ -1,7 +1,12 @@
 package boundaries.movie;
 
+/**
+ * MovieByStatus UI is a class that contains static methods to print output to users when they try to view movies (for customer) and view/edit movies (for staff)
+ */
 public class MovieByStatusUI extends MovieUI {
-
+    /**
+     * Prints staff menu for viewing and editing of movies
+     */
     public static void printStaffMenu() {
             System.out.println(
                     generateTitleWithLines("VIEW/ EDIT MOVIES (STAFF)") +
@@ -16,6 +21,9 @@ public class MovieByStatusUI extends MovieUI {
             promptUserChoice();
     }
 
+    /**
+     * Prints customer menu for viewing movies
+     */
     public static void printCustomerMenu() {
         System.out.println(
                 generateTitleWithLines("VIEW MOVIES (CUSTOMER)") +

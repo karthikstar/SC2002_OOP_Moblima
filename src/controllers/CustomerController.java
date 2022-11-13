@@ -9,30 +9,57 @@ import javax.xml.crypto.Data;
 import java.io.File;
 import java.util.HashMap;
 
+/**
+ * CustomerController is a class which will handle customer-related issues such as checking their booking history
+ */
 public class CustomerController {
 
     // has all the mobile no.s matching to cust.id
+    /**
+     * A HashMap that stores all the mobile numbers matching to a customer id
+     */
     private HashMap<String, Integer> idMobileHash;
 
-    // has all the emails matching to cust id
+    /**
+     * A HashMap that stores all the emails matching to a customer id
+     */
     private HashMap<String, Integer> idEmailHash; // Key: email, Value: id
 
-    // has all the customer ids matching to the cust object
+    /**
+     * A HashMap that stores all the customer ids matching to a customer object
+     */
     private HashMap<Integer, CustomerAccount> idCustomerObjHash;
 
+    /**
+     * The current customerAccount that the CustomerController is working with
+     */
     private CustomerAccount customerAccount;
 
-    // gets the current customerAccount object
+    /**
+     * Gets the current customerAccount object the CustomerController is working with
+     * @return
+     */
     public CustomerAccount getCustomerAccountObj() {
         return customerAccount;
     }
 
+    /**
+     * Sets the current customerAccount object for the CustomerController to work with
+     * @param customerAccountObj
+     */
     public void setCustomerAccountObj(CustomerAccount customerAccountObj) {
         this.customerAccount = customerAccountObj;
     }
 
+    /**
+     * single_instance ensures that only one instance of CustomerController can be created
+     */
     private static CustomerController single_instance = null;
 
+    /**
+     * Instantiates the CustomerController singleton, and will create a new instance of CustomerController if one doesn't exist.
+     * @return an instance of CustomerController
+     */
     public static CustomerController getInstance() {
         if(single_instance == null) {
             single_instance = new CustomerController();
@@ -40,8 +67,10 @@ public class CustomerController {
         return single_instance;
     }
 
-    // Constructor
-    public CustomerController() {
+    /**
+     * Constructor of CustomerController
+     */
+    private CustomerController() {
         this.idEmailHash = new HashMap<String, Integer>();
         this.idMobileHash = new HashMap<String, Integer>();
 
@@ -49,6 +78,11 @@ public class CustomerController {
         this.loadCustomersFromFile();
     }
 
+    /**
+     * Retrieves a CustomerAccount object from a email
+     * @param email a String representing the email of the customer
+     * @return a CustomerAccount object referring to the customer who has this email
+     */
     private CustomerAccount getCustomerFromEmail(String email) {
         if(idCustomerObjHash.containsKey(idEmailHash.get(email))){
             return idCustomerObjHash.get(idEmailHash.get(email));
@@ -57,6 +91,11 @@ public class CustomerController {
         }
     }
 
+    /**
+     * Retrieves a CustomerAccount object from a mobile number
+     * @param mobileNo a String representing the mobile number of the customer
+     * @return a CustomerAccount object referring to the customer who has this mobile number
+     */
     private CustomerAccount getCustomerFromMobile(String mobileNo) {
         if(idCustomerObjHash.containsKey(idMobileHash.get(mobileNo))){
             return idCustomerObjHash.get(idMobileHash.get(mobileNo));
@@ -65,6 +104,10 @@ public class CustomerController {
         }
     }
 
+    /**
+     * Prints the booking history of a customer
+     * @param customer a CustomerAccount object referring to the customer, whose booking history is being printed here
+     */
     private void printBookingHistory(CustomerAccount customer) {
         Booking bookingToPrint;
 
@@ -86,9 +129,12 @@ public class CustomerController {
     }
 
 
-    // this function will be called during makeBooking() in BookingController
-
-    // Update a customer's information
+    /**
+     * Update a customer's information and will be called during makeBooking() in BookingController
+     * @param customerName is a String representing the customer's name
+     * @param email is a String representing the customer's email
+     * @param mobileNo is a String representing the customer's mobile number
+     */
     public void updateCustomer(String customerName, String email, String mobileNo) {
         CustomerAccount currentCustomer;
 
@@ -108,8 +154,10 @@ public class CustomerController {
         setCustomerAccountObj(currentCustomer);
     }
 
-
-    // Store this bookingID into current customer obj. - called by BookingController
+    /**
+     * Stores the booking id into the current customer object we are working with
+     * @param bookingID is an integer, representing a booking id to be put into this customer object
+     */
     public void storeBooking(int bookingID) {
         // add bookingID to the customerAccount object
         getCustomerAccountObj().addBookingID(bookingID);
@@ -120,20 +168,26 @@ public class CustomerController {
         reset();
     }
 
-    // resets the customerContoller's attributes
+    /**
+     * Resets the customerController's attributes
+     */
     public void reset() {
         setCustomerAccountObj(null);
         single_instance = null;
     }
 
-    // display past bookings via email
+    /**
+     * Display the past bookings of a customer, based on their email
+     */
     public void displayPastBookingViaEmail() {
         System.out.println("Please enter your email address: ");
         String userEmail = InputController.getUserEmail();
         printBookingHistory(getCustomerFromEmail(userEmail));
     }
 
-    // display past bookings via mobile number
+    /**
+     * Display the past bookings of a customer, based on their mobile number
+     */
     public void displayPastBookingViaMobile() {
         System.out.println("Please enter your mobile no: ");
         String userMobileNumber = InputController.getUserMobileNumber();
@@ -141,7 +195,9 @@ public class CustomerController {
     }
 
 
-    // Load all customer data from file
+    /**
+     * Load all the files present in the specified folder and uses the information in them to update the relevant hashmaps of a CustomerAccount object.
+     */
     private void loadCustomersFromFile() {
         String folder = FilePathFinder.findRootPath() + "/src/data/customers";
         File[] files = null;
@@ -166,7 +222,12 @@ public class CustomerController {
         }
     }
 
-    // load booking from stored files, based on bookingID.
+
+    /**
+     * Load booking files based on their booking id
+     * @param bookingID an integer, representing a booking id
+     * @return a Booking object, which was stored in the files
+     */
     private Booking loadBookingFromFile(Integer bookingID) {
         Booking booking = null;
 
@@ -192,8 +253,9 @@ public class CustomerController {
         return null;
     }
 
-
-    // save customer into a file
+    /**
+     * Save customer data into a file
+     */
     private void saveCustomerFile() {
         String filePath = FilePathFinder.findRootPath() + "/src/data/customers/customer_" + getCustomerAccountObj().getCustomerID() + ".dat";
         DataSerializer.ObjectSerializer(filePath, getCustomerAccountObj());
