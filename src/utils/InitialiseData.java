@@ -17,12 +17,25 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Class that is called by ResetData in order to reset the database to its original initialised state.
+ */
 public class InitialiseData {
+    /**
+     * Method that returns the array of Files retrieved from the provided file path directory.
+     * @param path Directory File Path
+     * @return Array of Files of all files stored in the directory
+     */
     public File[] getAllFiles(String path) {
         File directory = new File(path);
         return directory.listFiles();
     }
 
+    /**
+     * Method that loads all the initial movie data from the /src/data/initialisation/movies directory, after a deletion of the old files has been done.
+     * @param path Initialisation folder path in string format
+     * @return List of Movie objects
+     */
     public ArrayList<Movie> initMovieData(String path) {
         String pathOfFolder = path + "/movies";
         System.out.println(pathOfFolder);
@@ -123,10 +136,14 @@ public class InitialiseData {
             }
         }
 
-//        return ArrayList of movies
         return movies;
     }
-
+    /**
+     * Method that loads all the initial showtime data from the /src/data/initialisation/showtimes directory, after a deletion of the old files has been done.
+     * @param path Initialisation folder path in string format
+     * @param movies List of movie objects
+     * @return List of Showtime objects
+     */
     public ArrayList<Movie> initShowtimeData(ArrayList<Movie> movies, String path) {
         String pathOfFolder = path + "/showtimes";
 
@@ -209,7 +226,12 @@ public class InitialiseData {
         }
         return movies;
     }
-
+    /**
+     * Method that loads all the initial cinema data from the /src/data/initialisation/cinemas directory, after a deletion of the old files has been done.
+     * @param filePath Initialisation folder path in string format
+     * @param cinemaID ID of cinema in format "AAA_1"
+     * @return List of Cinema objects
+     */
     public Cinema initialiseCinemaData(String cinemaID, String filePath) {
         Cinema newCinema = new Cinema(cinemaID);
 
@@ -263,7 +285,12 @@ public class InitialiseData {
         return newCinema;
     }
 
-
+    /**
+     * Method that loads all the initial review data from the /src/data/initialisation/reviews directory, after a deletion of the old files has been done.
+     * @param path Initialisation folder path in string format
+     * @param movies List of movie objects
+     * @return List of MovieReview objects
+     */
     public ArrayList<Movie> initReviewData(ArrayList<Movie> movies, String path) {
         String pathOfFolder = path + "/reviews";
 
@@ -329,6 +356,9 @@ public class InitialiseData {
         return movies;
     }
 
+    /**
+     * Method that constructs the controller objects.
+     */
     public void initSystemFiles() {
         CompanyController.getInstance();
         SystemSettingsController.getInstance();
@@ -336,6 +366,10 @@ public class InitialiseData {
         HolidayController.getInstance();
     }
 
+    /**
+     * Method that deletes a file in its given specified path.
+     * @param fileName File Path to be deleted
+     */
     public void resetFiles(String fileName) {
         String path = FilePathFinder.findRootPath() + "/" + fileName;
 
@@ -343,6 +377,10 @@ public class InitialiseData {
         file.delete();
     }
 
+    /**
+     * Method that deletes all the data in a given folder path.
+     * @param folderName Directory path for all files to be deleted
+     */
     public void resetFolders(String folderName) {
         String path = FilePathFinder.findRootPath() + "/src/data/" + folderName;
         System.out.println(path);
@@ -361,7 +399,9 @@ public class InitialiseData {
         }
     }
 
-
+    /**
+     * Method that resets all the necessary folders in the database to be empty, so that the application is restored to its original state and the initialised objects are put into a clean database.
+     */
     public void resetAllData() {
         this.resetFolders("movies");
         this.resetFolders("showtimes");
