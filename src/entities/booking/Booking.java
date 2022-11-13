@@ -21,7 +21,7 @@ public class Booking implements Serializable {
 
     private int movieID;
 
-    private static int bookingCount = getNumberOfExistingBookings();
+    private static int bookingCount = getNumberOfExistingBookings() - 1;
 
     public void printBookingDetails() {
         System.out.println("-----------------------------------------------------------------------------");
