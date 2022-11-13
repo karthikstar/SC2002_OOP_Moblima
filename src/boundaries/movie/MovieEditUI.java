@@ -1,6 +1,12 @@
 package boundaries.movie;
 
+/**
+ * MovieEditUI is a class that contains static methods to print ui to the staff when they try to edit a movie
+ */
 public class MovieEditUI extends MovieUI {
+    /**
+     * Prints a menu for staff to see when they want to edit the movie attributes
+     */
     public static void printMenu() {
         System.out.println(
                 generateTitleWithLines("MOVIE EDITING MENU") +

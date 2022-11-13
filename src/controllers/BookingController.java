@@ -17,24 +17,55 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * BookingController is a class which will handle all the booking related issues. It will interact with other controllers to coordinate the entire booking process.
+ */
 public class BookingController {
+    /**
+     * An ArrayList of Strings representing the current seating plan of the cinema, including selected seats
+     */
     private ArrayList<String> cinemaSeatingLayout;
 
+    /**
+     * An ArrayList of Strings representing the current selected seats
+     */
     private ArrayList<String> selectedSeats = new ArrayList<>();
 
     // check for seat column no, and its index position in the string, store these 2 values as a key value pair in hashmap
+    /**
+     * A hashmap that stores the seat column number and its index position in the string as key value pairs
+     */
     private HashMap<Integer, Integer> storeColumnNoAndIndex = new HashMap<>();
 
+    /**
+     * A Hashmap that Stores the row and respective column choices
+     */
     private HashMap<Character, ArrayList<Integer>> storeRowAndColChoices = new HashMap<>();
 
-    private Booking booking = null; // refers to current booking
+    /**
+     * This is the current booking that is being worked om
+     */
+    private Booking booking = null;
 
-    private Showtime showTime = null; // refers to current selected showtime
+    /**
+     * This is the current showtime that this booking is being done for
+     */
+    private Showtime showTime = null;
 
+    /**
+     * This is to enable exiting out of the booking window
+     */
     public Boolean exitBooking = false;
+
+    /**
+     * Tracks whether BookingController has been instantiated previously
+     */
     public static BookingController single_instance = null;
 
-    // ensure there's only one instance of BookingController
+    /**
+     * Instantiates the BookingController singleton. Creates a new instance if no previous instance is found.
+     * @return an instance of BookingController
+     */
     public static BookingController getInstance()
     {
         if(single_instance == null) {
@@ -43,12 +74,16 @@ public class BookingController {
         return single_instance;
     }
 
-
+    /**
+     * Constructor of BookingController, which also calls reset to clear its memory to prepare for a new booking
+     */
     private BookingController(){
         resetData();
     }
 
-    // Reset data of this BookingController instance so that data doesn't persist, in the event that user clicks back
+    /**
+     * Resets data of this BookingController instance so that data doesn't persist, in the event that user clicks back
+     */
     public void resetData() {
         setBooking(null);
         setShowTime(null);
@@ -60,18 +95,17 @@ public class BookingController {
         single_instance = null;
     }
 
-    // Initialise Seat Selection Process
+    /**
+     * Starts the booking process by intiialising the seat selection procedure.It shows the available seats in the cinema for the particular showtime, for selection by customers.
+     * @param showtime a Showtime object which represents the particular showtime for which we are intiialising this seat selection procedure for
+     */
     public void initSeatSelection(Showtime showtime) {
         setShowTime(showtime);
-
-//        showtime.getCinema().printCinemaSeatLayout();
-//        System.exit(0);
 
         // set CinemaSeatingLayout to a cloned copy so that we don't change the originial seating layout until confirmation
         ArrayList<String> SeatingLayoutClone = cloneCinemaSeatingLayout(showtime.getCinema().getCinemaSeatLayout());
 
         setCinemaSeatingLayout(SeatingLayoutClone);
-
 
         // Looking for row with seat column numbers.
         for(int row = 0; row < getCinemaSeatingLayout().size(); row++) {
@@ -105,7 +139,6 @@ public class BookingController {
                 }
                 colIndex++;
             }
-
             // once we have found the row string containing the seat col numbers, break
             if(foundSeatColumnRow){
                 break;
@@ -158,7 +191,9 @@ public class BookingController {
 
     }
 
-    // finaliseBooking() is called once booking is confirmed and payment is made.
+    /**
+     * Finalises the booking procedure after payment is made, by injecting this confirmation data into other controllers
+     */
     public void finaliseBooking() {
         // confirm all the selected seats
         for(int i = 0; i < getSelectedSeats().size(); i++){
@@ -211,6 +246,9 @@ public class BookingController {
         resetData();
     }
 
+    /**
+     * Enables addition of seats by customer, and has validation checks in place to ensure this addition of seat is valid.
+     */
     private void addSeat() {
         System.out.println("Please select a seat to be added (e.g A1)");
         String seatChoice = InputController.getUserString().toUpperCase();
@@ -235,10 +273,12 @@ public class BookingController {
             updateCinemaSeatingLayout("addSeat", seatChoice);
 
         }
-
         // if not valid, isValidSeatSelection() will print an error message.
     }
 
+    /**
+     * Enables removal of selected seats by customer
+     */
     private void removeSelectedSeat() {
         System.out.println("Please select a seat to be removed from your cart (e.g C3)");
         String seatChoice = InputController.getUserString().toUpperCase();
@@ -276,6 +316,11 @@ public class BookingController {
         // if not valid seat removal, isValidSeatRemoval() will print a error message
     }
 
+    /**
+     * Checks whether removal of seat prompted by customer is valid
+     * @param seatChoice a String representing the target seat that the customer wants to remove from his choices
+     * @return a boolean, representing if this removal of seat is valid
+     */
     private boolean isValidSeatRemoval(String seatChoice) {
         String seatChoiceRegex = "[A-Z]\\d{1,2}";
         // Check 1: Check if formatting of SeatChoice is valid
@@ -308,6 +353,12 @@ public class BookingController {
         return false;
     }
 
+    /**
+     * Checks whether selection of seat by customer is valid.
+     * Ensures that this seat is a valid seat that is part of the cinema, not already occupied, and enforces that a customer cannot leave spaces between their seat choices on the same row.
+     * @param seatChoice a String representing the choice of seat selected by the customer
+     * @return a boolean, representing whether this is a valid seat selection
+     */
     private boolean isValidSeatSelection(String seatChoice) {
         String seatChoiceRegex = "[A-Z]\\d{1,2}";
         if(seatChoice.matches(seatChoiceRegex)) {
@@ -377,7 +428,11 @@ public class BookingController {
         return false;
     }
 
-
+    /**
+     * Updates cinema seating plan, when there is either a seat selected, removed or confirmed by a customer
+     * @param event a String representing whether it is a selection, removal or confirmation of seat
+     * @param seatID a String representing the seat to which we are modifying based on the event
+     */
     private void updateCinemaSeatingLayout(String event, String seatID) {
         char targetRow = seatID.charAt(0);
         int targetCol = Integer.valueOf(seatID.substring(1));
@@ -420,34 +475,67 @@ public class BookingController {
         }
     }
 
+    /**
+     * Retrieves the current showtime being booked
+     * @return a Showtime Object representing the current showtime being booked
+     */
     public Showtime getShowtime() {
         return showTime;
     }
 
+    /**
+     * Sets a showtime object to perform booking operation on
+     * @param showTime a Showtime Object that we want to perform a booking operation on
+     */
     public void setShowTime(Showtime showTime) {
         this.showTime = showTime;
     }
 
+    /**
+     * Retrieves the current seating plan of the cinema
+     * @return an ArrayList of String representing the seating plan
+     */
     public ArrayList<String> getCinemaSeatingLayout() {
         return cinemaSeatingLayout;
     }
 
+    /**
+     * Sets the seating plan for this BookingController to work with to perform the booking procedure
+     * @param cinemaSeatingLayout an ArrayList of Strings representing the seating plan for BookingController to work with
+     */
     public void setCinemaSeatingLayout(ArrayList<String> cinemaSeatingLayout) {
         this.cinemaSeatingLayout = cinemaSeatingLayout;
     }
 
+    /**
+     * Retrieves the current selected seats
+     * @return a ArrayList of Strings representing the current selected seats
+     */
     public ArrayList<String> getSelectedSeats() {
         return selectedSeats;
     }
 
+    /**
+     * Sets the current booking that the BookingController is working with
+     * @param booking a Booking object that the BookingController is working with
+     */
     public void setBooking(Booking booking) {
         this.booking = booking;
     }
 
+    /**
+     * Retrieve the Booking object that we are working with
+     * @return a Booking object that we are working with
+     */
     public Booking getBooking() {
         return booking;
     }
 
+    /**
+     * Creates a copy of the cinema seating plan for the particular movie's showtime
+     * @param cinemaSeatingLayout is an ArrayList of Strings representing the seating plan of the cinema being booked
+     * @return an ArrayList of Strings, representing a cloned copy of the cinema seating plan that we will be working with
+     */
     private ArrayList<String> cloneCinemaSeatingLayout(ArrayList<String> cinemaSeatingLayout) {
         ArrayList<String> seatingLayoutCopy = new ArrayList<>();
 
@@ -457,6 +545,10 @@ public class BookingController {
         return seatingLayoutCopy;
     }
 
+    /**
+     * Prints out the seating plan for the customer to see
+     * @param cinemaSeatingLayout an ArrayList of Strings representing the seating plan, to be printed
+     */
     public void displaySeatingPlan(ArrayList<String> cinemaSeatingLayout) {
         String rowString;
         for(int row = 0; row < cinemaSeatingLayout.size() - 1; row++ ) {
@@ -470,10 +562,19 @@ public class BookingController {
         }
         System.out.println("\nLegend: |_| : Available Seat, |X|: Unavailable Seat, |O| : Your Selected Seat(s)");
     }
+
+    /**
+     * Retrieve the stored pairs of seat column number and their corresponding index position in the String
+     * @return a HashMap which has key value pairs of seat column number and its corresponding index position
+     */
     public HashMap<Integer, Integer> getStoreColumnNoAndIndex() {
         return storeColumnNoAndIndex;
     }
 
+    /**
+     * Retrieves the stored key value pairs of the row and respective column choices made by customer
+     * @return a Hashmap which has  key value pairs of the row and respective column choices made by customer
+     */
     public HashMap<Character, ArrayList<Integer>> getStoreRowAndColChoices() {
         return storeRowAndColChoices;
     }

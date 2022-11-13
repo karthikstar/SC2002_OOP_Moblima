@@ -8,12 +8,24 @@ import utils.FilePathFinder;
 
 import java.io.File;
 
-
+/**
+ * CompanyController is a class which will handle all the company related issues, and it will instantiate a company entity comprising of 3 cineplexes, each having 3 cinemas.
+ */
 public class CompanyController {
+    /**
+     * This is the company object that we will be working with.
+     */
     private Company company;
 
+    /**
+     * This single_instance tracks whether CompanyController has been instantiated previously.
+     */
     private static CompanyController single_instance = null;
 
+    /**
+     * Instantiates the CompanyController singleton. It will create a new instance if there is no previous instance created.
+     * @return an instance of CompanyController
+     */
     public static CompanyController getInstance() {
         if(single_instance == null) {
             single_instance = new CompanyController();
@@ -21,7 +33,9 @@ public class CompanyController {
         return single_instance;
     }
 
-    // constructor of CompanyController - will try loading data first, if data not found, will create a file
+    /**
+     * Constructor of CompanyController. It attempts to load serialized data to create a Companny object. If data not available, it will create these files from our src/data/initialisation folder
+     */
     private CompanyController() {
         Company storedDataOfCompany = this.loadData();
         // if no data found
@@ -34,13 +48,20 @@ public class CompanyController {
         }
     }
 
+    /**
+     * Gets the company for us to work with
+     * @return a Company object
+     */
     public Company getCompany() {
         return company;
     }
 
 
-//  returns a new cloned copy of cinema for showtimeController to create a new showtime.
-    // this copy is
+    /**
+     * Returns a new cloned copy of cinema for showtimeController to create a new showtime.
+     * @param cinemaID a String representing the ID of the cinema
+     * @return a Cinema object, which is a cloned copy
+     */
     public Cinema generateNewCinema(String cinemaID) {
         for(int i = 0; i < this.company.getCineplexList().size(); i++) {
             Cineplex cineplex = this.company.getCineplexList().get(i);
@@ -64,7 +85,10 @@ public class CompanyController {
         return null;
     }
 
-
+    /**
+     * Creates a company object from serialized file
+     * @return a Company object
+     */
     public Company loadData() {
         System.out.println("Company Files loaded!");
         String filePath = FilePathFinder.findRootPath() + "/src/data/company/company.dat";
@@ -73,6 +97,9 @@ public class CompanyController {
         else return null;
     }
 
+    /**
+     * Saves the entire company object and serializes it
+     */
     public void saveData() {
         String filePath = FilePathFinder.findRootPath() + "/src/data/company/company.dat";
         DataSerializer.ObjectSerializer(filePath, this.company);

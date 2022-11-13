@@ -6,10 +6,19 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-
+/**
+ * InputController is a class that handles all the input related operations such as getting integers, strings from users
+ */
 public class InputController {
+    /**
+     * Stores an instance of Scanner to read input
+     */
     private static Scanner sc = new Scanner(System.in);
 
+    /**
+     * Get integer from user
+     * @return an integer, which is keyed in by the user
+     */
     public static int getUserInt() {
         int userInt = -1;
         boolean isValidInt = false;
@@ -25,6 +34,12 @@ public class InputController {
         return userInt;
     }
 
+    /**
+     * Gets user integer, with additional check to ensure it is within a specified range of integers
+     * @param minIntChoice an integer representing minimum choice that can be made by the user
+     * @param maxIntChoice an integer representing the maximum choice that can be made by the user
+     * @return a integer keyed in by the user, that falls in the range of minIntChoice to maxIntChoice
+     */
     public static int getUserInt(int minIntChoice, int maxIntChoice) {
         int userInt = -1;
         boolean isValidInt = false;
@@ -44,6 +59,10 @@ public class InputController {
         return userInt;
     }
 
+    /**
+     * Gets a long from the user
+     * @return a long that is keyed in by the user
+     */
     public static long getUserLong() {
         long userLong = -1;
         boolean isValidLong = false;
@@ -59,6 +78,10 @@ public class InputController {
         return userLong;
     }
 
+    /**
+     * Gets a double from the user
+     * @return a double keyed in by the user
+     */
     public static double getUserDouble() {
         double userDouble = -1.0;
         boolean isValidDouble = false;
@@ -74,6 +97,10 @@ public class InputController {
         return userDouble;
     }
 
+    /**
+     * Gets a String from the user
+     * @return a String that is keyed in by the user
+     */
     public static String getUserString() {
         String userString = "";
 
@@ -86,6 +113,10 @@ public class InputController {
         return userString;
     }
 
+    /**
+     * Gets a valid date from the user
+     * @return a LocalDate object representing the date keyed in by the user
+     */
     public static LocalDate getDate(){
         String DateKeyed = getUserString();
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -93,8 +124,10 @@ public class InputController {
         return date;
     }
 
-
-
+    /**
+     * Gets a valid date from the user
+     * @return a LocalDateTime object representing the date keyed in by the user
+     */
     public static LocalDateTime getDateTimeFromUser(){
         LocalDateTime userDateTime = null;
         String date;
@@ -112,6 +145,10 @@ public class InputController {
         return userDateTime;
     }
 
+    /**
+     * Gets a valid email from user
+     * @return a String representing the email keyed in by the user
+     */
     public static String getUserEmail(){
         String pattern = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         String input = "";
@@ -128,6 +165,10 @@ public class InputController {
         return input;
     }
 
+    /**
+     * Gets a valid mobile number from the user that is compliant with local mobile name conventions (8 digits long, start with either 8 or 9)
+     * @return a String representing the mobile number entered in by the user
+     */
     public static String getUserMobileNumber(){
         String pattern = "\\d{8}";
         String input = "";
@@ -143,8 +184,5 @@ public class InputController {
         }
         return input;
     }
-
-
-
 
 }

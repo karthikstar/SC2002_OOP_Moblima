@@ -1,8 +1,14 @@
 package boundaries.movie;
 
+/**
+ * MovieOptionsUI is a class that contains static methods to print individual movie options for customer and staff
+ */
 public class MovieOptionsUI extends MovieUI {
 
     public static void printStaffMenu() {
+        /**
+         * Prints individual movie options for staff
+         */
         System.out.println(
                 generateTitleWithLines("INDIVIDUAL MOVIE OPTIONS (STAFF)") +
                 " 1. Display/Edit Showtimes                              \n" +
@@ -16,6 +22,9 @@ public class MovieOptionsUI extends MovieUI {
         promptUserChoice();
     }
 
+    /**
+     * Prints individual movie options for customer
+     */
     public static void printCustomerMenu() {
         System.out.println(
                 generateTitleWithLines("INDIVIDUAL MOVIE OPTIONS (CUSTOMER)") +

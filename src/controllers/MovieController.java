@@ -11,21 +11,41 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * MovieController is a class that will handle all the operations related to a movie, such as customer features like showing movie listings, and staff-side features such as modifying attributes of a movie listing.
+ */
 public class MovieController {
+    /**
+     * A HashMap mapping an integer movie ID to a Movie object
+     */
     private Map<Integer,Movie> movies;
+
+    /**
+     * Constructor of the MovieController
+     */
     private MovieController() {
         this.movies = new HashMap<Integer, Movie>();
         this.load();
     }
 
+    /**
+     * single_instance ensures that at most only one instance of MovieController is created
+     */
     private static MovieController single_instance = null;
 
+    /**
+     * Instantiates the MovieController singleton, and creates an instance if one does not already exist
+     * @return an instance of MovieController
+     */
     public static MovieController getInstance() {
         if (single_instance == null)
             single_instance = new MovieController();
         return single_instance;
     }
 
+    /**
+     * Handles the main display of movie menu for staff, and enables them to select operations to perform such as editing movies, adding movies or searching for movies.
+     */
     public void movieMenuStaff() {
         int choice;
 
@@ -54,6 +74,11 @@ public class MovieController {
         } while (choice != 0);
     }
 
+    /**
+     * Prints a display menu to see the various movies, and this display is customised based on whether user is a Customer or Staff
+     * User will be able to view all movies, or select movie based on their movie status
+     * @param userType is a String that represents whether user viewing movies is a Staff or Customer
+     */
     public void viewMovies(String userType) {
         int choice;
 
@@ -193,6 +218,11 @@ public class MovieController {
 
     }
 
+    /**
+     * Prints out all available movies and enables user to select one
+     * @param list is an ArrayList of Movies that a user can choose from
+     * @param userType is a String that represents whether a user is a Staff or Customer, and feeds this information to other methods
+     */
         private void selectMovie(ArrayList<Movie> list, String userType) {
             int choice, choice2;
             if (list.size() == 0) {
@@ -223,7 +253,13 @@ public class MovieController {
             } while (choice2 != 0);
         }
 
-        private void indivMovieOptions (Movie movie, String userType) {
+    /**
+     * Prints out menu, enabling users to gain access to showtimes, reviews or movie listings
+     * @param movie is a Movie object, that was previously selected by the user and passed down to this method
+     * If a user is a Customer, they can view showtimes or reviews or even make a review for the movie. If a user is a Staff, they will be able to view/edit showtimes, view/edit/remove movie listings, and view/delete movie reviews as well for the chosen movie.
+     * @param userType is a String representing whether the user is a Staff or Customer.
+     */
+    private void indivMovieOptions (Movie movie, String userType) {
             if (userType.equals("Staff")) {
                 int choice;
                 do {
@@ -282,6 +318,10 @@ public class MovieController {
             }
         }
 
+    /**
+     * Retrieves movies which contain the input string entered in by the user, regardless of casing.
+     * @param userType is a String that represents whether the user is a Staff or Customer
+     */
     private void searchMovies(String userType){
         System.out.println("Please enter your search: ");
         String search = InputController.getUserString().toLowerCase();
@@ -300,6 +340,9 @@ public class MovieController {
         selectMovie(results,userType);
     }
 
+    /**
+     * Creates a new Movie object by taking in inputs keyed in by the Staff. Upon inputting the necessary fields, staff will be prompted to confirm and submit this new movie listing.
+     */
     private void addMovies() {
         Movie newMovie = new Movie();
         ArrayList<MovieGenre> tempGenreList = new ArrayList<MovieGenre>();
@@ -398,9 +441,6 @@ public class MovieController {
         }
         newMovie.setType(tempTypeList);
 
-        //SETTING UP OF SHOWTIMES???
-
-
         int choice;
 
         do {
@@ -428,6 +468,10 @@ public class MovieController {
         } while (choice != 0);
     }
 
+    /**
+     * Enables staff to edit specific attributes of a selected movie
+     * @param movieEditable is a Movie object representing the movie chosen by the staff.
+     */
     private void editMovies (Movie movieEditable){
         int choice;
         do {
@@ -529,13 +573,20 @@ public class MovieController {
         save(movieEditable);
     }
 
-    // Only removes movie from viewing by customer.
+    /**
+     * Removes a movie by changing its ending date to the day before, so that it cannot be viewed by customers anymore
+     * @param movie is a Movie object that is selected by the user
+     */
     private void removeMovie(Movie movie) {
         LocalDate today = LocalDate.now();
         movie.setMovieEndDate(today.minusDays(1));
         save(movie);
     }
 
+    /**
+     * Prints out top 5 movies based on number of movie tickets sold or based on movie rating stars for each movie
+     * @param userType is a String representing whether a user is a Staff or Customer
+     */
     public void viewTop5(String userType) {
         int choice, choice2;
 
@@ -615,6 +666,10 @@ public class MovieController {
         } while (choice != 0);
     }
 
+    /**
+     * Load Movie objects from stored datafiles
+     * @return a boolean representing whether this load operation was succesful or not (which means our database is empty)
+     */
     private boolean load() {
         File[] listOfFiles = new File(FilePathFinder.findRootPath() + "/src/data/movies").listFiles();
 
@@ -633,38 +688,71 @@ public class MovieController {
         return false;
     }
 
+    /**
+     * Saves a Movie object and serializes it
+     * @param movie is a Movie object to be saved
+     */
     private void save(Movie movie) {
         String path = FilePathFinder.findRootPath() + "/src/data/movies/movie_"+movie.getId()+".dat";
         DataSerializer.ObjectSerializer(path,movie);
         System.out.println("Movies updated!");
     }
 
+    /**
+     * Retrieves a Movie object based on movie id
+     * @param movieID is an integer representing a movie id
+     * @return a Movie object which corresponds to this id
+     */
     public Movie getMoviebyID(int movieID){
         return movies.get(movieID);
     }
 
+    /**
+     * Retrieves movie types for a certain movie based on id
+     * @param movieID is an integer representing the movie id
+     * @return an ArrayList of MovieTypes representing the various movie types for the target movie
+     */
     public ArrayList<MovieType> getMovieTypesbyID(int movieID){
         return movies.get(movieID).getType();
     }
 
+    /**
+     * Increases tickets sold for a certain movie when tickets are succesfully sold
+     * @param movieID an integer representing the id of the movie for which tickets sold is to be incremented
+     * @param ticketsSold a long representing the number of tickets sold for the particular movie
+     */
     public void increaseTicketsSold(int movieID, long ticketsSold){
         movies.get(movieID).setTicketsSold(movies.get(movieID).getTicketsSold() + ticketsSold);
         save(getMoviebyID(movieID));
     }
 
+    /**
+     * Add a review for a particular movie
+     * @param movieID an integer representing the id of the movie for which this review is to be added
+     * @param review a MovieReview object that is to be added for this movie
+     */
     void addReview(int movieID, MovieReview review) {
         Movie movie = movies.get(movieID);
         movie.addMovieReview(review);
         save(movie);
     }
 
-
+    /**
+     * Removes a review for a particular movie
+     * @param movieID an integer representing the id of the movie for which this review is to be added
+     * @param reviewID a MovieReview object that is to be added for this movie
+     */
     void removeReview(int movieID, int reviewID) {
         Movie movie = movies.get(movieID);
         movie.removeMovieReview(reviewID);
         save(movie);
     }
 
+    /**
+     * Update showtimes for a particular movie
+     * @param movieID an integer representing the id of the movie for which this review is to be added
+     * @param showtimeID an integer representing the showtime to be added for this movie
+     */
     void updateShowtimes(int movieID, int showtimeID) {
         Movie movie = movies.get(movieID);
         movie.addShowtimeID(showtimeID);
