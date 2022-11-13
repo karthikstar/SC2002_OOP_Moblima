@@ -67,7 +67,7 @@ public class ShowtimeController {
                         System.out.println("Back to list of Showtimes");
                         break;
                     case 1:
-                        System.out.println("Enter the no. of which showtime you would like to view/update/delete: ");
+                        System.out.println("Enter the showtime number you would like to view/update/delete: ");
                         int showtimeChoice = InputController.getUserInt(1, showtimeIdsForMovie.size()) - 1;
                         int chosenShowtimeID = showtimeIdsForMovie.get(showtimeChoice);
                         this.staffShowtimeOperations(chosenShowtimeID); // goes to staffShowtimeOperations based on the specific showtimeID selected

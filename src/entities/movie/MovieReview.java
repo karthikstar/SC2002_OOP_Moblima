@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  */
 //@SuppressWarnings("serial")
 public class MovieReview implements Serializable {
-    private static int idCounter = getNumberOfExistingReviews() + 1;
+    private static int idCounter = getNumberOfExistingReviews();
     private int reviewId;
     private String username;
     private int numOfStars;

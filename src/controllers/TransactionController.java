@@ -157,6 +157,7 @@ public class TransactionController {
 
     public void reset() {
         transaction = null;
+        TransactionController.getInstance();
         bookerName = null;
         bookerMobileNo = null;
         bookerEmail = null;

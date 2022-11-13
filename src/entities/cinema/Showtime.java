@@ -12,7 +12,7 @@ import utils.FilePathFinder;
 
 public class Showtime implements Serializable {
 
-    private static int idCounter = getNumberOfExistingShowtimes() + 1;
+    private static int idCounter = getNumberOfExistingShowtimes();
     private int showTimeId;
     private LocalDateTime dateTime;
     private int movieId;
