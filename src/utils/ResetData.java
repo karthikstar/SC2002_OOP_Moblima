@@ -5,6 +5,9 @@ import entities.movie.Movie;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Class that is called in order for the staff to reset all the data in the database into its original intialised state.
+ */
 public class ResetData {
     public static void main(String[] args) throws IOException {
         InitialiseData initialiseData = new InitialiseData();

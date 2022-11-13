@@ -2,7 +2,15 @@ package utils;
 
 import java.io.*;
 
+/**
+ * Class that provides ease for the serializing and deserializing of objects to be stored in our database.
+ */
 public class DataSerializer {
+    /**
+     * Method that serialises the object given into the specified file path.
+     * @param filename File path to be stored in
+     * @param obj Object to be serialised
+     */
     public static void ObjectSerializer(String filename, Object obj) {
         try {
             //System.out.println("show file path" + filename);
@@ -18,6 +26,11 @@ public class DataSerializer {
         }
     }
 
+    /**
+     * Method that deserialises an object and returns it from the given file path.
+     * @param filename File path to obtain the object and deserialise it
+     * @return Object that is deserialised
+     */
     public static Object ObjectDeserializer(String filename) {
         try {
             FileInputStream fileInputStream = new FileInputStream(filename);
