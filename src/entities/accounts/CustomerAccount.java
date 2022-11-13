@@ -18,7 +18,7 @@ public class CustomerAccount implements Serializable {
 
     private ArrayList<Integer> bookingHistory = new ArrayList<>();
 
-    private static int customerAccountCount = getNumberOfExistingCustomers();
+    private static int customerAccountCount = getNumberOfExistingCustomers()- 1;
 
     public CustomerAccount(String customerName, String email, String mobileNo) {
         this.email = email;

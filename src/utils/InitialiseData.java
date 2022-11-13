@@ -350,12 +350,14 @@ public class InitialiseData {
         File[] list = directory.listFiles();
 
         if(list != null) {
-            for(int i = 0; i < list.length; i++) {
-                if(!list[i].isDirectory()) {
-                    if (list[i].getName().equalsIgnoreCase(".gitkeep")) continue;
-                    list[i].delete();
+            do {
+                for(int i = 0; i < list.length; i++) {
+                    if(!list[i].isDirectory()) {
+                        if (list[i].getName().equalsIgnoreCase(".gitkeep")) continue;
+                        list[i].delete();
+                    }
                 }
-            }
+            } while (list.length!=1);
         }
     }
 
