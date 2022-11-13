@@ -31,7 +31,7 @@ public class Transaction implements Serializable {
         LocalDateTime dateTime= LocalDateTime.now() ;
         DateTimeFormatter newDateTime= DateTimeFormatter.ofPattern("yyyyMMddHHmm");
         String dateTimeStr = dateTime.format(newDateTime);
-        String newID = BookingController.getInstance().getShowtime().getCinema().getCinemaID() + dateTimeStr;
+        String newID = BookingController.getInstance().getShowtime().getCinema().getCinemaID() + "-" + dateTimeStr;
         this.transactionID = newID;
     }
 

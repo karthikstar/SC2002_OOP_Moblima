@@ -101,20 +101,20 @@ public class Cinema implements Serializable {
                 }
                 switch (lineCount) {
                     case 0:
-                        System.out.println("Cineplex Name: " + inputLine);
+                        //System.out.println("Cineplex Name: " + inputLine);
                         this.setCineplexName(inputLine);
                         break;
                     case 1:
-                        System.out.println("Cinema ID: " + inputLine);
+                        //System.out.println("Cinema ID: " + inputLine);
                         this.setCinemaID(inputLine);
                         break;
                     case 2:
-                        System.out.println("Cinema Type: " + inputLine);
+                        //System.out.println("Cinema Type: " + inputLine);
                         this.setCinemaType(CinemaType.valueOf(inputLine));
                         break;
                     case 3:
                         this.setTotalNOfSeats(Integer.parseInt(inputLine));
-                        System.out.println("Total No Of Seats: " + inputLine);
+                        //System.out.println("Total No Of Seats: " + inputLine);
                         break;
                     default:
                         seatLayout.add(inputLine);
@@ -123,7 +123,7 @@ public class Cinema implements Serializable {
                 lineCount++;
             } while (inputLine != null);
 
-            System.out.println("\n\nNew Cinema Showtime Generated!");
+            //System.out.println("\n\nNew Cinema Showtime Generated!");
 
             brStream.close();
 

@@ -57,6 +57,7 @@ public class BookingController {
         getStoreColumnNoAndIndex().clear();
         getStoreRowAndColChoices().clear();
         exitBooking = true;
+        single_instance = null;
     }
 
     // Initialise Seat Selection Process
@@ -206,6 +207,7 @@ public class BookingController {
         // reset BookingController instance, as well as ticketcontroller, and transactioncontroller.
         TicketController.getInstance().reset();
         TransactionController.getInstance().reset();
+        TransactionController.getInstance();
         resetData();
     }
 

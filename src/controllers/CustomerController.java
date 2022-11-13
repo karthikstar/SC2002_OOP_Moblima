@@ -123,6 +123,7 @@ public class CustomerController {
     // resets the customerContoller's attributes
     public void reset() {
         setCustomerAccountObj(null);
+        single_instance = null;
     }
 
     // display past bookings via email
