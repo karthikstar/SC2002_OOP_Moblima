@@ -384,6 +384,7 @@ public class ShowtimeController {
         // Deserialize each file in the list , convert them to Showtime Objects, and add to the Hashmap
         if(fileList != null) {
             for(int i = 0; i < fileList.length; i++) {
+                if (fileList[i].getName().equalsIgnoreCase(".gitkeep")) continue;
                 String path = fileList[i].getPath();
 
                 Showtime newShowtimeObj = (Showtime) DataSerializer.ObjectDeserializer(path);

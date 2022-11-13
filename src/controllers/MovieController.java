@@ -621,6 +621,7 @@ public class MovieController {
         if(listOfFiles != null){
             System.out.println("Loading Movies...");
             for(int i=0;i<listOfFiles.length;i++){
+                if (listOfFiles[i].getName().equalsIgnoreCase(".gitkeep")) continue;
                 String path = listOfFiles[i].getPath(); // Returns full path incl file name and type
                 //System.out.println(path);
                 Movie newMovie = (Movie) DataSerializer.ObjectDeserializer(path);
