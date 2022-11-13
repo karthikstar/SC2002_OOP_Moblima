@@ -9,6 +9,6 @@ public class EditReviewUI {
                 " 0. Editing Complete!				            \n"+
                 "---------------------------------------------------------");
 
-        System.out.println("Enter choice: ");
+        System.out.println("Please select one of the above choices between 0 to 3: ");
     }
 }

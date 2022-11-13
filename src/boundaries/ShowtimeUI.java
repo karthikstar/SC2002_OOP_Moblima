@@ -44,7 +44,7 @@ public class ShowtimeUI {
                 "1. View Specific Showtime\n" +
                 "0. Back to Individual Movie Options\n"
                 );
-        System.out.println("Please select one of the above choices: ");
+        System.out.println("Please select one of the above choices between 0 to 1: ");
     }
 
     public static void custChosenShowtimeMenu() {
@@ -54,7 +54,7 @@ public class ShowtimeUI {
                 "2. Book this showtime\n" +
                 "0. Back to list of showtimes\n"
         );
-        System.out.println("Please select one of the above choices: ");
+        System.out.println("Please select one of the above choices between 0 to 2: ");
     }
     public static void staffShowtimeMenu() {
         System.out.println("Showtime Portal - Staff");
@@ -63,7 +63,7 @@ public class ShowtimeUI {
                 "2. Create New Showtime\n" +
                 "0. Back to List of Movie Options\n"
                 );
-        System.out.println("Please select one of the above choices: ");
+        System.out.println("Please select one of the above choices between 0 to 2: ");
     }
 
     // in the event that there is no showtime for the particular movie
@@ -73,7 +73,7 @@ public class ShowtimeUI {
                         "1. Create New Showtime\n" +
                         "0. Back to List of Showtimes\n"
         );
-        System.out.println("Please select one of the above choices: ");
+        System.out.println("Please select one of the above choices between 0 to 1: ");
     }
 
     public static void staffShowtimeOperationsMenu() {
@@ -84,7 +84,7 @@ public class ShowtimeUI {
                 "3. Delete showtime\n" +
                 "0. Back to list of showtimes\n"
         );
-        System.out.println("Please select one of the above choices: ");
+        System.out.println("Please select one of the above choices between 0 to 3: ");
     }
 
     public static void staffUpdateMenu() {

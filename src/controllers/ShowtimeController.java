@@ -299,7 +299,7 @@ public class ShowtimeController {
         } else {
             do {
                 ShowtimeUI.staffUpdateMenu();
-                System.out.println("Please select one of the options above (0-5):");
+                System.out.println("Please select one of the choices above between 0 to 5:");
                 int minChoice = 0;
                 int maxChoice = 5;
                 userChoice = InputController.getUserInt(minChoice, maxChoice);

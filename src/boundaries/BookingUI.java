@@ -23,7 +23,7 @@ public class BookingUI {
             "0. Exit\n" +
             "------------------------------\n"
         );
-        System.out.println("Please select an option between 0 to 3");
+        System.out.println("Please select one of the above choices between 0 to 3:");
     }
 
     public static void printCustomerBookingHistoryMenu() {
@@ -33,6 +33,6 @@ public class BookingUI {
                 "2. Check Booking History via Mobile Number\n" +
                 "0. Back to Customer Interface\n"
         );
-        System.out.println("Please select an option between 0 to 2");
+        System.out.println("Please select one of the above choices between 0 to 2:");
     }
 }
