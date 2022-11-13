@@ -170,6 +170,7 @@ public class ReviewController {
 
         if(listOfFiles != null){
             for(int i=0;i<listOfFiles.length;i++){
+                if (listOfFiles[i].getName().equalsIgnoreCase(".gitkeep")) continue;
                 String path = listOfFiles[i].getPath(); // Returns full path incl file name and type
                 MovieReview review = (MovieReview) DataSerializer.ObjectDeserializer(path);
                 reviews.put(review.getReviewId(), review);

@@ -155,6 +155,7 @@ public class CustomerController {
 
         if(files != null) {
             for(int i = 0; i < files.length; i++) {
+                if (files[i].getName().equalsIgnoreCase(".gitkeep")) continue;
                 String filePath = files[i].getPath();
                 CustomerAccount newCustomer = (CustomerAccount) DataSerializer.ObjectDeserializer(filePath);
 

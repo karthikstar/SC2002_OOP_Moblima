@@ -347,11 +347,13 @@ public class InitialiseData {
         String path = FilePathFinder.findRootPath() + "/src/data/" + folderName;
         System.out.println(path);
         File directory = new File(path);
+        File[] list = directory.listFiles();
 
-        if(directory.listFiles() != null) {
-            for(int i = 0; i < directory.listFiles().length; i++) {
-                if(!directory.listFiles()[i].isDirectory()) {
-                    directory.listFiles()[i].delete();
+        if(list != null) {
+            for(int i = 0; i < list.length; i++) {
+                if(!list[i].isDirectory()) {
+                    if (list[i].getName().equalsIgnoreCase(".gitkeep")) continue;
+                    list[i].delete();
                 }
             }
         }

@@ -59,9 +59,9 @@ public class Showtime implements Serializable {
         } catch(Exception e) {
             return 0;
         }
-
         File directory = new File(path);
         File[] files = directory.listFiles();
+        if (files == null) return 0;
         if(files.length != 0) {
             return files.length;
         }

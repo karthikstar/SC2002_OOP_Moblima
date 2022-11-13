@@ -17,7 +17,7 @@ public class Movie implements Serializable {
     /**
      * Counter to keep track of the ids generated for the movie
      */
-    private static int idCounter = getNumberOfExistingMovies() + 1;
+    private static int idCounter = getNumberOfExistingMovies();
 
     //Attributes
     /**
@@ -144,6 +144,7 @@ public class Movie implements Serializable {
 
         File directory = new File(path);
         File[] files = directory.listFiles();
+        if (files == null) return 0;
         if(files.length != 0) {
             return files.length;
         }
