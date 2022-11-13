@@ -1,5 +1,8 @@
 package entities.movie;
 
+/**
+ * MovieGenre is a enum data type that represents various genres of a movie. These can be set by staff as an attribute of movies. This is visible to customers as well.
+ */
 public enum MovieGenre {
     ACTION ("ACTION"),
     ANIMATION ("ANIMATION"),
@@ -17,25 +20,21 @@ public enum MovieGenre {
     THRILLER ("THRILLER"),
     WESTERN ("WESTERN");
 
-
+    /**
+     * String representing the name of the movie genre
+     */
     private final String names;
 
     /**
-     * Constructor for Genre enum, taking in the string value of the enum and setting it as an attribute.
-     * @param name of the enum.
+     * Constructor for MovieGenre
+     * @param name a String, representing the name of the MovieGenre
      */
     private MovieGenre(String name) { this.names = name; }
 
-//    /**
-//     * For string comparison.
-//     * @param otherName String to be compared to.
-//     * @return boolean on whether the String value of Genre is equals to otherName.
-//     */
-//    public boolean equalsString(String otherName) {
-//        (otherName == null) check is not needed because name.equals(null) returns false
-//        return names.equals(otherName);
-//    }
-
+    /**
+     * For Conversion to String format
+     * @return a String, representing the String value of the genre
+     */
     @Override
     public String toString() {
         return this.names;

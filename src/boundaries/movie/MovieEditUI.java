@@ -1,8 +1,9 @@
 package boundaries.movie;
 
-public class MovieEditUI {
+public class MovieEditUI extends MovieUI {
     public static void printMenu() {
-        System.out.println("------------------- MOVIE EDITING MENU ------------------\n" +
+        System.out.println(
+                generateTitleWithLines("MOVIE EDITING MENU") +
                 " 1. Edit Title      	                                  \n" +
                 " 2. Edit Rating                      	        		  \n" +
                 " 3. Edit Genre	                                     \n" +
@@ -16,7 +17,8 @@ public class MovieEditUI {
                 " 11. Edit Cast                                 \n" +
                 " 12. Edit Movie Types                                 \n" +
                 " 0. Finish Editing Movie                                \n"+
-                "---------------------------------------------------------");
-        System.out.println("Enter choice: ");
+                generateFullLine()
+             );
+        promptUserChoice();
     }
 }

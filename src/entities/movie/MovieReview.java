@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Represents a Review of a Movie in the system
+ * MovieReview
  */
 //@SuppressWarnings("serial")
 public class MovieReview implements Serializable {

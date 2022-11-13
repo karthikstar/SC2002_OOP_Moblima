@@ -1,5 +1,8 @@
 package entities.movie;
 
+/**
+ * MovieRating is an enum, which represents the rating of a movie (e.g G, NC16, R21)
+ */
 public enum MovieRating {
     G ("G"),
     PG ("PG"),
@@ -8,20 +11,22 @@ public enum MovieRating {
     M18 ("M18"),
     R21 ("R21");
 
+    /**
+     * String representing the name of the movie rating
+     */
     private final String names;
 
+    /**
+     * Constructor for the `MovieRating` enum
+     * @param names a String representing the name of the MovieRating, and will be set as an attribute
+     */
     private MovieRating(String names) { this.names = names; }
 
-//    /**
-//     * For string comparison.
-//     * @param otherName String to be compared to.
-//     * @return boolean on whether the String value of MovieRating is equals to otherName.
-//     */
-//    public boolean equalsString(String otherName) {
-//        // (otherName == null) check is not needed because name.equals(null) returns false
-//        return names.equals(otherName);
-//    }
 
+    /**
+     * For Conversion to String format
+     * @return a String representing the name of the movie rating
+     */
     public String toString() {
         return this.names;
     }
