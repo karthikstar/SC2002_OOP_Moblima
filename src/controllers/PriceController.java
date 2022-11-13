@@ -139,7 +139,7 @@ public class PriceController implements Serializable {
     }
 
     /**
-     * Loads the storerd prices from the database.
+     * Loads the stored prices from the database.
      * @return Price Controller object
      */
     public static PriceController load() {

@@ -1,7 +1,7 @@
 package boundaries.movie;
 
 /**
- * MovieByStatus UI is a class that contains static methods to print output to users when they try to view movies (for customer) and view/edit movies (for staff)
+ * MovieByStatusUI is a class that contains static methods to print output to users when they try to view movies (for customer) and view/edit movies (for staff)
  */
 public class MovieByStatusUI extends MovieUI {
     /**

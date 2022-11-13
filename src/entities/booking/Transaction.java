@@ -47,7 +47,7 @@ public class Transaction implements Serializable {
     }
 
     /**
-     * Setter which constructs the Transaction ID as a string given by cinema_code ("AAA_1") - Date & Time of transaction as a string.
+     * Setter which constructs the Transaction ID as a string given by cinema_code ("AAA_1") - Date and Time of transaction as a string.
      */
     public void setTransactionID() {
         LocalDateTime dateTime= LocalDateTime.now() ;

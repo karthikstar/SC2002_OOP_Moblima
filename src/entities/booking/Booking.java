@@ -18,7 +18,7 @@ public class Booking implements Serializable {
      */
     private int bookingID;
     /**
-     * Date & Time of the booking.
+     * Date and Time of the booking.
      */
     private LocalDateTime dateTime;
     /**
@@ -132,15 +132,15 @@ public class Booking implements Serializable {
     }
 
     /**
-     * Getter for the date & time of the booking.
-     * @return Date & Time of booking
+     * Getter for the date and time of the booking.
+     * @return Date and Time of booking
      */
     public LocalDateTime getDateTime() {
         return dateTime;
     }
     /**
-     * Setter for the date & time of the booking.
-     * @param dateTime Date & Time of booking to be set
+     * Setter for the date and time of the booking.
+     * @param dateTime Date and Time of booking to be set
      */
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;

@@ -7,7 +7,7 @@ import controllers.SystemSettingsController;
 import entities.movie.Movie;
 
 /**
- * Class that manages the staff side of the application.
+ * StaffApp is a class that manages the staff side of the application.
  */
 public class StaffApp {
     /**

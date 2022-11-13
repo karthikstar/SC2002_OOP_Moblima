@@ -13,15 +13,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class that manages the functionalities requires in that of a transaction.
+ * TransactionController is a Class that manages the functionalities requires in that of a transaction.
  */
 public class TransactionController {
     /**
      * Singleton Constructor
      */
     private static TransactionController single_instance = null;
+
     /**
-     * Singleton Constructor
+     * Instantiates the TransactionController singleton
+     * @return an instance of TransactionController
      */
     public static TransactionController getInstance()
     {
@@ -124,8 +126,8 @@ public class TransactionController {
 
     /**
      * Displays pricing information for each ticket type and total price in a receipt format.
-     * @param ticketPrices Map<TicketType, Double> The prices of the tickets that are being bought for each ticket type.
-     * @param ticketCount Map<TicketType, Integer> The number of tickets that are being bought for each ticket type.
+     * @param ticketPrices The prices of the tickets that are being bought for each ticket type.
+     * @param ticketCount The number of tickets that are being bought for each ticket type.
      */
     public void displayPrices(Map<TicketType, Double> ticketPrices, Map<TicketType, Integer> ticketCount) {
 
@@ -150,7 +152,7 @@ public class TransactionController {
     }
 
     /**
-     * Set the respective attributes for transaction, booking & customer details and save the transaction into the database.
+     * Set the respective attributes for transaction, booking and customer details and save the transaction into the database.
      */
     public void confirmTransaction() {
         transaction.setTransactionID();
