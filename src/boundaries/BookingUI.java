@@ -2,10 +2,22 @@ package boundaries;
 
 import controllers.BookingController;
 
+/**
+ * Stores the UI for booking instances to be printed.
+ */
 public class BookingUI {
+    /**
+     * Constructor for BookingUI.
+     */
     public BookingUI(){}
-    public static BookingUI single_instance = null;
 
+    /**
+     * Singleton Constructor
+     */
+    public static BookingUI single_instance = null;
+    /**
+     * Singleton Constructor
+     */
     public static BookingUI getInstance()
     {
         if(single_instance == null) {
@@ -14,6 +26,9 @@ public class BookingUI {
         return single_instance;
     }
 
+    /**
+     * Prints the booking menu options.
+     */
     public static void printBookingMenu() {
         System.out.printf(
             "-------- SEAT BOOKING --------\n" +
@@ -25,7 +40,9 @@ public class BookingUI {
         );
         System.out.println("Please select one of the above choices between 0 to 3:");
     }
-
+    /**
+     * Prints the customer checking booking history menu.
+     */
     public static void printCustomerBookingHistoryMenu() {
         System.out.println("How do you want to check your booking history?");
         System.out.printf(

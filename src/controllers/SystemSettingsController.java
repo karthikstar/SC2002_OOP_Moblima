@@ -12,9 +12,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Class that manages the functionalities required in that of a computation of prices in a showtime for various ticket types.
+ */
 public class SystemSettingsController {
+    /**
+     * Singleton Controller
+     */
     private static SystemSettingsController single_instance = null;
-
+    /**
+     * Singleton Controller
+     */
     public static SystemSettingsController getInstance() {
         if(single_instance == null) {
             single_instance = new SystemSettingsController();
@@ -23,7 +31,7 @@ public class SystemSettingsController {
     }
 
     /**
-     * Main method to load - display all available options and ask user to choose one
+     * Main method that enables staff to configure system settings such as holiday dates & prices and also view them.
      */
     public void main() {
         boolean exit  = false;
@@ -85,7 +93,7 @@ public class SystemSettingsController {
 
     /**
      * Create a new holiday - ask user to enter date
-     * If the holiday already exists, the user has to try again
+     * If the holiday already exists, asked to try again.
      */
     public void createHoliday() {
         System.out.println("Enter holiday date to add: ");
@@ -98,8 +106,8 @@ public class SystemSettingsController {
     }
 
     /**
-     * List all available holidays (If there are any)
-     * @return		If there are available holidays or not
+     * List all available holidays in the database
+     * @return		If there are available holidays or not, return true, else false.
      */
     public boolean listAllHolidays(){
         ArrayList<Holiday> holList = HolidayController.getInstance().read();
@@ -120,8 +128,7 @@ public class SystemSettingsController {
     }
 
     /**
-     * Delete a holiday from database
-     * If the user's input is invalid, they have to try again
+     * Deletes a holiday from the database.
      */
     public void deleteHoliday() {
         if(listAllHolidays()){
@@ -137,8 +144,7 @@ public class SystemSettingsController {
     }
 
     /**
-     * Update the price of a specific movie type (user's choosing)
-     * Invalid choice will return the user back to main menu
+     * Update the price of a specific movie type.
      */
     public void updateMovieTypePrice() {
         System.out.println("Choose Movie Type: \n" +
@@ -171,8 +177,7 @@ public class SystemSettingsController {
     }
 
     /**
-     * Update the price of a specific cinema type (user's choosing)
-     * Invalid choice will return the user back to main menu
+     * Updates the price of a specific cinema type.
      */
     public void updateCinemaTypePrice() {
         System.out.println("Choose Cinema Type: \n" +
@@ -196,30 +201,42 @@ public class SystemSettingsController {
         }
     }
 
+    /**
+     * Updates price of a student ticket.
+     */
     public void updateStudentPrice () {
         System.out.println("Enter new price: ");
         double newPrice = InputController.getUserDouble();
         PriceController.getInstance().changePriceChanger(TicketType.STUDENT, newPrice);
     }
 
+    /**
+     * Updates the price of a senior ticket.
+     */
     public void updateSeniorPrice () {
         System.out.println("Enter new price: ");
         double newPrice = InputController.getUserDouble();
         PriceController.getInstance().changePriceChanger(TicketType.SENIOR, newPrice);
     }
-
+    /**
+     * Updates the price of an adult ticket.
+     */
     public void updateAdultPrice () {
         System.out.println("Enter new price: ");
         double newPrice = InputController.getUserDouble();
         PriceController.getInstance().changePriceChanger(TicketType.ADULT, newPrice);
     }
-
+    /**
+     * Updates the price of a weekend ticket.
+     */
     public void updateWeekendPrice () {
         System.out.println("Enter new price: ");
         double newPrice = InputController.getUserDouble();
         PriceController.getInstance().changePriceChanger(TicketType.WEEKEND, newPrice);
     }
-
+    /**
+     * Updates the price of a holiday ticket.
+     */
     public void updateHolidayPrice () {
         System.out.println("Enter new price: ");
         double newPrice = InputController.getUserDouble();

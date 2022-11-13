@@ -14,26 +14,39 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
+/**
+ * Class that manages the functionalities required in that of reviews.
+ */
 public class ReviewController {
-    private Scanner sc = new Scanner(System.in);
+    /**
+     * HashMap that stores the review IDs to retrieve the respective MovieReview objects.
+     */
     private Map<Integer, MovieReview> reviews;
-
+    /**
+     * Singleton Constructor
+     */
     private static ReviewController single_instance = null;
+    /**
+     * Singleton Constructor
+     */
     public static ReviewController getInstance() {
         if (single_instance == null)
             single_instance = new ReviewController();
         return single_instance;
     }
 
-    // Constructor
+    /**
+     * Constructor for the ReviewController object.
+     */
     private ReviewController() {
         reviews = new HashMap<Integer, MovieReview>();
         load();
     }
 
-
-
+    /**
+     * Prints the list of reviews.
+     * @param reviews List of Reviews.
+     */
     public void printReviews(ArrayList<MovieReview> reviews) {
         int i=0;
 
@@ -50,18 +63,13 @@ public class ReviewController {
         }
     }
 
+    /**
+     * Adds a review to its respective movie object.
+     * @param movieID ID of the movie
+     */
     public void addReview(int movieID) {
         MovieReview newReview = new MovieReview();
 
-        ////////////// INPUT VALIDATION NEEDED???
-
-        // Is this not from login details?
-
-//        System.out.println("Enter your name: ");
-//        newReview.setUser(sc.nextLine());
-
-//        System.out.println("Enter title of review: ");
-//        newReview.setReviewTitle(sc.nextLine());
         System.out.println("Enter your name: ");
         newReview.setUsername(InputController.getUserString());
 
@@ -105,6 +113,10 @@ public class ReviewController {
         } while (choice != 0);
     }
 
+    /**
+     * Allows for deletion of a chosen review by the staff.
+     * @param reviews List of Movie Reviews
+     */
     public void deleteReview(ArrayList<MovieReview> reviews) {
         this.printReviews(reviews);
         if (reviews.size() == 0) {
@@ -134,6 +146,10 @@ public class ReviewController {
         } while (choice != 0);
     }
 
+    /**
+     * Allows for editing of the review object.
+     * @param review Review Object
+     */
     private void editReview(MovieReview review) {
         int choice;
 
@@ -164,9 +180,11 @@ public class ReviewController {
         } while (choice != 0);
     }
 
+    /**
+     * Loads the reviews from the database.
+     */
     private void load() {
-        File[] listOfFiles = new File[0];
-        listOfFiles = new File(FilePathFinder.findRootPath() + "/src/data/reviews").listFiles();
+        File[] listOfFiles = new File(FilePathFinder.findRootPath() + "/src/data/reviews").listFiles();
 
         if(listOfFiles != null){
             for(int i=0;i<listOfFiles.length;i++){
@@ -178,6 +196,10 @@ public class ReviewController {
         }
     }
 
+    /**
+     * Saves new/edited reviews into the database.
+     * @param review Review object
+     */
     private void save(MovieReview review) {
         String path = FilePathFinder.findRootPath() + "/src/data/reviews/review_"+review.getReviewId()+".dat";
         DataSerializer.ObjectSerializer(path,review);

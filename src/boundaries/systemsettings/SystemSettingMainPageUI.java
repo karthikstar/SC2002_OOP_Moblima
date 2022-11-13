@@ -1,6 +1,12 @@
 package boundaries.systemsettings;
 
+/**
+ * Stores the UI for the Editing of System Settings.
+ */
 public class SystemSettingMainPageUI {
+    /**
+     * Prints the System Settings Edit Menu.
+     */
     public static void printMenu() {
         System.out.println("------------------- System Settings Main Menu -------------------\n"+
                         "1.  List all holidays date \n" +

@@ -16,12 +16,21 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * Class that manages the functionalities required in that of showtimes.
+ */
 public class ShowtimeController {
+    /**
+     * HashMap that stores the showtime IDs and its respective showtime objects.
+     */
     private HashMap<Integer, Showtime> showtimes = new HashMap<>();
-
+    /**
+     * Singleton Constructor
+     */
     private static ShowtimeController single_instance = null;
-
+    /**
+     * Singleton Constructor
+     */
     public static ShowtimeController getInstance() {
         if(single_instance == null) {
             single_instance = new ShowtimeController();
@@ -29,6 +38,9 @@ public class ShowtimeController {
         return single_instance;
     }
 
+    /**
+     * Constructor for showtime Controller objects, showtimes are loaded from the database.
+     */
     private ShowtimeController() {
         // load data from .dat files
         HashMap<Integer, Showtime> showTimeHashMap = this.loadData();
@@ -38,7 +50,11 @@ public class ShowtimeController {
         }
     }
 
-    // retrieves a list of showtimes for a particular movieID - CALL THIS From MovieController.
+    /**
+     * Prints the list of showtimes for a specific provided movie ID, called from the MovieController.
+     * @param movieID ID of movie
+     * @param userType "Customer" or "Staff"
+     */
     void getMovieShowtimes(int movieID, String userType) {
         int userChoice;
         // Get showtime Ids for a particular movie
@@ -138,6 +154,10 @@ public class ShowtimeController {
 
     }
 
+    /**
+     * Individual Showtime options available such as viewing details & booking the showtime.
+     * @param chosenShowtimeID ID of showtime chosen.
+     */
     private void chosenShowtimeCust(int chosenShowtimeID) {
         int userChoice;
 
@@ -171,7 +191,10 @@ public class ShowtimeController {
         }
     }
 
-
+    /**
+     * Functionalities given to staff to manage the showtimes such as creating/editing/deleting of showtimes
+     * @param showtimeID ID of showtime to be managed by staff.
+     */
     private void staffShowtimeOperations(int showtimeID) {
         int userChoice;
         do {
@@ -206,10 +229,19 @@ public class ShowtimeController {
 
     }
 
+    /**
+     * Returns a showtime based on its ID.
+     * @param showtimeID ID of showtime
+     * @return Showtime object
+     */
     private Showtime retrieveShowtime(int showtimeID) {
         return this.showtimes.get(showtimeID);
     }
 
+    /**
+     * Shows the details of each showtime.
+     * @param chosenShowtimeID
+     */
     private void viewShowtimeDetails(int chosenShowtimeID) {
         DateTimeFormatter dateTimeFormatter= DateTimeFormatter.ofPattern("dd MMM yyyy, hh.mma");
         // retrieve the showtime obj, corresponding to the chosenShowtimeID
@@ -217,6 +249,10 @@ public class ShowtimeController {
         ShowtimeUI.printShowtimeDetails(chosenShowtime);
     }
 
+    /**
+     * Removes the showtime from viewing by marking it as "FULL_CAPACITY".
+     * @param showtimeID ID of showtime
+     */
     private void deleteShowtime(int showtimeID) {
         Showtime showtimeToDelete = this.showtimes.get(showtimeID);
         if(showtimeToDelete == null) {
@@ -228,6 +264,11 @@ public class ShowtimeController {
         }
     }
 
+    /**
+     * Creation of a new showtime for a given movie. Allows showtime details to be entered by the staff.
+     * @param movieID ID of movie for showtime to be added
+     * @return Showtime object created
+     */
     private Showtime createShowtime(int movieID) {
         Showtime newShowTime = new Showtime();
         int showtimeID = newShowTime.getIdCounter();
@@ -290,6 +331,10 @@ public class ShowtimeController {
         return newShowTime;
     }
 
+    /**
+     * Allows staff to edited the showtime information from its ID.
+     * @param showtimeID ID of showtime
+     */
     private void updateShowtimeDetails(int showtimeID) {
         int userChoice;
 
@@ -349,6 +394,11 @@ public class ShowtimeController {
         }
     }
 
+    /**
+     * Checks if Cinema Availability entered is valid.
+     * @param cinemaAvailability String entered for cinema availability to be stored.
+     * @return True if its valid / False if its invalid
+     */
     private boolean checkIfValidCinemaAvailability(String cinemaAvailability) {
         try {
             CinemaAvailability cinemaAvailabilityEnum = CinemaAvailability.valueOf(cinemaAvailability);
@@ -358,6 +408,11 @@ public class ShowtimeController {
             return false;
         }
     }
+    /**
+     * Checks if Movie Type entered is valid.
+     * @param movieType String entered for movie type to be stored.
+     * @return True if its valid / False if its invalid
+     */
     private boolean checkIfValidMovieType(String movieType) {
         try {
             MovieType movieTypeEnum = MovieType.valueOf(movieType);
@@ -368,12 +423,20 @@ public class ShowtimeController {
         }
     }
 
-    // saves a showtime object as a .dat file
+    /**
+     * Saves showtime in the database.
+     * @param showtimeObj Showtime object
+     * @param showtimeID ID of showtime
+     */
     void saveShowtime(Showtime showtimeObj, int showtimeID) {
         String filePath = FilePathFinder.findRootPath() + "/src/data/showtimes/showtime_" + showtimeID + ".dat";
         DataSerializer.ObjectSerializer(filePath, showtimeObj);
     }
 
+    /**
+     * Loads the showtimes from the database.
+     * @return HashMap of showtime IDs to retrieve the showtime objects.
+     */
     private HashMap<Integer, Showtime> loadData() {
         HashMap<Integer, Showtime> storedShowtimes = new HashMap<>();
 

@@ -9,7 +9,14 @@ import java.lang.reflect.Array;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * Stores all the functionalities that manages the showtimes side of the application.
+ */
 public class ShowtimeUI {
+    /**
+     * Prints all the showtimes available.
+     * @param showtimeList List of Showtime Objects
+     */
     public static void printShowtimes(ArrayList<Showtime> showtimeList) {
         System.out.println("Here are the available showtimes for the movie you're looking for:");
 
@@ -27,6 +34,10 @@ public class ShowtimeUI {
         }
     }
 
+    /**
+     * Prints the showtime details of all showtimes.
+     * @param showtimeList List of Showtime Objects
+     */
     public static void printShowtimesChoice(ArrayList<Showtime> showtimeList) {
         for(int i = 0; i < showtimeList.size(); i++) {
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy, hh.mma");
@@ -38,6 +49,9 @@ public class ShowtimeUI {
         }
     }
 
+    /**
+     * Prints Customer Showtime functionalities UI.
+     */
     public static void custShowtimeMenu() {
         System.out.println("What would you like to do now?");
         System.out.printf(
@@ -46,7 +60,9 @@ public class ShowtimeUI {
                 );
         System.out.println("Please select one of the above choices between 0 to 1: ");
     }
-
+    /**
+     * Prints Customer Selected Showtime functionalities UI.
+     */
     public static void custChosenShowtimeMenu() {
         System.out.printf(
                 "What would you like to do with this selected showtime?\n" +
@@ -56,6 +72,9 @@ public class ShowtimeUI {
         );
         System.out.println("Please select one of the above choices between 0 to 2: ");
     }
+    /**
+     * Prints Staff Showtime functionalities UI.
+     */
     public static void staffShowtimeMenu() {
         System.out.println("Showtime Portal - Staff");
         System.out.printf(
@@ -66,7 +85,9 @@ public class ShowtimeUI {
         System.out.println("Please select one of the above choices between 0 to 2: ");
     }
 
-    // in the event that there is no showtime for the particular movie
+    /**
+     * Prints Staff Showtime functionalities UI if there is no showtime.
+     */
     public static void staffShowtimeMenuNoShowtime() {
         System.out.println("Showtime Manager - Staff");
         System.out.printf(
@@ -75,7 +96,9 @@ public class ShowtimeUI {
         );
         System.out.println("Please select one of the above choices between 0 to 1: ");
     }
-
+    /**
+     * Prints Staff Showtime functionalities UI for each chosen showtime for editing/removing/viewing.
+     */
     public static void staffShowtimeOperationsMenu() {
         System.out.printf(
                 "[STAFF] What would you like to do with the selected showtime?\n" +
@@ -86,7 +109,9 @@ public class ShowtimeUI {
         );
         System.out.println("Please select one of the above choices between 0 to 3: ");
     }
-
+    /**
+     * Prints Staff Editing Showtimes functionalities.
+     */
     public static void staffUpdateMenu() {
         System.out.printf(
                 "Welcome to the Update Menu for Showtime!\n" +
@@ -100,6 +125,10 @@ public class ShowtimeUI {
         );
     }
 
+    /**
+     * Prints showtime details from the given showtime.
+     * @param chosenShowtime Showtime object
+     */
     public static void printShowtimeDetails(Showtime chosenShowtime) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy, hh.mma");
         System.out.println("\nHere are the details of your chosen showtime:");
@@ -115,6 +144,10 @@ public class ShowtimeUI {
         chosenShowtime.getCinema().printCinemaSeatLayout();
     }
 
+    /**
+     * Prints list of cineplexes available in the company.
+     * @param listOfCineplexes List of Cineplexes objects
+     */
     public static void printListOfCineplexes(ArrayList<Cineplex> listOfCineplexes) {
         System.out.println("List of Cineplexes:");
         if (listOfCineplexes.size() == 0) {
@@ -125,12 +158,22 @@ public class ShowtimeUI {
             System.out.println(i + 1 + ". " + listOfCineplexes.get(i).getCineplexName());
         }
     }
+
+    /**
+     * Prints List of Cinemas available by code.
+     * @param listOfCinemas List of Cinema Objects
+     */
     public static void printListOfCinemas(ArrayList<Cinema> listOfCinemas) {
         System.out.println("List of Cinemas:");
         for(int i = 0; i < listOfCinemas.size(); i++) {
             System.out.println(i + 1 + ". " + listOfCinemas.get(i).getCineplexCode() + "_" + (i+1));
         }
     }
+
+    /**
+     * Prints list of movie types available to choose from.
+     * @param listOfMovieTypes List of MovieType Object
+     */
     public static void printListOfMovieTypes(ArrayList<MovieType> listOfMovieTypes) {
         for(int i = 0; i < listOfMovieTypes.size(); i++) {
             System.out.println(i + 1 + ". " + listOfMovieTypes.get(i).toString());
