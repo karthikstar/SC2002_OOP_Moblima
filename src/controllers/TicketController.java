@@ -165,5 +165,6 @@ public class TicketController {
         ticketCount.clear();
         ticketPrices.clear();
         exit = true;
+        single_instance = null;
     }
 }

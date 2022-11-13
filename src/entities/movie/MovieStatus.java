@@ -3,7 +3,7 @@ package entities.movie;
 /**
  * Enumerated type for better readability and easier referencing to attribute
  */
-public enum MovieStatus {
+public enum MovieStatus implements Comparable<MovieStatus> {
     NOW_SHOWING("Now showing"),
     PREVIEW("Preview"),
     COMING_SOON("Coming soon"),

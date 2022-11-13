@@ -1,5 +1,9 @@
 package entities.booking;
 
+import utils.DataSerializer;
+import utils.FilePathFinder;
+
+import java.io.File;
 import java.io.Serializable;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,7 +21,7 @@ public class Booking implements Serializable {
 
     private int movieID;
 
-    private static int bookingCount = 0;
+    private static int bookingCount = getNumberOfExistingBookings();
 
     public void printBookingDetails() {
         System.out.println("-----------------------------------------------------------------------------");
@@ -54,6 +58,23 @@ public class Booking implements Serializable {
 
     public Booking(){
         bookingCount++;
+    }
+
+    private static int getNumberOfExistingBookings() {
+        String path = FilePathFinder.findRootPath() + "/src/data/bookings";
+        try {
+            File directory = new File(path);
+            File[] files = directory.listFiles();
+        } catch(Exception e) {
+            return 0;
+        }
+
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        if(files.length != 0) {
+            return files.length;
+        }
+        return 0;
     }
 
 
@@ -129,4 +150,6 @@ public class Booking implements Serializable {
     public int getMovieID() {
         return movieID;
     }
+
+
 }

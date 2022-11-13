@@ -67,13 +67,14 @@ public class MovieController {
                     case 1:
                         ArrayList<Movie> allShowingMovies = new ArrayList<Movie>();
                         for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("COMING_SOON"))  ||
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))  ||
                                     indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("PREVIEW"))  ||
-                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING")) ||
+                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("COMING_SOON")) ||
                                     indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("END_OF_SHOWING")))  {
                                 allShowingMovies.add(indivMovie.getValue());
                             }
                         }
+                        allShowingMovies.sort(Comparator.comparing(Movie::getShowStatus));
                         this.selectMovie(allShowingMovies, userType);
                         break;
                     case 2:
@@ -128,12 +129,13 @@ public class MovieController {
                     case 1:
                         ArrayList<Movie> allShowingMovies = new ArrayList<Movie>();
                         for (Map.Entry<Integer, Movie> indivMovie : movies.entrySet()) {
-                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("COMING_SOON")) ||
+                            if (indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING")) ||
                                     indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("PREVIEW")) ||
-                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("NOW_SHOWING"))) {
+                                    indivMovie.getValue().getShowStatus().equals(MovieStatus.valueOf("COMING_SOON"))) {
                                 allShowingMovies.add(indivMovie.getValue());
                             }
                         }
+                        allShowingMovies.sort(Comparator.comparing(Movie::getShowStatus));
                         if (allShowingMovies.size() == 0) {
                             System.out.println("No Movies that are currently showing!");
                             break;

@@ -22,7 +22,11 @@ public class TransactionController {
         return single_instance;
     }
 
-    private Transaction transaction = new Transaction();
+    public TransactionController() {
+        this.transaction = new Transaction();
+    }
+
+    private Transaction transaction;
     private String bookerName;
     private String bookerMobileNo;
     private String bookerEmail;
@@ -157,6 +161,7 @@ public class TransactionController {
         bookerMobileNo = null;
         bookerEmail = null;
         exit = true;
+        single_instance = null;
     }
 
 }

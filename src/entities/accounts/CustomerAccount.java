@@ -1,5 +1,8 @@
 package entities.accounts;
 
+import utils.FilePathFinder;
+
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -15,13 +18,30 @@ public class CustomerAccount implements Serializable {
 
     private ArrayList<Integer> bookingHistory = new ArrayList<>();
 
-    private static int customerAccountCount = 0;
+    private static int customerAccountCount = getNumberOfExistingCustomers();
 
     public CustomerAccount(String customerName, String email, String mobileNo) {
         this.email = email;
         this.mobileNo = mobileNo;
         this.customerName = customerName;
         customerAccountCount++;
+    }
+
+    private static int getNumberOfExistingCustomers() {
+        String path = FilePathFinder.findRootPath() + "/src/data/customers";
+        try {
+            File directory = new File(path);
+            File[] files = directory.listFiles();
+        } catch(Exception e) {
+            return 0;
+        }
+
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        if(files.length != 0) {
+            return files.length;
+        }
+        return 0;
     }
 
     public void addBookingID(Integer id){

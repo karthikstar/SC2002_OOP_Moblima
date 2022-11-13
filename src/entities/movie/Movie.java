@@ -1,5 +1,8 @@
 package entities.movie;
 
+import utils.FilePathFinder;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.io.Serializable;
 import java.text.DecimalFormat;
@@ -8,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 
 public class Movie implements Serializable {
-    private static int idCounter = 1;
+    private static int idCounter = getNumberOfExistingMovies() + 1;
 
     //Attributes
     private int id;
@@ -56,6 +59,23 @@ public class Movie implements Serializable {
         this.genres = genres;
         this.reviews = new ArrayList<MovieReview>();
         this.showtimeIDs = new ArrayList<Integer>();
+    }
+
+    private static int getNumberOfExistingMovies() {
+        String path = FilePathFinder.findRootPath() + "/src/data/movies";
+        try {
+            File directory = new File(path);
+            File[] files = directory.listFiles();
+        } catch(Exception e) {
+            return 0;
+        }
+
+        File directory = new File(path);
+        File[] files = directory.listFiles();
+        if(files.length != 0) {
+            return files.length;
+        }
+        return 0;
     }
 
     public MovieStatus getShowStatus() {
