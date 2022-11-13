@@ -9,8 +9,17 @@ import entities.movie.Movie;
 import java.time.format.TextStyle;
 import java.util.*;
 
+/**
+ * Class that manages the functionalities required in that of a ticket.
+ */
 public class TicketController {
+    /**
+     * Singleton Constructor
+     */
     private static TicketController single_instance = null;
+    /**
+     * Singleton Constructor
+     */
     public static TicketController getInstance()
     {
         if (single_instance == null) {
@@ -19,20 +28,30 @@ public class TicketController {
         return single_instance;
     }
 
-    // Attributes
+    /**
+     * List of Ticket Objects being managed.
+     */
     private ArrayList<Ticket> selectedTickets = new ArrayList<Ticket>();
-
+    /**
+     * HashMap that stores the number of tickets bought for each ticket type.
+     */
     private HashMap<TicketType, Integer> ticketCount = new HashMap<TicketType, Integer>();
 
     /**
      * This holds the various prices of the ticket types. These prices are the modifed prices
-     * after implementing the price modifiers for every aspect of the booking in question
+     * after implementing the price modifiers for every aspect of the booking.
      */
     private HashMap<TicketType, Double> ticketPrices = new HashMap<TicketType, Double>();
-    
+    /**
+     * Controls loops using a boolean variable.
+     */
     public Boolean exit = false;
 
-
+    /**
+     * Method that begins the process of selecting the tickets to be purchased.
+     * @param showtime Showtime object being purchased.
+     * @param selectedSeats List of Strings representing the seat numbers being bought for.
+     */
     public void startTicketSelection(Showtime showtime, ArrayList<String> selectedSeats) {
 
         // Get new ticket prices based on showtime
@@ -107,13 +126,20 @@ public class TicketController {
         }
     }
 
-// DID WE INCREASE NO. OF TICKETS SOLD IN THE MOVIE OBJECT?
+    /**
+     * Method that sets the needed attributes such as selected tickets, movie ID and number of tickets sold in the movie to be updated.
+     */
     public void confirmTicketSelection() {
         BookingController.getInstance().getBooking().setTicketsBought(selectedTickets);
         int movieID = BookingController.getInstance().getShowtime().getMovieId();
         MovieController.getInstance().increaseTicketsSold(movieID, selectedTickets.size());
     }
 
+    /**
+     * Method that sets the ticket prices based on the selected ticket, then adds them to the ticket selection list including the number of each ticket.
+     * @param ticketType Ticket Type being bought for.
+     * @param count Number of tickets bought for the ticket types in question.
+     */
     private void addTicketSelection(TicketType ticketType, int count) {
         for (int i = 0; i < count; i++) {
             Ticket newTicket = new Ticket(ticketType);
@@ -125,6 +151,10 @@ public class TicketController {
         ticketCount.put(ticketType, count);
     }
 
+    /**
+     * Updates the ticketPrices HashMap based on the various PriceChangers of the current showtime.
+     * @param showtime ShowTime object tickets are being bought for.
+     */
     private void updateTicketPrices(Showtime showtime) {
         HashMap<TicketType, Double> prices = ticketPrices;
         PriceController priceList = PriceController.getInstance();
@@ -155,11 +185,17 @@ public class TicketController {
         }
     }
 
+    /**
+     * Resets the selected tickets HashMap & and ticket count HashMap.
+     */
     private void clearTicketSelection() {
         selectedTickets.clear();
         ticketCount.clear();
     }
 
+    /**
+     * Resets the Ticket Controller object so that it is now ready to manage another set of tickets in another showtime transaction.
+     */
     public void reset() {
         selectedTickets.clear();
         ticketCount.clear();

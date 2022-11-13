@@ -16,11 +16,17 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * Class that manages the functionalities required in that of computing/managing prices of a ticket.
+ */
 public class PriceController implements Serializable {
-    // Attributes
+    /**
+     * Singleton Constructor
+     */
     private static PriceController single_instance = null;
-
+    /**
+     * Singleton Constructor
+     */
     public static PriceController getInstance() {
         if (single_instance != null) save();
         File f = new File (FilePathFinder.findRootPath() + "/src/data/system_settings/prices.dat");
@@ -32,12 +38,22 @@ public class PriceController implements Serializable {
         return single_instance;
     }
 
+    /**
+     * HashMap that stores the various object that affects price of ticket and its respective price increase.
+     */
     private Map<PriceChanger,Double> priceMap = new HashMap<PriceChanger,Double>();
 
+    /**
+     * Constructor for Price Controller. Loads the Default Prices into the priceMap HashMap.
+     */
     public PriceController(){
         populateDefaultPrices(priceMap);
     }
 
+    /**
+     * Sets the default values for the prices of ticket types, as well as the additional fees that come with each priceChanger.
+     * @param priceMap HashMap that stores the various object that affects price of ticket and its respective price increase.
+     */
     private void populateDefaultPrices(Map<PriceChanger,Double> priceMap) {
         priceMap.put(MovieType.TWO_D, 0.0);
         priceMap.put(MovieType.THREE_D, 1.5);
@@ -55,20 +71,9 @@ public class PriceController implements Serializable {
         priceMap.put(TicketType.SENIOR, 5.0);
     }
 
-    // if fri to sun or eve of ph or ph, 14.5 regardless of student/senior etc. student senior only available for 2d normal
-    public double computePrice(Showtime session, Cinema cinema, TicketType priceType){
-        double bookingFee = 1.5;
-        double addToPrice = getPrice(session.getMovieType()) + getPrice(cinema.getCinemaType()) + bookingFee;
-        if (session.isWeekend())
-            addToPrice += getPrice(TicketType.WEEKEND);
-        if(HolidayController.getInstance().isHoliday(session.getDateTime().toLocalDate())){
-            return getPrice(TicketType.HOLIDAY) + addToPrice;
-        }
-        else{
-            return getPrice(priceType) + addToPrice;
-        }
-    }
-
+    /**
+     * Prints the price list such as base fees of each ticket type, followed by the additional fees according to each PriceChanger.
+     */
     public void printAllPriceChangers(){
         String result1 = "";
         for(PriceChanger priceChanger : priceMap.keySet()){
@@ -85,16 +90,29 @@ public class PriceController implements Serializable {
         System.out.printf("\nAdditional Fees according to Type: \n%s\n",result2);
     }
 
-    // Getters
+    /**
+     * Getter for the Price of each ticket based on the PriceChanger.
+     * @param priceChanger PriceChanger object
+     * @return Price set to the PriceChanger
+     */
     public double getPrice(PriceChanger priceChanger){
         return priceMap.getOrDefault(priceChanger, 0.0);
     }
 
-    // Map Modifiers
+    /**
+     * Method that adds a new price changer and its respective price into the HashMap stored in the controller.
+     * @param priceChanger PriceChanger Object
+     * @param value Price indicated by the PriceChanger
+     */
     public void addPriceChanger(PriceChanger priceChanger, double value){
         priceMap.put(priceChanger, value);
     }
 
+    /**
+     * Modifies the price increase/base price of the priceChanger object
+     * @param priceChanger PriceChanger object
+     * @param newPrice New Price to be changed to
+     */
     public void changePriceChanger(PriceChanger priceChanger, double newPrice){
         if(priceMap.containsKey(priceChanger)){
             priceMap.replace(priceChanger, newPrice);
@@ -104,19 +122,26 @@ public class PriceController implements Serializable {
         }
     }
 
+    /**
+     * Method that removes the current PriceChanger from the HashMap.
+     * @param priceChanger PriceChanger object
+     */
     public void removePriceChanger(PriceChanger priceChanger){
         priceMap.remove(priceChanger);
     }
 
-    public Map<PriceChanger,Double> getAllPriceChangers(){
-        return priceMap;
-    }
-
+    /**
+     * Saves the updated prices into the database.
+     */
     public static void save() {
         String path = FilePathFinder.findRootPath() + "/src/data/system_settings/prices.dat";
         DataSerializer.ObjectSerializer(path, single_instance);
     }
 
+    /**
+     * Loads the storerd prices from the database.
+     * @return Price Controller object
+     */
     public static PriceController load() {
         String path = FilePathFinder.findRootPath() + "/src/data/system_settings/prices.dat";
         return (PriceController) DataSerializer.ObjectDeserializer(path);

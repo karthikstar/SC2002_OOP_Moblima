@@ -3,7 +3,9 @@ import controllers.InputController;
 
 import java.util.Scanner;
 
-//Main App
+/**
+ * Main Application Access.
+ */
 public class MainApp {
     public static void main(String[] args) {
         int choice;

@@ -6,16 +6,24 @@ import controllers.TicketController;
 import entities.accounts.CustomerAccount;
 import entities.booking.Booking;
 
+/**
+ * Customer Application Class.
+ */
 public class CustomerApp {
-    // Implementing Singleton design pattenr to ensure CustomerUI only has one instance
-
+    /**
+     * Singleton Constructor
+     */
     private static CustomerApp single_custUI = null;
 
+    /**
+     * Constructor for CustomerApp.
+     */
     private CustomerApp(){
 
     }
-
-
+    /**
+     * Singleton Constructor
+     */
     public static CustomerApp getInstance() {
         if(single_custUI == null){
             single_custUI = new CustomerApp();
@@ -24,13 +32,7 @@ public class CustomerApp {
     }
 
     /**
-     * 1. Search / List Movie
-     * 2. View movie details - incl. reviews and ratings
-     * 3. Check Seat availability and selection of seats
-     * 4. Book and Purchase Of Ticket
-     * 5. View Booking History
-     * 6. List the Top 5 Ranking by ticket sales OR by overall reviewers' ratings
-     * 7. Enter their own review/rating of the movie
+     * Prints Customer Portal UI and allows them to choose which functionality to access.
      */
     public void displayCustomerUI() {
         int userChoice = -1;

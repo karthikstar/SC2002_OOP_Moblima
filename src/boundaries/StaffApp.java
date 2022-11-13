@@ -6,15 +6,24 @@ import controllers.StaffController;
 import controllers.SystemSettingsController;
 import entities.movie.Movie;
 
+/**
+ * Class that manages the staff side of the application.
+ */
 public class StaffApp {
-
+    /**
+     * Singleton Constructor
+     */
     private static StaffApp single_instance = null;
 
-    // constructor
+    /**
+     * Object Constructor
+     */
     private StaffApp(){
 
     }
-
+    /**
+     * Singleton Constructor
+     */
     public static StaffApp getInstance() {
         if(single_instance == null) {
             single_instance = new StaffApp();
@@ -22,6 +31,9 @@ public class StaffApp {
         return single_instance;
     }
 
+    /**
+     * Displays the Staff UI for the Staff Portal and allows them to login or exit.
+     */
     public void displayStaffUI() {
         boolean isLoggedin = false;
         boolean quit = false;
@@ -69,6 +81,9 @@ public class StaffApp {
         } while(!quit && !isLoggedin);
     }
 
+    /**
+     * Displays the UI for the staff after login and allow them to select which functionality they would like to access.
+     */
     public void displayLoggedInUI() {
         int userChoice;
 

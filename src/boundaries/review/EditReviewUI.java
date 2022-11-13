@@ -1,6 +1,12 @@
 package boundaries.review;
 
+/**
+ * Stores the Review Options UI.
+ */
 public class EditReviewUI {
+    /**
+     * Prints the Review Editing Menu.
+     */
     public static void printMenu() {
         System.out.println(	"------------------------ EDIT REVIEW OPTIONS --------------------\n" +
                 " 1. Edit Review Comment   						    	\n" +
